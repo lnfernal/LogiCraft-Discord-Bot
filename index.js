@@ -13,7 +13,7 @@ client.on("ready", () => {
     console.log("Bot Ready!")
 
     antiAd(client)
-    voteReactions(client, "809393787553972224")
+    voteReactions(client)
     const baseFile = "command-base.js"
     const commandBase = require(`./commands/${baseFile}`)
 
