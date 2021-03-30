@@ -12,7 +12,7 @@ const addReactions = (message) => {
     message.react(reactions.downvote)
 
     // bully bedrock
-    if(message.content.includes("Minecraft - Beta 1.")){
+    if(!message.content.includes("Java")){
         message.react(reactions.kekwPurple)
     }
 }
@@ -29,7 +29,7 @@ const reactPreviousMsg = async (client) => {
     }
 } 
 
-module.exports = (client, id) => {
+module.exports = (client) => {
     reactPreviousMsg(client)
     
     client.on("message", message => {
