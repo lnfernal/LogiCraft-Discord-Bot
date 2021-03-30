@@ -17,7 +17,7 @@ const addReactions = (message) => {
     }
 }
 
-const reactPreviousMsg = async (client) => {
+const reactToMsg = async (client) => {
     for(const id of channelsId){
         const channel = await client.channels.fetch(id)
 
@@ -34,7 +34,7 @@ module.exports = (client) => {
     
     client.on("message", message => {
         if(channelsId.includes(message.channel.id)){
-            addReactions(message)
+            reactToMsg(client)
         }
     })
 }
