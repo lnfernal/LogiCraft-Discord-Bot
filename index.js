@@ -12,7 +12,7 @@ client.login(process.env.BOT_TOKEN);
 client.on("ready", () => {
     console.log("Bot Ready!")
 
-    antiAd(client)
+    //antiAd(client)
     voteReactions(client)
     const baseFile = "command-base.js"
     const commandBase = require(`./commands/${baseFile}`)
