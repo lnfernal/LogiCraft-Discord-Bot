@@ -30,7 +30,7 @@ const reactToMsg = async (client) => {
 } 
 
 module.exports = (client) => {
-    reactPreviousMsg(client)
+    reactToMsg(client)
     
     client.on("message", message => {
         if(channelsId.includes(message.channel.id)){
