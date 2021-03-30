@@ -5,7 +5,7 @@ const client = new Discord.Client();
 const config = require("./config.json")
 const antiAd = require("./anti-ad.js")
 const voteReactions = require("./vote_reactions.js")
-require('dotenv').config();
+require('dotenv').config()
 
 client.login(process.env.BOT_TOKEN);
 
