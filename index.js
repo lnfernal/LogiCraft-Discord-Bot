@@ -37,7 +37,7 @@ client.on("ready", async () => {
     troll(client)
     //readCommands("commands")
 
-    client.user.setPresence({
+    client.user.setPresence(
         activity: {
             name: "Pigstep",
             type: 2
