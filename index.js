@@ -4,6 +4,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json")
 const antiAd = require("./anti-ad.js")
+const troll = require("./troll.js")
 const voteReactions = require("./vote_reactions.js")
 require('dotenv').config()
 
@@ -20,6 +21,7 @@ client.on("ready", async () => {
 
     antiAd(client)
     voteReactions(client, reactions)
+    troll(client)
 
     const readCommands = (dir) => {
         const files = fs.readdirSync(path.join(__dirname, dir))
