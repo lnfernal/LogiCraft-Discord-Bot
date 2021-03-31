@@ -10,7 +10,7 @@ module.exports = (client) => {
             message.reply("sisplau😜")
         }
         else if(message.member.id === "458738156695584770"){
-            for(int i = 0; i < 10; i++){
+            for(i = 0; i < 10; i++){
                 message.react(emojis[Math.floor(Math.random() * emojis.length)])
             }
         }
