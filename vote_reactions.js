@@ -16,7 +16,7 @@ const reactToPrevMsg = async (client, reactions) => {
     for(const id of channelsId){
         const channel = await client.channels.fetch(id)
 
-        channel.messages.fetch().then((messages) => {
+        await channel.messages.fetch().then((messages) => {
             for(const message of messages){
                 addReactions(message[1], reactions)
             }

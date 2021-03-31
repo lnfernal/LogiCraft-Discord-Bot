@@ -7,8 +7,9 @@ module.exports = async (client) => {
     client.on("message", async (message) => {
 
         if (message.content === "/cleanReactions") {
-            const channel = client.channels.fetch("666295715726622752")
-            channel.messages.fetch().then((messages) => {
+            const channel = await client.channels.fetch("666295715726622752")
+            
+            await channel.messages.fetch().then((messages) => {
                 for (const message of messages) {
                     message.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
                 }
