@@ -18,11 +18,6 @@ client.on("ready", async () => {
         downvote: client.emojis.cache.find(emoji => emoji.name === "downvote"),
         kekwPurple: client.emojis.cache.find(emoji => emoji.name === "kekwPurple")
     }
-
-    antiAd(client)
-    voteReactions(client, reactions)
-    troll(client)
-
     const readCommands = (dir) => {
         const files = fs.readdirSync(path.join(__dirname, dir))
         for (const file of files) {
@@ -35,6 +30,11 @@ client.on("ready", async () => {
             }
         }
     }
+
+    // function calls
+    antiAd(client)
+    voteReactions(client, reactions)
+    troll(client)
     //readCommands("commands")
 
     client.user.setPresence({

@@ -3,10 +3,10 @@ var emojis = [
 ];
 
 
-//sisp
+//siber
 module.exports = (client) => {
     client.on("message", async (message) => {
-        if(message.member.id === "323378898794446850"){
+        if(message.member.id === "458738156695584770"){
             message.react(emojis[Math.floor(Math.random() * emojis.length)])
         }
 
