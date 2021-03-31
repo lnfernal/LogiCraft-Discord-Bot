@@ -40,7 +40,7 @@ client.on("ready", async () => {
             name: "Pigstep",
             type: 2
         },
-        status: "idle"
+        status: "online"
     })
     console.log("Bot Ready!")
 })
