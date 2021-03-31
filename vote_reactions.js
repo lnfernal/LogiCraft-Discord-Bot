@@ -3,12 +3,12 @@ const channelsId = [
 ]
 
 const addReactions = async (message, reactions) => {
-    message.react(reactions.upvote.id)
-    message.react(reactions.downvote.id)
+    await message.react(reactions.upvote.id)
+    await message.react(reactions.downvote.id)
 
     // bully bedrock
     if(!message.content.includes("Java")){
-        message.react(reactions.kekwPurple.id)
+        await message.react(reactions.kekwPurple.id)
     }
 }
 
