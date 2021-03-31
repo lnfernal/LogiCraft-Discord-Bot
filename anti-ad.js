@@ -15,14 +15,15 @@ module.exports = (client) => {
 
     client.on("message", async (message) => {
         const { guild, member, content } = message
-
         const code = content.split("discord.gg/")[1]
 
         if (content.includes("discord.gg/")) {
             console.log("CODE: ", code)
             const isOurInvite = await isInvite(guild, code)
             if(!isOurInvite){
-                console.log(member.displayName)
+                console.log(`${member.displayName} spammed invitation: ${content}`)
+                message.channel.send(`${member.displayName}, links to other Discord Servers or any spam are forbidden :P`)
+                message.delete()
             }
         }
     })
