@@ -1,6 +1,6 @@
 {
-  "name": "Logicraft Bot",
-  "version": "1.0.1",
+  "name": "discordbot",
+  "version": "1.0.0",
   "description": "",
   "main": "bot.js",
   "scripts": {
@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.5.1",
+    "discord.js-commando": "github:discordjs/Commando",
     "dotenv": "^8.2.0",
     "fs-path": "^0.0.25",
     "mongoose": "^5.12.3",
