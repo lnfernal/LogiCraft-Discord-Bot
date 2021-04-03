@@ -1,0 +1,25 @@
+{
+  "name": "logidiscordbot",
+  "version": "1.0.0",
+  "description": "LogiCraft BOt",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariod8/LogiDiscordBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mariod8/LogiDiscordBot/issues"
+  },
+  "homepage": "https://github.com/mariod8/LogiDiscordBot#readme",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^8.2.0",
+    "mongodb": "^3.6.5",
+    "mongoose": "^5.12.3"
+  }
+}
