@@ -1,12 +1,11 @@
 module.exports = {
-  commands: "say",
+  commands: "latency",
   expectedArgs: "<content>",
   permissionError: "no tienes permisos",
-  minArgs: 1,
-  maxArgs: 199,
+  maxArgs: 0,
   permissions: [],
   requiredRoles: [],
   callback: (message, arguments, text, client) => {
-    message.channel.send(text);
+    message.channel.send(`Ping: ${client.ws.ping}ms`);
   },
 };

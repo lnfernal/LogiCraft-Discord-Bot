@@ -1,3 +1,4 @@
 {
-    "prefix": "/"
+  "prefix": "/",
+  "mongoPath": "mongodb+srv://LogiBot:kf9KA3UiKlmf0Tmj@logicraftdiscordbot.18kgr.mongodb.net/LogiCraftDiscordBot?retryWrites=true&w=majority"
 }

@@ -1,0 +1,26 @@
+module.exports = {
+  commands: "op",
+  expectedArgs: "<user>",
+  permissionError: "no tienes los permisos necesarios :c",
+  minArgs: 1,
+  maxArgs: 1,
+  permissions: ["MANAGE_ROLES"],
+  requiredRoles: [],
+  callback: (message, arguments, text, client) => {
+    const user = message.mentions.users.first();
+    if (user !== undefined) {
+      const role = message.guild.roles.cache.get("666297857929642014");
+      const member = message.guild.members.cache.get(user.id);
+      member.roles.add(role).catch(console.error);
+    } else {
+      const errorMsg = [
+        `${message.member.displayName}, tienes que mencionar al usuario :P`,
+        `${message.member.displayName}, eso no parece una mención...`,
+        `${message.member.displayName}, prueba mencionando al usuario con su @`,
+      ];
+      message.channel.send(
+        errorMsg[Math.floor(Math.random() * errorMsg.length)]
+      );
+    }
+  },
+};
