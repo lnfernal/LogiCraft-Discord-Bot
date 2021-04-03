@@ -18,7 +18,7 @@ module.exports = {
   commands: "couple",
   permissionError: "no tienes permisos",
   maxArgs: 0,
-  cooldown: 60 * 60 * 23*0,
+  cooldown: 60 * 60 * 23,
   permissions: [],
   requiredRoles: [],
   callback: async (message, arguments, text, client) => {

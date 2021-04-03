@@ -102,9 +102,17 @@ module.exports = (client, commandOptions) => {
           if (!role || !member.roles.cache.has(role.id)) {
             message.channel.send(
               `${message.member.displayName}, necesitas el rol de "${requiredRole}" para usar este comando`
-            );
+            )
             return;
           }
+        }
+
+        // Ensure Siber is not exploiting
+        if(message.authot.id === "824989001999712337"){
+          message.channel.send(
+            `${message.member.displayName}, nope :)`
+          )
+          return
         }
 
         // Ensure the user doesn't run command too quickly
