@@ -108,9 +108,9 @@ module.exports = (client, commandOptions) => {
         }
 
         // Ensure Siber is not exploiting
-        if(message.author.id === "824989001999712337"){
+        if(message.author.bot){
           message.channel.send(
-            `${message.member.displayName}, nope :)`
+            `nope :)`
           )
           return
         }
