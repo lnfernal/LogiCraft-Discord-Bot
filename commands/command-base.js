@@ -88,7 +88,7 @@ module.exports = (client, commandOptions) => {
         // Ensure the user has the required permissions
         for (const permission of permissions) {
           if (!member.hasPermission(permission)) {
-            message.reply(permissionError);
+            message.channel.send(`${member.displayName}, ${permissionError}`);
             return;
           }
         }
@@ -110,7 +110,7 @@ module.exports = (client, commandOptions) => {
         // Ensure the user doesn't run command too quickly
         let cooldownString = "";
         if (cooldown > 0 && recentlyRan.includes(cooldownString)) {
-          message.channel.send("espera un poco");
+          message.channel.send("Este comando está en cooldown :P");
           return;
         }
 
