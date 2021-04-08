@@ -44,7 +44,7 @@ const addXP = async (guildId, member, xpToAdd, message) => {
             { level, xp }
           );
         }
-      } while (xp > needed);
+      } while (xp >= needed);
     });
 };
 
