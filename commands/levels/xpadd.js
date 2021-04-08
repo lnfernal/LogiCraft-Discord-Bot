@@ -1,4 +1,4 @@
-const levels = require("../../levels.js")
+const levels = require("../../levels.js");
 
 module.exports = {
   commands: "xpadd",
@@ -28,7 +28,7 @@ module.exports = {
         `${message.member.displayName}, introduce un número válido de XP`
       );
     }
-    levels.addXpCall(target, xpToAdd, message)
+    levels.addXpCall(target, xpToAdd, message);
     message.channel.send(
       `**${message.member.displayName}**, has dado a <@${userId}> **${xpToAdd}XP**`
     );
