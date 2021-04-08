@@ -27,9 +27,10 @@ const addXP = async (guildId, member, xpToAdd, message) => {
     )
     .then(async (result) => {
       let { xp, level, totalXp } = result;
+      const needed
       
       do {
-        const needed = getNeededXP(level);
+        needed = getNeededXP(level);
         if (xp >= needed && level <= maxLevel) {
           ++level;
           xp -= needed;
