@@ -5,8 +5,9 @@ const maxLevel = 999;
 
 const getNeededXP = (level) => level * level * 100;
 
-const addXP = async (guildId, userId, xpToAdd, message) => {
+const addXP = async (guildId, member, xpToAdd, message) => {
   const spamChannel = message.guild.channels.cache.get("669882952582168607");
+  const userId = member.id
   await profileSchema
     .findOneAndUpdate(
       {
@@ -14,6 +15,7 @@ const addXP = async (guildId, userId, xpToAdd, message) => {
         userId,
       },
       {
+        name: member.displayName,
         guildId,
         userId,
         $inc: {
@@ -49,6 +51,6 @@ const addXP = async (guildId, userId, xpToAdd, message) => {
 module.exports = {
   onMessage: (client, message) => {
     const { guild, member } = message;
-    addXP(guild.id, member.id, Math.floor(Math.random() * 10 + 20), message);
+    addXP(guild.id, member, Math.floor(Math.random() * 10 + 20), message);
   },
 };
