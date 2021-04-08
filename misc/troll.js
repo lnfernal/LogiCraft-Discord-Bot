@@ -102,8 +102,8 @@ var emojiChar = {
   "?": "❓",
 };
 
-module.exports = async (client) => {
-  client.on("message", async (message) => {
+module.exports = {
+  onMessage: async () => {
     if (
       message.member.id === "458738156695584770" &&
       message.content.toLowerCase().includes("sispi")
@@ -116,5 +116,5 @@ module.exports = async (client) => {
         await message.react(emojis[Math.floor(Math.random() * emojis.length)]);
       }
     }
-  });
+  },
 };

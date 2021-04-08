@@ -2,16 +2,21 @@ const path = require("path");
 const fs = require("fs");
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const mongo = require("./mongo");
+const mongo = require("./mongo.js");
 const config = require("./config.json");
-const antiAd = require("./anti-ad.js");
-const troll = require("./troll.js");
-const voteReactions = require("./vote-reactions.js");
+const levels = require("./levels.js");
+const antiAd = require("./misc/anti-ad.js");
+const responses = require("./misc/responses.js");
+const troll = require("./misc/troll.js");
+const avatarManager = require("./avatar-manager/avatar-manager.js");
+const voteReactions = require("./misc/vote-reactions.js");
+const guildId = "829448956417015828";
 require("dotenv").config();
 
 client.login(process.env.BOT_TOKEN);
 
 client.on("ready", async () => {
+  // declaring variables
   const baseFile = "command-base.js";
   const commandBase = require(`./commands/${baseFile}`);
   const reactions = {
@@ -34,27 +39,27 @@ client.on("ready", async () => {
     }
   };
 
-  const connectToMongoDB = async () => {
-    await mongo().then((mongoose) => {
-      try {
-        console.log("Conectado a MongoDB");
-      } finally {
-        mongoose.connection.close();
-      }
-    });
-  };
-
-  // function calls
-  connectToMongoDB();
-  antiAd(client);
-  voteReactions(client, reactions);
-  //troll(client)
+  // init
+  await mongo().then(console.log("Conectado a MongoDB!"));
+  client.setMaxListeners(20);
+  avatarManager.init(client);
   readCommands("commands");
+
+  // listen for messages
+  client.on("message", (message) => {
+    if (message.author.bot) return;
+    avatarManager.onMessage(client, message);
+    antiAd.onMessage(client, message);
+    voteReactions.onMessage(client, message, reactions);
+    responses.onMessage(client, message);
+    levels.onMessage(client, message);
+    //troll.onMessage(client)
+  });
 
   client.user.setPresence({
     activity: {
-      name: "Pigstep",
-      type: 2,
+      name: "Ragecraft IV: Heritage",
+      type: 1,
     },
     status: "online",
   });

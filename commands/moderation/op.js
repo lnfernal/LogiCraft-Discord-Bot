@@ -8,7 +8,7 @@ module.exports = {
   requiredRoles: [],
   callback: (message, arguments, text, client) => {
     const user = message.mentions.users.first();
-    if (user !== undefined) {
+    if (user) {
       const role = message.guild.roles.cache.get("666297857929642014");
       const member = message.guild.members.cache.get(user.id);
       member.roles.add(role).catch(console.error);

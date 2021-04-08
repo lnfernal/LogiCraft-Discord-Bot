@@ -10,7 +10,7 @@ module.exports = {
     const user = message.mentions.users.first();
     const modRoleId = "666297857929642014";
 
-    if (user !== undefined) {
+    if (user) {
       const role = message.guild.roles.cache.get(modRoleId);
       const member = message.guild.members.cache.get(user.id);
       if (member.roles.cache.has(modRoleId))

@@ -48,7 +48,7 @@ module.exports = (client, commandOptions) => {
   let {
     commands,
     expectedArgs = "",
-    permissionError = "No tienes permiso para usar este comando :c",
+    permissionError = "no tienes permiso para usar este comando :c",
     minArgs = 0,
     maxArgs = null,
     cooldown = -1,
@@ -72,7 +72,6 @@ module.exports = (client, commandOptions) => {
     validatePermissions(permissions);
   }
 
-  // Listen for messages
   client.on("message", (message) => {
     const { member, content, guild } = message;
 
@@ -83,9 +82,15 @@ module.exports = (client, commandOptions) => {
         content.toLowerCase().startsWith(`${command} `) ||
         content.toLowerCase() === command
       ) {
-        // A command has been ran
+        // a command has been ran
 
-        // Ensure the user has the required permissions
+        // ensure Siber is not exploiting
+        if (message.author.bot) {
+          message.channel.send(`nope :)`);
+          return;
+        }
+
+        // ensure the user has the required permissions
         for (const permission of permissions) {
           if (!member.hasPermission(permission)) {
             message.channel.send(`${member.displayName}, ${permissionError}`);
@@ -93,7 +98,7 @@ module.exports = (client, commandOptions) => {
           }
         }
 
-        // Ensure the user has the required roles
+        // ensure the user has the required roles
         for (const requiredRole of requiredRoles) {
           const role = guild.roles.cache.find(
             (role) => role.name === requiredRole
@@ -101,40 +106,32 @@ module.exports = (client, commandOptions) => {
 
           if (!role || !member.roles.cache.has(role.id)) {
             message.channel.send(
-              `${message.member.displayName}, necesitas el rol de "${requiredRole}" para usar este comando`
-            )
+              `**${message.member.displayName}**, necesitas el rol de **"${requiredRole}"** para usar este comando`
+            );
             return;
           }
         }
 
-        // Ensure Siber is not exploiting
-        if(message.author.bot){
-          message.channel.send(
-            `nope :)`
-          )
-          return
-        }
-
-        // Ensure the user doesn't run command too quickly
+        // ensure the user doesn't run command too quickly
         let cooldownString = "";
         if (cooldown > 0 && recentlyRan.includes(cooldownString)) {
           message.channel.send("Este comando está en cooldown :P");
           return;
         }
 
-        // Split on any number of spaces
+        // split on any number of spaces
         const arguments = content.split(/[ ]+/);
 
-        // Remove the command which is the first index
+        // remove the command which is the first index
         arguments.shift();
 
-        // Ensure we have the correct number of arguments
+        // ensure we have the correct number of arguments
         if (
           arguments.length < minArgs ||
           (maxArgs !== null && arguments.length > maxArgs)
         ) {
           message.channel.send(
-            `${message.member.displayName}, sintaxis incorrecta! Usa "${prefix}${alias} ${expectedArgs}"`
+            `**${message.member.displayName}**, sintaxis incorrecta! Usa **"${prefix}${alias} ${expectedArgs}"**`
           );
           return;
         }

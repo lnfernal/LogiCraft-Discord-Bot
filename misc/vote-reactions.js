@@ -22,12 +22,12 @@ const reactToPrevMsg = async (client, reactions) => {
   }
 };
 
-module.exports = (client, reactions) => {
+module.exports = {
   //reactToPrevMsg(client, reactions)
 
-  client.on("message", async (message) => {
+  onMessage: (client, message, reactions) => {
     if (channelsId.includes(message.channel.id)) {
       addReactions(message, reactions);
     }
-  });
+  },
 };
