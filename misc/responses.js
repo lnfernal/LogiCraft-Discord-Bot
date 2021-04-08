@@ -13,6 +13,8 @@ module.exports = {
       );
     } else if (message.content.toLowerCase().includes("monke")) {
       message.channel.send("reject humanity, return to monke 🐒");
+    } else if (message.content.toLowerCase() === "/xd") {
+      message.channel.send("seas o no Dark, es /xp no /xd");
     }
   },
 };
