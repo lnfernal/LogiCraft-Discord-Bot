@@ -61,8 +61,7 @@ module.exports = {
         xp,
         totalXp,
         level,
-        (Math.floor(level / 10) + 1) * 100 * (level % 10) +
-          (Math.floor(level / 10) ^ (2 + Math.floor(level / 10) * 500))
+        level * level * 100
       );
     }
   },
