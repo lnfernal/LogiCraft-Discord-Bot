@@ -3,7 +3,7 @@ const profileSchema = require("./schemas/profile-schema.js");
 
 const maxLevel = 999;
 
-const getNeededXP = (level) => level * level * 100;
+const getNeededXP = (level) => 4 * (level ^ 3) / 5;
 
 const addXP = async (guildId, member, xpToAdd, message) => {
   const spamChannel = message.guild.channels.cache.get("809393787553972224");
