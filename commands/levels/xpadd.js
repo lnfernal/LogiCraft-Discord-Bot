@@ -28,7 +28,7 @@ module.exports = {
         `${message.member.displayName}, introduce un número válido de XP`
       );
     }
-    levels.addXpCall(member, xpToAdd, message)
+    levels.addXpCall(target, xpToAdd, message)
     message.channel.send(
       `**${message.member.displayName}**, has dado a <@${userId}> **${xpToAdd}XP**`
     );
