@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const coupleSchema = require("../schemas/couple-schema.js");
 const mongo = require("../mongo.js");
-const guildId = "829448956417015828";
+const guildId = "666295714724446209";
 
 const loveSentences = [
   "Salgamos juntos, yo invito a los besos",
@@ -40,7 +40,7 @@ module.exports = {
         const guild = client.guilds.cache.get(guildId);
         await guild.members.fetch().then((members) => {
           var arr = [];
-          members = members /*.filter((m) => !m.user.bot)*/
+          members = members.filter((m) => !m.user.bot)
             .array();
           while (arr.length < 2) {
             var r = Math.floor(Math.random() * members.length);

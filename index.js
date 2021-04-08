@@ -10,7 +10,7 @@ const responses = require("./misc/responses.js");
 const troll = require("./misc/troll.js");
 const avatarManager = require("./avatar-manager/avatar-manager.js");
 const voteReactions = require("./misc/vote-reactions.js");
-const guildId = "829448956417015828";
+const guildId = "666295714724446209";
 require("dotenv").config();
 
 client.login(process.env.BOT_TOKEN);
