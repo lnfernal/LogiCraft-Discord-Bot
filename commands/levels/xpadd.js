@@ -8,7 +8,7 @@ module.exports = {
   permissions: "ADMINISTRATOR",
   callback: async (message, arguments, text, client) => {
     const target = message.mentions.users.first() || message.author;
-    const targetId = target.id;
+    const member = message.members.cache.find(m => m.id === target.id);
     const guildId = message.guild.id;
     const userId = target.id;
     const xpToAdd = arguments[1];
@@ -28,7 +28,7 @@ module.exports = {
         `${message.member.displayName}, introduce un número válido de XP`
       );
     }
-    levels.addXpCall(target, xpToAdd, message);
+    levels.addXpCall(member, xpToAdd, message);
     message.channel.send(
       `**${message.member.displayName}**, has dado a <@${userId}> **${xpToAdd}XP**`
     );
