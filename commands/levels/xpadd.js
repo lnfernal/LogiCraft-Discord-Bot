@@ -1,4 +1,3 @@
-const profileSchema = require("../../schemas/profile-schema.js");
 const levels = require("../../levels.js")
 
 module.exports = {
