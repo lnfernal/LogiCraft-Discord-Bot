@@ -27,7 +27,7 @@ const addXP = async (guildId, member, xpToAdd, message) => {
     )
     .then(async (result) => {
       let { xp, level, totalXp } = result;
-      const needed
+      var needed = 0
       
       do {
         needed = getNeededXP(level);
