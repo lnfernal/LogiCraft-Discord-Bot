@@ -56,6 +56,7 @@ module.exports = {
 
   onMessage: (client, message) => {
     const { guild, member } = message;
-    addXP(guild.id, member, Math.floor(Math.random() * 10 + 20), message);
+    if (!message.content.startsWith("/xpadd"))
+      addXP(guild.id, member, Math.floor(Math.random() * 10 + 20), message);
   },
 };
