@@ -27,22 +27,22 @@ const addXP = async (guildId, userId, xpToAdd, message) => {
       let { xp, level, totalXp } = result;
       const needed = getNeededXP(level);
 
-      if (xp >= needed && level <= maxLevel) {
-        ++level;
-        xp -= needed;
-        spamChannel.send(
-          `**${message.member.displayName}** ha subido a nivel **${level}**`
-        );
-        await profileSchema.updateOne(
-          {
-            guildId,
-            userId,
-          },
-          { level, xp }
-        );
-      } else {
-        //console.log(`Current Level: ${Math.floor(xp / needed * 100)}%`)
-      }
+      do {
+        if (xp >= needed && level <= maxLevel) {
+          ++level;
+          xp -= needed;
+          spamChannel.send(
+            `**${message.member.displayName}** ha subido a nivel **${level}**`
+          );
+          await profileSchema.updateOne(
+            {
+              guildId,
+              userId,
+            },
+            { level, xp }
+          );
+        }
+      } while (xp > needed);
     });
 };
 
