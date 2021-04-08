@@ -2,7 +2,7 @@ const profileSchema = require("../../schemas/profile-schema.js");
 const economy = require("../../economy.js");
 
 module.exports = {
-  commands: "addcoins",
+  commands: "coinadd",
   maxArgs: 2,
   minArgs: 2,
   expectedArgs: "<user> <amount>",

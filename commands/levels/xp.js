@@ -1,6 +1,6 @@
-const mongo = require("../mongo.js");
+const mongo = require("../../mongo.js");
 const Discord = require("discord.js");
-const profileSchema = require("../schemas/profile-schema.js");
+const profileSchema = require("../../schemas/profile-schema.js");
 const progressBarPrecision = 25;
 
 function xpEmbed(message, xp, totalXp, level, needed) {
