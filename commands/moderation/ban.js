@@ -14,7 +14,11 @@ module.exports = {
     var reason = "_No especificado_";
     var days = 0;
     if (user && arguments[0].includes("<@!")) {
-      if (!protectedRolesFunc(message, member, protectedRoles)) return;
+      if (
+        !protectedRolesFunc(message, member, protectedRoles) ||
+        user.id === "824989001999712337"
+      )
+        return;
       if (arguments[1]) {
         arguments.shift();
         if (!isNaN(arguments[0])) {

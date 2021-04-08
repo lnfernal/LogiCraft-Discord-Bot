@@ -14,7 +14,11 @@ module.exports = {
     const user = message.mentions.users.first();
     if (user === arguments[0]) {
       const member = message.guild.members.cache.get(user.id);
-      if (!protectedRolesFunc(message, member, protectedRoles)) return;
+      if (
+        !protectedRolesFunc(message, member, protectedRoles) ||
+        user.id === "824989001999712337"
+      )
+        return;
       var reason = "_No especificado_";
       if (arguments[1]) {
         arguments.shift();

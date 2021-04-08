@@ -20,8 +20,8 @@ module.exports = {
   permissions: ["MANAGE_ROLES"],
   callback: (message, arguments, text, client) => {
     const user = message.mentions.users.first();
-    const emojis = client.guilds.cache.get("666295714724446209").emojis.cache
-    const hj = emojis.find((emoji) => emoji.name === "GOTOHORNYJAIL")
+    const emojis = client.guilds.cache.get("666295714724446209").emojis.cache;
+    const hj = emojis.find((emoji) => emoji.name === "GOTOHORNYJAIL");
     const role = message.guild.roles.cache.get(roleId);
     if (user) {
       const member = message.guild.members.cache.get(user.id);

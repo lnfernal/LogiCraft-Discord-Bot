@@ -40,8 +40,7 @@ module.exports = {
         const guild = client.guilds.cache.get(guildId);
         await guild.members.fetch().then((members) => {
           var arr = [];
-          members = members.filter((m) => !m.user.bot)
-            .array();
+          members = members.filter((m) => !m.user.bot).array();
           while (arr.length < 2) {
             var r = Math.floor(Math.random() * members.length);
             if (!arr.includes(members[r])) {
