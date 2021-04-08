@@ -8,7 +8,7 @@ module.exports = {
   permissions: "ADMINISTRATOR",
   callback: async (message, arguments, text, client) => {
     const target = message.mentions.users.first() || message.author;
-    const member = message.members.cache.find(m => m.id === target.id);
+    const member = message.guild.members.cache.get(target.id);
     const guildId = message.guild.id;
     const userId = target.id;
     const xpToAdd = arguments[1];
