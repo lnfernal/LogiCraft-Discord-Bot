@@ -57,6 +57,7 @@ module.exports = {
       users.forEach((user) =>
         users[user] === undefined ? delete users[user] : {}
       );
+      console.log(users)
       users.sort(function (a, b) {
         return b.totalXp - a.totalXp;
       });
