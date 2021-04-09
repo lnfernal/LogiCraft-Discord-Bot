@@ -2,7 +2,8 @@ const mongo = require("../../utils/mongo.js");
 const profileSchema = require("../../schemas/profile-schema.js");
 const Discord = require("discord.js");
 
-var getUserData = async (guildId, userId) => {
+var getUserData = async (guildId, member) => {
+  const userId = member.id
   const result = await profileSchema.findOne({
     guildId,
     userId,
@@ -11,11 +12,17 @@ var getUserData = async (guildId, userId) => {
     const { name, totalXp, level } = result;
     let user = {
       name,
+      totalXp: 0,
+      level: 0,
+    };
+  } else {
+    let user = {
+      name: member.user.name,
       totalXp,
       level,
     };
-    return user;
   }
+  return user;
 };
 
 var getNames = (users) => {
@@ -51,12 +58,12 @@ module.exports = {
     await guild.members.fetch().then(async (members) => {
       const promises = [];
       members.forEach((member) => {
-        promises.push(getUserData(guildId, member.id));
+        promises.push(getUserData(guildId, member));
       });
       usersBad = await Promise.all(promises);
     });
-    let users = usersBad.filter(user => user !== undefined)
-    console.log(users)
+    let users = usersBad.filter((user) => user !== undefined);
+    console.log(users);
     users.sort(function (a, b) {
       return b.totalXp - a.totalXp;
     });
