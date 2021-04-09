@@ -54,7 +54,9 @@ module.exports = {
         promises.push(getUserData(guildId, member.id));
       });
       users = await Promise.all(promises);
-      console.log(users)
+      users.forEach((user) =>
+        users[user] === undefined ? delete users[user] : {}
+      );
       users.sort(function (a, b) {
         return b.totalXp - a.totalXp;
       });
