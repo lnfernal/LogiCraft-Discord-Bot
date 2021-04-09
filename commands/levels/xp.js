@@ -1,4 +1,4 @@
-const mongo = require("../../mongo.js");
+const mongo = require("../../utils/mongo.js");
 const Discord = require("discord.js");
 const profileSchema = require("../../schemas/profile-schema.js");
 const progressBarPrecision = 25;

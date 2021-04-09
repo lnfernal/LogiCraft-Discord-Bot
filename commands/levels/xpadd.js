@@ -4,6 +4,7 @@ module.exports = {
   commands: "xpadd",
   maxArgs: 2,
   minArgs: 2,
+  cooldown: 30,
   expectedArgs: "<user> <amount>",
   permissions: "ADMINISTRATOR",
   callback: async (message, arguments, text, client) => {
@@ -22,11 +23,19 @@ module.exports = {
       message.channel.send(
         errorMsg[Math.floor(Math.random() * errorMsg.length)]
       );
+      return;
     }
     if (isNaN(xpToAdd)) {
       message.channel.send(
         `${message.member.displayName}, introduce un número válido de XP`
       );
+      return;
+    }
+    if (xpToAdd > 400000) {
+      message.channel.send(
+        `${message.member.displayName}, el máximo es de 400.000XP`
+      );
+      return;
     }
     levels.addXpCall(member, xpToAdd, message);
     message.channel.send(

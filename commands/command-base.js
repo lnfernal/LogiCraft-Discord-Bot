@@ -99,17 +99,22 @@ module.exports = (client, commandOptions) => {
         }
 
         // ensure the user has the required roles
+        const hasAtLeastOneRole = false;
         for (const requiredRole of requiredRoles) {
           const role = guild.roles.cache.find(
-            (role) => role.name === requiredRole
+            (role) => role.id === requiredRole
           );
-
-          if (!role || !member.roles.cache.has(role.id)) {
-            message.channel.send(
-              `**${message.member.displayName}**, necesitas el rol de **"${requiredRole}"** para usar este comando`
-            );
-            return;
+          if (role) {
+            if (member.roles.cache.has(role.id)) {
+              hasAtLeastOneRole = true;
+            }
           }
+        }
+        if (!hasAtLeastOneRole && requiredRoles > 0) {
+          message.channel.send(
+            `**${message.member.displayName}**, necesitas un rol especial para usar este comando`
+          );
+          return;
         }
 
         // ensure the user doesn't run command too quickly

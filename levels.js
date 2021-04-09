@@ -1,4 +1,4 @@
-const mongo = require("./mongo.js");
+const mongo = require("./utils/mongo.js");
 const profileSchema = require("./schemas/profile-schema.js");
 
 const maxLevel = 999;
@@ -6,7 +6,7 @@ const maxLevel = 999;
 const getNeededXP = (level) => level * level * 100;
 
 const addXP = async (guildId, member, xpToAdd, message) => {
-  const spamChannel = message.guild.channels.cache.get("669882952582168607");
+  const spamChannel = message.guild.channels.cache.get("829680230301564928");
   const userId = member.id;
   await profileSchema
     .findOneAndUpdate(

@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const mongo = require("./mongo.js");
+const mongo = require("./utils/mongo.js");
 const config = require("./config.json");
 const levels = require("./levels.js");
 const antiAd = require("./misc/anti-ad.js");
@@ -58,8 +58,8 @@ client.on("ready", async () => {
 
   client.user.setPresence({
     activity: {
-      name: "Ragecraft IV: Heritage",
-      type: 1,
+      name: "/bonk",
+      type: 3,
     },
     status: "online",
   });

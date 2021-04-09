@@ -18,6 +18,7 @@ module.exports = {
   minArgs: 1,
   maxArgs: 1,
   permissions: ["MANAGE_ROLES"],
+  requiredRoles: ["784046874482049064"],
   callback: (message, arguments, text, client) => {
     const user = message.mentions.users.first();
     const emojis = client.guilds.cache.get("666295714724446209").emojis.cache;

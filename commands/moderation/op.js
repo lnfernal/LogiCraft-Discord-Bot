@@ -5,7 +5,7 @@ module.exports = {
   minArgs: 1,
   maxArgs: 1,
   permissions: ["MANAGE_ROLES"],
-  requiredRoles: [],
+  requiredRoles: ["666297045207875585", "666297857929642014"],
   callback: (message, arguments, text, client) => {
     const user = message.mentions.users.first();
     if (user) {

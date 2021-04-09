@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const coupleSchema = require("../schemas/couple-schema.js");
-const mongo = require("../mongo.js");
+const mongo = require("../utils/mongo.js");
 const guildId = "666295714724446209";
 
 const loveSentences = [
