@@ -73,7 +73,7 @@ module.exports = {
       .addFields(
         { name: "Nombre", value: getNames(users), inline: true },
         { name: "XP", value: getXP(users), inline: true },
-        { name: "Level", value: getLevel(users), inline: true }
+        { name: "Nivel", value: getLevel(users), inline: true }
       )
       .setTimestamp()
       .setFooter(`Ranking de ${guild.name} por XP`)
