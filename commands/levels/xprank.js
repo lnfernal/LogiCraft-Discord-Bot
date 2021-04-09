@@ -15,14 +15,15 @@ var getUserData = async (guildId, member) => {
       totalXp: 0,
       level: 0,
     };
+    return user;
   } else {
     let user = {
       name: member.user.name,
       totalXp,
       level,
     };
+    return user;
   }
-  return user;
 };
 
 var getNames = (users) => {
