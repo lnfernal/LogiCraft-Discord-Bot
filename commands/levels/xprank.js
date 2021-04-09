@@ -54,13 +54,13 @@ module.exports = {
         promises.push(getUserData(guildId, member.id));
       });
       users = await Promise.all(promises);
-      users.forEach((user) =>
-        users[user] === undefined ? delete users[user] : {}
-      );
-      console.log(users)
-      users.sort(function (a, b) {
-        return b.totalXp - a.totalXp;
-      });
+    });
+    users.forEach((user) => {
+      if(users[user] === undefined)
+        delete users[user]
+    });
+    users.sort(function (a, b) {
+      return b.totalXp - a.totalXp;
     });
     const embed = new Discord.MessageEmbed()
       .setColor("#c4e898")
