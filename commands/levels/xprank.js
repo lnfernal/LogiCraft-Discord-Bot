@@ -7,20 +7,21 @@ var getUserData = async (guildId, userId) => {
     guildId,
     userId,
   });
-  const { name, totalXp, level } = result;
-  let user = {
-    name,
-    totalXp,
-    level,
-  };
-  return user;
+  if (result) {
+    const { name, totalXp, level } = result;
+    let user = {
+      name,
+      totalXp,
+      level,
+    };
+    return user;
+  }
 };
 
 var getNames = (users) => {
   var names = ``;
 
-  for (i = 0; i < users.length; i++)
-    names += `${i + 1}. ${users[i].name}\n`
+  for (i = 0; i < users.length; i++) names += `${i + 1}. ${users[i].name}\n`;
   return names;
 };
 
@@ -28,7 +29,7 @@ var getXP = (users) => {
   var xp = ``;
 
   for (i = 0; i < users.length; i++)
-    xp += `${new Intl.NumberFormat().format(users[i].totalXp)}\n`
+    xp += `${new Intl.NumberFormat().format(users[i].totalXp)}\n`;
   return xp;
 };
 
@@ -36,7 +37,7 @@ var getLevel = (users) => {
   var level = ``;
 
   for (i = 0; i < users.length; i++)
-    level += `${new Intl.NumberFormat().format(users[i].level)}\n`
+    level += `${new Intl.NumberFormat().format(users[i].level)}\n`;
   return level;
 };
 
@@ -60,15 +61,14 @@ module.exports = {
     const embed = new Discord.MessageEmbed()
       .setColor("#c4e898")
       .setTitle(`Ranking de ${guild.name}`)
-      .setDescription("\n\n\n\n\n\n")
       .addFields(
-        {name: "Nombre", value: getNames(users), inline: true},
-        {name: "XP", value: getXP(users), inline: true},
-        {name: "Level", value: getLevel(users), inline: true},
+        { name: "Nombre", value: getNames(users), inline: true },
+        { name: "XP", value: getXP(users), inline: true },
+        { name: "Level", value: getLevel(users), inline: true }
       )
       .setTimestamp()
       .setFooter(`Ranking de ${guild.name} por XP`)
-      .setThumbnail(guild.iconURL())
+      .setThumbnail(guild.iconURL());
     message.channel.send(embed);
   },
 };
