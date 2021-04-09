@@ -18,7 +18,7 @@ var getUserData = async (guildId, member) => {
     return user;
   } else {
     let user = {
-      name: member.user.name,
+      name: member.name,
       totalXp: 0,
       level: 0,
     };
