@@ -47,18 +47,16 @@ module.exports = {
   callback: async (message, arguments, text, client) => {
     const guild = message.guild;
     const guildId = guild.id;
-    let users = [];
+    let usersBad = [];
     await guild.members.fetch().then(async (members) => {
       const promises = [];
       members.forEach((member) => {
         promises.push(getUserData(guildId, member.id));
       });
-      users = await Promise.all(promises);
+      usersBad = await Promise.all(promises);
     });
-    users.forEach((user) => {
-      if(users[user] === undefined)
-        delete users[user]
-    });
+    let users = usersBad.filter(user => user !== undefined)
+    console.log(users)
     users.sort(function (a, b) {
       return b.totalXp - a.totalXp;
     });
