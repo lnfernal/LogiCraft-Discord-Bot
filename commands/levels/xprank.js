@@ -21,7 +21,8 @@ var getUserData = async (guildId, userId) => {
 var getNames = (users) => {
   var names = ``;
 
-  for (i = 0; i < users.length; i++) names += `${i + 1}. ${users[i].name}\n`;
+  for (i = 0; i < users.length; i++)
+    if (users[i].name) names += `${i + 1}. ${users[i].name}\n`;
   return names;
 };
 
