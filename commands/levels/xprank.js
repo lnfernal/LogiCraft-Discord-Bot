@@ -21,8 +21,7 @@ var getUserData = async (guildId, userId) => {
 var getNames = (users) => {
   var names = ``;
 
-  for (i = 0; i < users.length; i++)
-    if (users[i].name) names += `${i + 1}. ${users[i].name}\n`;
+  for (i = 0; i < users.length; i++) names += `${i + 1}. ${users[i].name}\n`;
   return names;
 };
 
@@ -55,6 +54,7 @@ module.exports = {
         promises.push(getUserData(guildId, member.id));
       });
       users = await Promise.all(promises);
+      console.log(users)
       users.sort(function (a, b) {
         return b.totalXp - a.totalXp;
       });
