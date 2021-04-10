@@ -30,7 +30,8 @@ var getNames = (users) => {
   var names = ``;
 
   for (i = 0; i < users.length; i++) names += `${i + 1}. ${users[i].name}\n`;
-  return names.replace("_", "");
+  names = names.replace("_", "");
+  return names
 };
 
 var getXP = (users) => {
