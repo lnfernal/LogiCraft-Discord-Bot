@@ -68,6 +68,9 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
       { level, xp, totalXp }
     );
   } else {
+    await spamChannel.send(
+      `**${member.displayName}** ha subido a nivel **1**!`
+    );
     await profileSchema.findOneAndUpdate(
       {
         guildId,
