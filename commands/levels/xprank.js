@@ -29,9 +29,10 @@ var getUserData = async (guildId, member) => {
 var getNames = (users) => {
   var names = ``;
 
-  for (i = 0; i < users.length; i++) names += `${i + 1}. ${users[i].name}\n`;
-  names = names.replace("_", "");
-  return names
+  for (i = 0; i < users.length; i++)
+    if (!users[i].bot) names += `${i + 1}. ${users[i].name}\n`;
+  names = names.replace('_','');
+  return names;
 };
 
 var getXP = (users) => {

@@ -95,7 +95,7 @@ module.exports = {
 
   onMessage: (client, message) => {
     const { guild, member } = message;
-    if (!message.content.startsWith("/xpadd"))
+    if (!message.content.startsWith("/xpadd") && !message.author.bot)
       addXP(guild.id, member, 0, message);
   },
 };
