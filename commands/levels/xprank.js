@@ -30,7 +30,7 @@ var getNames = (users) => {
   var names = ``;
 
   for (i = 0; i < users.length; i++) names += `${i + 1}. ${users[i].name}\n`;
-  return names;
+  return names.replace("_", "—");
 };
 
 var getXP = (users) => {
