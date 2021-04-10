@@ -30,9 +30,9 @@ function xpEmbed(message, xp, totalXp, level, needed) {
         level + 1
       }:\n**${new Intl.NumberFormat().format(
         xp
-      )} / ${new Intl.NumberFormat().format(needed)}XP (${
+      )} / ${new Intl.NumberFormat().format(needed)}XP**\n${progressMade()} **${
         Math.round((xp / needed) * 1000) / 10
-      }%)**\n${progressMade()}`
+      }%**}`
     )
     .setThumbnail(message.author.avatarURL());
   message.channel.send(embed);
