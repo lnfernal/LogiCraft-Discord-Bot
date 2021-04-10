@@ -61,7 +61,7 @@ module.exports = {
         xp,
         totalXp,
         level,
-        Math.floor(Math.pow(level, 2.75) * 10)
+        Math.floor(Math.pow(level, 2.5) * 10)
       );
     }
   },
