@@ -2,9 +2,8 @@ const levels = require("../../levels.js");
 
 module.exports = {
   commands: "xpadd",
-  maxArgs: 2,
+  maxArgs: 3,
   minArgs: 2,
-  cooldown: 30,
   expectedArgs: "<user> <amount>",
   permissions: "ADMINISTRATOR",
   callback: async (message, arguments, text, client) => {
@@ -25,7 +24,7 @@ module.exports = {
       );
       return;
     }
-    if (isNaN(xpToAdd)) {
+    if (isNaN(xpToAdd) && !arguments[2]) {
       message.channel.send(
         `${message.member.displayName}, introduce un número válido de XP`
       );
@@ -37,9 +36,15 @@ module.exports = {
       );
       return;
     }
-    levels.addXpCall(member, xpToAdd, message);
-    message.channel.send(
-      `**${message.member.displayName}**, has dado a <@${userId}> **${xpToAdd}XP**`
+    levels.addXpCall(
+      member,
+      xpToAdd,
+      message,
+      (msg = arguments[2] ? arguments[2] : undefined)
     );
+    const ann = arguments[2]
+      ? `**${message.member.displayName}**, has dado a <@${userId}> la XP equivalente a **${msg} mensajes**`
+      : `**${message.member.displayName}**, has dado a <@${userId}> **${xpToAdd}XP**`;
+    message.channel.send(ann);
   },
 };

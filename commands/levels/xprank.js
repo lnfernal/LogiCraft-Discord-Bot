@@ -3,7 +3,7 @@ const profileSchema = require("../../schemas/profile-schema.js");
 const Discord = require("discord.js");
 
 var getUserData = async (guildId, member) => {
-  const userId = member.id
+  const userId = member.id;
   const result = await profileSchema.findOne({
     guildId,
     userId,

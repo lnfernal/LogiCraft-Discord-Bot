@@ -56,7 +56,13 @@ module.exports = {
     });
     if (result) {
       const { xp, totalXp, level } = result;
-      xpEmbed(message, xp, totalXp, level, level * level * 100);
+      xpEmbed(
+        message,
+        xp,
+        totalXp,
+        level,
+        Math.floor(Math.pow(level, 2.75) * 10)
+      );
     }
   },
 };
