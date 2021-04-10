@@ -10,7 +10,7 @@ const xpPerMsgFunc = (level) =>
   );
 
 const addXP = async (guildId, member, xpToAdd, message, msg) => {
-  //const spamChannel = message.guild.channels.cache.get("829680230301564928");
+  const spamChannel = message.guild.channels.cache.get("829680230301564928");
   const userId = member.id;
 
   const result = await profileSchema.findOne({
@@ -26,6 +26,7 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
     if (xpToAdd !== 0) xpToAddGlobal = xpToAdd;
     // add xp
     if (msg !== undefined) {
+      prevLevel = level
       do {
         xpNeeded = xpNeededFunc(level);
         xpToAddGlobal = xpPerMsgFunc(level);
@@ -36,10 +37,11 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
         if (xp >= xpNeeded && level <= maxLevel) {
           ++level;
           xp -= xpNeeded;
-          /*await spamChannel.send(
-            `**${member.displayName}** ha subido a nivel **${level}**`
-          );*/
         }
+        if(prevLevel !== level)
+        await spamChannel.send(
+          `**${member.displayName}** ha subido del nivel ${prevLevel} al nivel **${level}**!`
+        );
       } while (numMsg > 0);
     } else {
       do {
@@ -51,9 +53,10 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
         if (xp >= xpNeeded && level <= maxLevel) {
           ++level;
           xp -= xpNeeded;
-          /*await spamChannel.send(
-          `**${member.displayName}** ha subido a nivel **${level}**`
-        );*/
+          if(level % 10 === 0)
+          await spamChannel.send(
+          `**${member.displayName}** ha llegado a nivel **${level}**!`
+          );
         }
       } while (xp >= xpNeeded);
     }
