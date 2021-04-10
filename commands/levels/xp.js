@@ -32,7 +32,7 @@ function xpEmbed(message, xp, totalXp, level, needed) {
         xp
       )} / ${new Intl.NumberFormat().format(needed)}XP**\n${progressMade()} **${
         Math.round((xp / needed) * 1000) / 10
-      }%**}`
+      }%**`
     )
     .setThumbnail(message.author.avatarURL());
   message.channel.send(embed);
