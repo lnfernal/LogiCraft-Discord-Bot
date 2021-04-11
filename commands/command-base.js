@@ -99,7 +99,7 @@ module.exports = (client, commandOptions) => {
         }
 
         // ensure the user has the required roles
-        const hasAtLeastOneRole = false;
+        var hasAtLeastOneRole = false;
         for (const requiredRole of requiredRoles) {
           const role = guild.roles.cache.find(
             (role) => role.id === requiredRole
