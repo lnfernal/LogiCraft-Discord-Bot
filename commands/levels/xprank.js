@@ -16,9 +16,9 @@ var getUserData = async (guildId, member) => {
       level,
     };
     return user;
-  } else {
+  } else if(!member.user.bot){
     let user = {
-      name: member.displayName,
+      name: member.displayName.replace('_',''),
       totalXp: 0,
       level: 0,
     };
@@ -29,9 +29,7 @@ var getUserData = async (guildId, member) => {
 var getNames = (users) => {
   var names = ``;
 
-  for (i = 0; i < users.length; i++)
-    if (!users[i].bot) names += `${i + 1}. ${users[i].name}\n`;
-  names = names.replace("_", "");
+  for (i = 0; i < users.length; i++) names += `${i + 1}. ${users[i].name}\n`;
   return names;
 };
 
