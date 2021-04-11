@@ -40,9 +40,9 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
         }
       } while (numMsg > 0);
       if (prevLevel !== level)
-          await spamChannel.send(
-            `**${member.displayName}** ha subido del nivel ${prevLevel} al nivel **${level}**!`
-          );
+        await spamChannel.send(
+          `**${member.displayName}** ha subido del nivel ${prevLevel} al nivel **${level}**!`
+        );
     } else {
       do {
         xpNeeded = xpNeededFunc(level);

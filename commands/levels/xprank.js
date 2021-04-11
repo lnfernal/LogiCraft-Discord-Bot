@@ -31,7 +31,7 @@ var getNames = (users) => {
 
   for (i = 0; i < users.length; i++)
     if (!users[i].bot) names += `${i + 1}. ${users[i].name}\n`;
-  names = names.replace('_','');
+  names = names.replace("_", "");
   return names;
 };
 
