@@ -53,7 +53,7 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
         if (xp >= xpNeeded && level <= maxLevel) {
           ++level;
           xp -= xpNeeded;
-          if (level % 10 === 0)
+          if (level % 10 == 0)
             await spamChannel.send(
               `**${member.displayName}** ha llegado a nivel **${level}**!`
             );
