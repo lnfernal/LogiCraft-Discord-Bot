@@ -105,7 +105,7 @@ module.exports = (client, commandOptions) => {
             (role) => role.id === requiredRole
           );
           if (role) {
-            if (member.roles.cache.has(role.id)) {
+            if (member.roles.cache.get(role.id)) {
               hasAtLeastOneRole = true;
             }
           }
