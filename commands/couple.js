@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const coupleSchema = require("../schemas/couple-schema.js");
+const profileSchema = require("../schemas/profile-schema.js");
 const mongo = require("../utils/mongo.js");
 const guildId = "666295714724446209";
 
@@ -21,9 +22,8 @@ checkDaily = async (coupleData) => {
   const lastCouple = new Date(coupleData.updatedAt).toDateString();
   const now = new Date().toDateString();
 
-  if (lastCouple !== now) {
+  if (lastCouple !== now)
     return true;
-  }
   return false;
 };
 
@@ -31,14 +31,15 @@ module.exports = {
   commands: "couple",
   maxArgs: 0,
   callback: async (message, arguments, text, client) => {
+    const guildId = message.guild.displayName;
     checkDaily(await coupleSchema.findOne({ _id: "0" })).then(
       async (coupleAvbl) => {
         if (!coupleAvbl) {
           message.channel.send("Ya se ha reclamado la pareja de hoy");
           return;
         }
-        const guild = client.guilds.cache.get(guildId);
-        await guild.members.fetch().then((members) => {
+        const guild = message.guild;
+        await guild.members.fetch().then(async (members) => {
           var arr = [];
           members = members.filter((m) => !m.user.bot).array();
           while (arr.length < 2) {
@@ -58,6 +59,50 @@ module.exports = {
           }:** _"${
             loveSentences[Math.floor(Math.random() * loveSentences.length)]
           }  ${loveEmojis[Math.floor(Math.random() * loveEmojis.length)]}"_`;
+
+          // add lover punctuation
+          await profileSchema
+            .findOneAndUpdate(
+              {
+                guildId,
+                userId: lover1.id,
+              },
+              { $inc: { lover: 1 } },
+              {
+                upsert: true,
+                new: true,
+              }
+            )
+            .then(async (result) => {
+              if (!result) {
+                await new profileSchema({
+                  guildId,
+                  userId: lover1.id,
+                  lover,
+                }).save();
+              }
+            });
+          await profileSchema
+            .findOneAndUpdate(
+              {
+                guildId,
+                userId: lover2.id,
+              },
+              { $inc: { lover: 1 } },
+              {
+                upsert: true,
+                new: true,
+              }
+            )
+            .then(async (result) => {
+              if (!result) {
+                await new profileSchema({
+                  guildId,
+                  userId: lover2.id,
+                  lover,
+                }).save();
+              }
+            });
 
           const embed = new Discord.MessageEmbed()
             .setColor("#ff66ff")

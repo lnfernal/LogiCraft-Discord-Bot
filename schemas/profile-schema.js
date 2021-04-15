@@ -25,6 +25,10 @@ const profileSchema = mongoose.Schema({
     type: Number,
     default: 1,
   },
+  lover: {
+    type: Number,
+    default: 0,
+  },
 });
 
 module.exports = mongoose.model("profiles", profileSchema);

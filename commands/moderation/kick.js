@@ -3,33 +3,29 @@ const protectedRolesFunc = require("../../misc/protected-roles.js");
 const protectedRoles = ["666297045207875585", "666297857929642014"];
 
 module.exports = {
-  commands: "kick",
-  expectedArgs: "<user> [reason]",
+  commands: ["kick", "kill"],
+  expectedArgs: "<user>",
   permissionError: "no tienes los permisos necesarios :c",
   minArgs: 1,
-  maxArgs: 19,
+  maxArgs: 1,
   permissions: ["KICK_MEMBERS"],
   requiredRoles: [],
   callback: (message, arguments, text, client) => {
     const user = message.mentions.users.first();
-    if (user === arguments[0]) {
+    if (user) {
       const member = message.guild.members.cache.get(user.id);
       if (
         !protectedRolesFunc(message, member, protectedRoles) ||
         user.id === "824989001999712337"
       )
         return;
-      var reason = "_No especificado_";
-      if (arguments[1]) {
-        arguments.shift();
-        reason = arguments.join(" ");
-      }
       const embed = new Discord.MessageEmbed()
         .setColor("#ffff00")
-        .setTitle(`${member.displayName} ha sido kickeado`)
-        .setDescription(`Motivo: ${reason}`);
+        .setTitle(
+          `${member.displayName} was slained by ${message.member.displayName}`
+        );
       message.channel.send(embed);
-      //member.kick(reason)
+      member.kick();
     } else {
       const errorMsg = [
         `${message.member.displayName}, tienes que mencionar al usuario :P`,

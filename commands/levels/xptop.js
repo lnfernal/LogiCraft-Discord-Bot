@@ -16,9 +16,9 @@ var getUserData = async (guildId, member) => {
       level,
     };
     return user;
-  } else if(!member.user.bot){
+  } else if (!member.user.bot) {
     let user = {
-      name: member.displayName.replace('_',''),
+      name: member.displayName.replace("_", "-"),
       totalXp: 0,
       level: 0,
     };
@@ -50,7 +50,7 @@ var getLevel = (users) => {
 };
 
 module.exports = {
-  commands: "xprank",
+  commands: "xptop",
   maxArgs: 0,
   callback: async (message, arguments, text, client) => {
     const guild = message.guild;
