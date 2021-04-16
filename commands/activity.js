@@ -3,7 +3,7 @@ module.exports = {
   expectedArgs: "<viendo|escuchando|jugando|retransmitiendo> <content>",
   minArgs: 2,
   maxArgs: 20,
-  cooldown: 2,
+  cooldown: 60,
   callback: (message, arguments, text, client) => {
     var type, name;
 
@@ -30,7 +30,7 @@ module.exports = {
     name = arguments;
     client.user.setPresence({
       activity: {
-        name: String(name),
+        name: String(name).replace(',',' '),
         type: type,
       },
       status: "online",
