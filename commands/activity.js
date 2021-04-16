@@ -27,11 +27,11 @@ module.exports = {
         return;
     }
     arguments.shift();
-    name = arguments;
+    name = arguments.join(' ');
     client.user.setPresence({
       activity: {
-        name: `${name}`,
-        type: type,
+        name,
+        type,
       },
       status: "online",
     });
