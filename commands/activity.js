@@ -30,7 +30,7 @@ module.exports = {
     name = arguments;
     client.user.setPresence({
       activity: {
-        name: String(name).replace(',',' '),
+        name: `${name}`,
         type: type,
       },
       status: "online",
