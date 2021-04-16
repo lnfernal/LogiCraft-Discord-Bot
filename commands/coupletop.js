@@ -44,7 +44,7 @@ module.exports = {
   callback: async (message, arguments, text, client) => {
     const { guild } = message;
     const promises = [];
-    guildId = guild.id
+    guildId = guild.id;
 
     await guild.members.fetch().then(async (members) => {
       const promises = [];
@@ -62,7 +62,7 @@ module.exports = {
       .setTitle(`🥰 Ranking de parejas 💕`)
       .addFields(
         { name: "Nombre", value: getNames(users), inline: true },
-        { name: "Parejas", value: getCouples(users), inline: true }
+        { name: "Amores <3", value: getCouples(users), inline: true }
       )
       .setTimestamp()
       .setFooter(`Ranking de parejas de ${guild.name}`)

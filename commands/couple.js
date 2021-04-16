@@ -22,16 +22,15 @@ checkDaily = async (coupleData) => {
   const lastCouple = new Date(coupleData.updatedAt).toDateString();
   const now = new Date().toDateString();
 
-  if (lastCouple !== now)
-    return true;
-  return false;
+  if (lastCouple !== now) return true;
+  return true;
 };
 
 module.exports = {
   commands: "couple",
   maxArgs: 0,
   callback: async (message, arguments, text, client) => {
-    const guildId = message.guild.displayName;
+    const guildId = message.guild.id;
     checkDaily(await coupleSchema.findOne({ _id: "0" })).then(
       async (coupleAvbl) => {
         if (!coupleAvbl) {
@@ -41,12 +40,15 @@ module.exports = {
         const guild = message.guild;
         await guild.members.fetch().then(async (members) => {
           var arr = [];
-          members = members.filter((m) => !m.user.bot).array();
+          members = members /*.filter((m) => !m.user.bot)*/
+            .array();
+          if (members.length < 2)
+            message.channel.send(
+              "No hay suficientes jugadores para elegir pareja :c"
+            );
           while (arr.length < 2) {
             var r = Math.floor(Math.random() * members.length);
-            if (!arr.includes(members[r])) {
-              arr.push(members[r]);
-            }
+            if (!arr.includes(members[r])) arr.push(members[r]);
           }
           var lover1 = Math.floor(Math.random() * 2);
           var lover2 = lover1 == 0 ? 1 : 0;
@@ -65,9 +67,9 @@ module.exports = {
             .findOneAndUpdate(
               {
                 guildId,
-                userId: lover1.id,
+                userId: arr[lover1].id,
               },
-              { $inc: { lover: 1 } },
+              { $inc: { lover: 1 }, name: arr[lover1].user.username },
               {
                 upsert: true,
                 new: true,
@@ -76,8 +78,9 @@ module.exports = {
             .then(async (result) => {
               if (!result) {
                 await new profileSchema({
+                  name: arr[lover1].user.username,
                   guildId,
-                  userId: lover1.id,
+                  userId: arr[lover1].id,
                   lover,
                 }).save();
               }
@@ -86,9 +89,9 @@ module.exports = {
             .findOneAndUpdate(
               {
                 guildId,
-                userId: lover2.id,
+                userId: arr[lover2].id,
               },
-              { $inc: { lover: 1 } },
+              { $inc: { lover: 1 }, name: arr[lover2].user.username },
               {
                 upsert: true,
                 new: true,
@@ -97,8 +100,9 @@ module.exports = {
             .then(async (result) => {
               if (!result) {
                 await new profileSchema({
+                  name: arr[lover2].user.username,
                   guildId,
-                  userId: lover2.id,
+                  userId: arr[lover2].id,
                   lover,
                 }).save();
               }
