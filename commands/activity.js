@@ -1,5 +1,5 @@
 module.exports = {
-  commands: "status",
+  commands: "activity",
   expectedArgs: "<viendo|escuchando|jugando|retransmitiendo> <content>",
   minArgs: 2,
   maxArgs: 20,
