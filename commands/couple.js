@@ -14,6 +14,16 @@ const loveSentences = [
   "Soy tuyo. No se aceptan devoluciones",
   "Sí, tengo la mente sucia. Y ahora mismo, tu estás en ella. Desnudo, por supuesto",
   "¿Me quieres?\nA - Sí\nB - A\nC - B\n",
+  "Imaginar una vida contigo es el mayor de mis deseos",
+  "Mi felicidad no tiene precio, tiene tu nombre",
+  "Incluso la luz es oscura si no me iluminas con tu mirada",
+  "Ven a dormir conmigo: no haremos el amor. Él nos hará",
+  "Tu alma y la mía son imánes",
+  "Toda historia de amor es hermosa, pero la nuestra es mi favorita",
+  "Nuestra boda empezó hace muchos años. La celebración continúa cada día",
+  "Hagan lo que hagan, no podrán separarnos",
+  "Felicidad de dos, envidia de miles",
+  "Nuestro plan es disfrutar la vida al máximo y tener miles de aventuras, todas juntos"
 ];
 
 const loveEmojis = ["💌", "💕", "🥰", "🌷", "💖", "😍", "💘", "😘"];
@@ -34,7 +44,7 @@ module.exports = {
     checkDaily(await coupleSchema.findOne({ _id: "0" })).then(
       async (coupleAvbl) => {
         if (!coupleAvbl) {
-          message.channel.send("Ya se ha reclamado la pareja de hoy");
+          message.channel.send("Ya se ha escogido la pareja de hoy");
           return;
         }
         const guild = message.guild;
