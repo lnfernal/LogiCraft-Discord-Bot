@@ -20,8 +20,8 @@ client.on("ready", async () => {
   const baseFile = "command-base.js";
   const commandBase = require(`./commands/${baseFile}`);
   const reactions = {
-    upvote: client.emojis.cache.find((emoji) => emoji.name === "upvote"),
-    downvote: client.emojis.cache.find((emoji) => emoji.name === "downvote"),
+    upvote: client.emojis.cache.find((emoji) => emoji.name === "redditUpvote"),
+    downvote: client.emojis.cache.find((emoji) => emoji.name === "redditDownvote"),
     kekwPurple: client.emojis.cache.find(
       (emoji) => emoji.name === "kekwPurple"
     ),
