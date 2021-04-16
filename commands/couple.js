@@ -23,7 +23,7 @@ checkDaily = async (coupleData) => {
   const now = new Date().toDateString();
 
   if (lastCouple !== now) return true;
-  return true;
+  return false;
 };
 
 module.exports = {
