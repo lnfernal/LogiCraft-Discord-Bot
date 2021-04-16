@@ -40,7 +40,7 @@ module.exports = {
         const guild = message.guild;
         await guild.members.fetch().then(async (members) => {
           var arr = [];
-          members = members /*.filter((m) => !m.user.bot)*/
+          members = members.filter((m) => !m.user.bot)
             .array();
           if (members.length < 2)
             message.channel.send(
