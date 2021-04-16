@@ -20,10 +20,14 @@ client.on("ready", async () => {
   const baseFile = "command-base.js";
   const commandBase = require(`./commands/${baseFile}`);
   const reactions = {
-    upvote: client.emojis.cache.find((emoji) => emoji.name === "redditUpvote"),
-    downvote: client.emojis.cache.find((emoji) => emoji.name === "redditDownvote"),
+    upvote: client.emojis.cache.find(
+      (emoji) => emoji.id === 826436803355344966
+    ),
+    downvote: client.emojis.cache.find(
+      (emoji) => emoji.id === 826436828554461195
+    ),
     kekwPurple: client.emojis.cache.find(
-      (emoji) => emoji.name === "kekwPurple"
+      (emoji) => emoji.id === 826525360799219742
     ),
   };
   const readCommands = (dir) => {

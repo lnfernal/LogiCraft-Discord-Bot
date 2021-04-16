@@ -27,7 +27,7 @@ module.exports = {
         return;
     }
     arguments.shift();
-    name = arguments.join(' ');
+    name = arguments.join(" ");
     client.user.setPresence({
       activity: {
         name,

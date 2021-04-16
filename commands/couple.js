@@ -23,7 +23,7 @@ const loveSentences = [
   "Nuestra boda empezó hace muchos años. La celebración continúa cada día",
   "Hagan lo que hagan, no podrán separarnos",
   "Felicidad de dos, envidia de miles",
-  "Nuestro plan es disfrutar la vida al máximo y tener miles de aventuras, todas juntos"
+  "Nuestro plan es disfrutar la vida al máximo y tener miles de aventuras, todas juntos",
 ];
 
 const loveEmojis = ["💌", "💕", "🥰", "🌷", "💖", "😍", "💘", "😘"];
@@ -50,8 +50,7 @@ module.exports = {
         const guild = message.guild;
         await guild.members.fetch().then(async (members) => {
           var arr = [];
-          members = members.filter((m) => !m.user.bot)
-            .array();
+          members = members.filter((m) => !m.user.bot).array();
           if (members.length < 2)
             message.channel.send(
               "No hay suficientes jugadores para elegir pareja :c"
