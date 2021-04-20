@@ -12,7 +12,7 @@ module.exports = {
     const user = message.mentions.users.first();
     const member = message.guild.members.cache.get(user.id);
     var reason = "_No especificado_";
-    if (user && arguments[0].includes("<@!")) {
+    if (user && arguments[0].includes("<@")) {
       if (
         !protectedRolesFunc(message, member, protectedRoles) ||
         user.id === "824989001999712337"
