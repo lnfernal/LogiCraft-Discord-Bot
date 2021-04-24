@@ -72,7 +72,7 @@ client.on("ready", async () => {
 
   // user joins
   client.on("guildMemberAdd", (member) => {
-    //if (message.guild.id == "829448956417015828") return;
+    if (message.guild.id == "829448956417015828") return;
     userActivity.onJoin(member);
     mute.checkMute(client, member);
   });
