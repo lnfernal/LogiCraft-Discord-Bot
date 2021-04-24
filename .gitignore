@@ -1,3 +1,4 @@
 node_modules
 .env
 webhook-ann.txt
+.vscode
