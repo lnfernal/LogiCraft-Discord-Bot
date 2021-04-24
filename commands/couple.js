@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const coupleSchema = require("../schemas/couple-schema.js");
 const profileSchema = require("../schemas/profile-schema.js");
 const mongo = require("../utils/mongo.js");
-const guildId = "666295714724446209";
+const loverRoleId = "835087933476044810";
 
 const loveSentences = [
   "Salgamos juntos, yo invito a los besos",
@@ -71,6 +71,32 @@ module.exports = {
             loveSentences[Math.floor(Math.random() * loveSentences.length)]
           }  ${loveEmojis[Math.floor(Math.random() * loveEmojis.length)]}"_`;
 
+          // lover role
+          const loverRole = guild.roles.cache.find((role) => {
+            return role.id == loverRoleId;
+          });
+          arr[lover1].roles.add(loverRole);
+          arr[lover2].roles.add(loverRole);
+
+          // remove role
+          var now = new Date();
+          var night = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate() + 1,
+            0,
+            0,
+            0
+          );
+          var msTillMidnight = night.getTime() - now.getTime();
+          setTimeout(async () => {
+            await guild.members.fetch().then((members) => {
+              members.forEach(async (member) => {
+                await member.roles.remove(loverRole).catch(console.log(e));
+              });
+            });
+          }, msTillMidnight);
+
           // add lover punctuation
           await profileSchema
             .findOneAndUpdate(
@@ -118,7 +144,7 @@ module.exports = {
             });
 
           const embed = new Discord.MessageEmbed()
-            .setColor("#ff66ff")
+            .setColor("#ba0001")
             .setTitle(coupleAnn)
             .setDescription(
               `**${arr[0].displayName} + ${arr[1].displayName} =  ${

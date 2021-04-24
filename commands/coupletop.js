@@ -58,7 +58,7 @@ module.exports = {
       return b.lover - a.lover;
     });
     const embed = new Discord.MessageEmbed()
-      .setColor("#ff66ff")
+      .setColor("#ba0001")
       .setTitle(`🥰 Ranking de parejas 💕`)
       .addFields(
         { name: "Nombre", value: getNames(users), inline: true },

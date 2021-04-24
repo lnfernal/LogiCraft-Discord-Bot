@@ -19,10 +19,10 @@ module.exports = {
   maxArgs: 1,
   permissions: ["MANAGE_ROLES"],
   requiredRoles: ["784046874482049064"],
-  callback: (message, arguments, text, client) => {
+  callback: async (message, arguments, text, client) => {
     const user = message.mentions.users.first();
-    const emojis = client.guilds.cache.get("666295714724446209").emojis.cache;
-    const hj = emojis.find((emoji) => emoji.name === "GOTOHORNYJAIL");
+    const emojis = await require("../utils/emojis.js").logibotEmojis(client);
+    const hj = logibotEmojis.GOTOHORNYJAIL;
     const role = message.guild.roles.cache.get(roleId);
     if (user) {
       const member = message.guild.members.cache.get(user.id);
@@ -41,9 +41,9 @@ module.exports = {
       }
     } else {
       const errorMsg = [
-        `${message.member.displayName}, tienes que mencionar al usuario :P`,
-        `${message.member.displayName}, eso no parece una mención...`,
-        `${message.member.displayName}, prueba mencionando al usuario con su @`,
+        `**${message.member.displayName}**, tienes que mencionar al usuario :P`,
+        `**${message.member.displayName}**, eso no parece una mención...`,
+        `**${message.member.displayName}**, prueba mencionando al usuario con su @`,
       ];
       message.channel.send(
         errorMsg[Math.floor(Math.random() * errorMsg.length)]

@@ -28,7 +28,7 @@ module.exports = {
       }
     } else {
       message.channel.send(
-        `${message.member.displayName}, se necesita el id del usuario`
+        `**${message.member.displayName}**, se necesita el id del usuario`
       );
     }
   },

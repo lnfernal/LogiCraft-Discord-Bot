@@ -1,4 +1,4 @@
-const levels = require("../../levels.js");
+const levels = require("../../handlers/levels.js");
 
 module.exports = {
   commands: "xpadd",
@@ -15,9 +15,9 @@ module.exports = {
 
     if (!target) {
       const errorMsg = [
-        `${message.member.displayName}, tienes que mencionar al usuario :P`,
-        `${message.member.displayName}, eso no parece una mención...`,
-        `${message.member.displayName}, prueba mencionando al usuario con su @`,
+        `**${message.member.displayName}**, tienes que mencionar al usuario :P`,
+        `**${message.member.displayName}**, eso no parece una mención...`,
+        `**${message.member.displayName}**, prueba mencionando al usuario con su @`,
       ];
       message.channel.send(
         errorMsg[Math.floor(Math.random() * errorMsg.length)]
@@ -26,13 +26,13 @@ module.exports = {
     }
     if (isNaN(xpToAdd) && !arguments[2]) {
       message.channel.send(
-        `${message.member.displayName}, introduce un número válido de XP`
+        `**${message.member.displayName}**, introduce un número válido de XP`
       );
       return;
     }
     if (xpToAdd > 400000) {
       message.channel.send(
-        `${message.member.displayName}, el máximo es de 400.000XP`
+        `**${message.member.displayName}**, el máximo es de 400.000XP`
       );
       return;
     }

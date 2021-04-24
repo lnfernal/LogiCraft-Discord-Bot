@@ -1,5 +1,5 @@
-const mongo = require("./index.js").mongo;
-const profileSchema = require("./schemas/profile-schema.js");
+const mongo = require("../index.js").mongo;
+const profileSchema = require("../schemas/profile-schema.js");
 
 module.exports = (client) => {};
 

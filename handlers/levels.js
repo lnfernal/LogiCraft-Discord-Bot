@@ -1,5 +1,5 @@
-const mongo = require("./utils/mongo.js");
-const profileSchema = require("./schemas/profile-schema.js");
+const mongo = require("../utils/mongo.js");
+const profileSchema = require("../schemas/profile-schema.js");
 
 const maxLevel = 999;
 
@@ -56,6 +56,14 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
           if (level % 10 == 0)
             spamChannel.send(
               `**${member.displayName}** ha llegado a nivel **${level}**!`
+            );
+          else if (level === 666)
+            spamChannel.send(
+              `**${member.displayName}** ha llegado a nivel **${level}**  😈!`
+            );
+          else if (level === 69)
+            spamChannel.send(
+              `**${member.displayName}** ha llegado a nivel **${level}**  😎!`
             );
         }
       } while (xp >= xpNeeded);

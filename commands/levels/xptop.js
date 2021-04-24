@@ -2,7 +2,7 @@ const mongo = require("../../utils/mongo.js");
 const profileSchema = require("../../schemas/profile-schema.js");
 const Discord = require("discord.js");
 
-var getUserData = async (guildId, member) => {
+const getUserData = async (guildId, member) => {
   const userId = member.id;
   const result = await profileSchema.findOne({
     guildId,
@@ -68,7 +68,7 @@ module.exports = {
       return b.totalXp - a.totalXp;
     });
     const embed = new Discord.MessageEmbed()
-      .setColor("#c4e898")
+      .setColor("#DF5FFF")
       .setTitle(`Ranking de ${guild.name}`)
       .addFields(
         { name: "Nombre", value: getNames(users), inline: true },

@@ -1,5 +1,5 @@
 module.exports = {
-  commands: "latency",
+  commands: ["ping", "latency"],
   expectedArgs: "<content>",
   callback: (message, arguments, text, client) => {
     message.channel.send(

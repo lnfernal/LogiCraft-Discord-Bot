@@ -17,13 +17,13 @@ module.exports = {
         member.roles.remove(role).catch(console.error);
       else
         message.channel.send(
-          `${message.member.displayName}, el usuario ${member.displayName} no tiene ese rol`
+          `**${message.member.displayName}**, el usuario ${member.displayName} no tiene ese rol`
         );
     } else {
       const errorMsg = [
-        `${message.member.displayName}, tienes que mencionar al usuario :P`,
-        `${message.member.displayName}, eso no parece una mención...`,
-        `${message.member.displayName}, prueba mencionando al usuario con su @`,
+        `**${message.member.displayName}**, tienes que mencionar al usuario :P`,
+        `**${message.member.displayName}**, eso no parece una mención...`,
+        `**${message.member.displayName}**, prueba mencionando al usuario con su @`,
       ];
       message.channel.send(
         errorMsg[Math.floor(Math.random() * errorMsg.length)]

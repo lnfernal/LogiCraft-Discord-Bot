@@ -1,5 +1,5 @@
 const profileSchema = require("../../schemas/profile-schema.js");
-const economy = require("../../economy.js");
+const economy = require("../../handlers/economy.js");
 
 module.exports = {
   commands: "coinadd",
@@ -16,9 +16,9 @@ module.exports = {
 
     if (!target) {
       const errorMsg = [
-        `${message.member.displayName}, tienes que mencionar al usuario :P`,
-        `${message.member.displayName}, eso no parece una mención...`,
-        `${message.member.displayName}, prueba mencionando al usuario con su @`,
+        `**${message.member.displayName}**, tienes que mencionar al usuario :P`,
+        `**${message.member.displayName}**, eso no parece una mención...`,
+        `**${message.member.displayName}**, prueba mencionando al usuario con su @`,
       ];
       message.channel.send(
         errorMsg[Math.floor(Math.random() * errorMsg.length)]
@@ -26,7 +26,7 @@ module.exports = {
     }
     if (isNaN(coins)) {
       message.channel.send(
-        `${message.member.displayName}, introduce un número válido de monedas`
+        `**${message.member.displayName}**, introduce un número válido de monedas`
       );
     }
     const newCoins = await economy.addCoins(guildId, userId, coins);

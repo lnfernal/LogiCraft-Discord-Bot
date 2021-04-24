@@ -14,9 +14,9 @@ module.exports = {
       member.roles.add(role).catch(console.error);
     } else {
       const errorMsg = [
-        `${message.member.displayName}, tienes que mencionar al usuario :P`,
-        `${message.member.displayName}, eso no parece una mención...`,
-        `${message.member.displayName}, prueba mencionando al usuario con su @`,
+        `**${message.member.displayName}**, tienes que mencionar al usuario :P`,
+        `**${message.member.displayName}**, eso no parece una mención...`,
+        `**${message.member.displayName}**, prueba mencionando al usuario con su @`,
       ];
       message.channel.send(
         errorMsg[Math.floor(Math.random() * errorMsg.length)]

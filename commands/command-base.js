@@ -44,7 +44,7 @@ const validatePermissions = (permissions) => {
 
 let recentlyRan = [];
 
-module.exports = (client, commandOptions) => {
+module.exports = (client, commandOptions, dirName) => {
   let {
     commands,
     expectedArgs = "",
@@ -62,7 +62,11 @@ module.exports = (client, commandOptions) => {
     commands = [commands];
   }
 
-  console.log(`Registrando comando: "${prefix}${commands[0]}"`);
+  console.log(
+    `Registrando comando: "${prefix}${commands[0]}" ${
+      dirName === null ? "" : `(/${dirName})`
+    }`
+  );
 
   // Ensure the permissions are in an array and are all valid
   if (permissions.length) {
@@ -75,6 +79,7 @@ module.exports = (client, commandOptions) => {
   client.on("message", (message) => {
     const { member, content, guild } = message;
 
+    //if(message.guild.id == "829448956417015828" || message.mentions.has(client.users.cache.get("829091397906464829"))) return // protecc logibot
     for (const alias of commands) {
       const command = `${prefix}${alias.toLowerCase()}`;
 

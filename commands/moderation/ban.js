@@ -14,7 +14,7 @@ module.exports = {
     var reason = "_No especificado_";
     if (user && arguments[0].includes("<@!")) {
       if (
-        !protectedRolesFunc(message, member, protectedRoles) ||
+        (!protectedRolesFunc(message, member, protectedRoles) && member) ||
         user.id === "824989001999712337"
       )
         return;
@@ -35,9 +35,9 @@ module.exports = {
       }
     } else {
       const errorMsg = [
-        `${message.member.displayName}, tienes que mencionar al usuario :P`,
-        `${message.member.displayName}, eso no parece una mención...`,
-        `${message.member.displayName}, prueba mencionando al usuario con su @`,
+        `**${message.member.displayName}**, tienes que mencionar al usuario :P`,
+        `**${message.member.displayName}**, eso no parece una mención...`,
+        `**${message.member.displayName}**, prueba mencionando al usuario con su @`,
       ];
       message.channel.send(
         errorMsg[Math.floor(Math.random() * errorMsg.length)]

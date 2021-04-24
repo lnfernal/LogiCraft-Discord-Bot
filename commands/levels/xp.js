@@ -21,8 +21,8 @@ function xpEmbed(message, xp, totalXp, level, needed) {
     return progressBar;
   };
   const embed = new Discord.MessageEmbed()
-    .setColor("#30fc03")
-    .setTitle(`__XP de ${message.member.displayName}__`)
+    .setColor("#DF5FFF")
+    .setTitle(`XP de ${message.member.displayName}`)
     .setDescription(
       `Nivel: **${level}**\nTotal XP: **${new Intl.NumberFormat().format(
         totalXp
@@ -30,7 +30,7 @@ function xpEmbed(message, xp, totalXp, level, needed) {
         level + 1
       }:\n**${new Intl.NumberFormat().format(
         xp
-      )} / ${new Intl.NumberFormat().format(needed)}XP**\n${progressMade()} **${
+      )} / ${new Intl.NumberFormat().format(needed)}**XP\n${progressMade()} **${
         Math.round((xp / needed) * 1000) / 10
       }%**`
     )

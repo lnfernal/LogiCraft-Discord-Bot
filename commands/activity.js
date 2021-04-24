@@ -1,3 +1,5 @@
+const randomActivity = require("../misc/random-activity.js");
+
 module.exports = {
   commands: "activity",
   expectedArgs: "<viendo|escuchando|jugando|retransmitiendo> <content>",
@@ -26,6 +28,7 @@ module.exports = {
         );
         return;
     }
+    randomActivity.activityTrigger();
     arguments.shift();
     name = arguments.join(" ");
     client.user.setPresence({

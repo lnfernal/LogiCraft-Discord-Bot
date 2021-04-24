@@ -25,6 +25,12 @@ setAngryAvatar = (client) => {
   client.user.setAvatar("./avatar-manager/images/avatar-angry.jpg");
 };
 
+setTrollAvatar = (client) => {
+  console.log("[!] avatar-troll loaded");
+  setCooldown();
+  client.user.setAvatar("./avatar-manager/images/avatar-troll.png");
+};
+
 setCooldown = () => {
   clearTimeout(timeoutCooldown);
   cooldown = true;
@@ -55,8 +61,24 @@ module.exports = {
     }
   },
 
+  troll: (client) => {
+    if (!cooldown) {
+      avatarIsSad = false;
+      setAngryAvatar(client);
+      clearTimeout(timeoutHappy);
+      timeoutHappy = setTimeout(() => {
+        setHappyAvatar(client);
+      }, happyAvatarCooldown);
+    }
+  },
+
   onMessage: (client, message) => {
-    if (!cooldown && avatarIsSad && !message.content.includes("/hornyjail")) {
+    if (
+      !cooldown &&
+      avatarIsSad &&
+      !message.content.includes("/hornyjail") &&
+      !message.content.includes("/troll")
+    ) {
       setHappyAvatar(client);
       avatarIsSad = false;
     }
