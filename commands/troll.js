@@ -232,7 +232,7 @@ module.exports = {
   onMessage: async (client, message) => {
     const { member, guild, guildId = guild.id } = message;
     emojis = await require("../utils/emojis.js").guildEmojis(client, guildId);
-    //if(member.id === guild.ownerID) return
+    if(member.id === guild.ownerID) return
     switch (mode) {
       case 1:
         var keys = Object.keys(emojis);
