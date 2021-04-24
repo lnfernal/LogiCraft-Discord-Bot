@@ -69,6 +69,7 @@ module.exports = {
               channel.send(
                 `**${message.member.displayName}**, usa **m (minutos)**, **h (horas)**, **d (dias)**`
               );
+              return
           }
           if (arguments[2]) {
             arguments.shift();
