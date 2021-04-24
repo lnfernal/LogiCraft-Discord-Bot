@@ -22,7 +22,7 @@ module.exports = {
   callback: async (message, arguments, text, client) => {
     const user = message.mentions.users.first();
     const emojis = await require("../utils/emojis.js").logibotEmojis(client);
-    const hj = logibotEmojis.GOTOHORNYJAIL;
+    const hj = emojis.GOTOHORNYJAIL;
     const role = message.guild.roles.cache.get(roleId);
     if (user) {
       const member = message.guild.members.cache.get(user.id);
