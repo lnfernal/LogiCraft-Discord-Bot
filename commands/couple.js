@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const coupleSchema = require("../schemas/couple-schema.js");
 const profileSchema = require("../schemas/profile-schema.js");
 const mongo = require("../utils/mongo.js");
-const loverRoleId = "835087933476044810";
+const loverRoleId = "835561996450791484";
 
 const loveSentences = [
   "Salgamos juntos, yo invito a los besos",
