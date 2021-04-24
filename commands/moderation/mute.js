@@ -40,7 +40,7 @@ module.exports = {
 
       if (!mutedRole) return;
 
-      if (target.bot || target.id === client.ownerID) return;
+      if (target.bot || target.id == guild.ownerID) return;
 
       if (arguments[1]) {
         const possibleTime = /^\d{1,3}[a-zA-Z]$/.test(arguments[1]);
