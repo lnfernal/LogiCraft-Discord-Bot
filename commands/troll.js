@@ -238,7 +238,7 @@ module.exports = {
         var keys = Object.keys(emojis);
         reactedMessages.push(message);
         for (var i = 0; i < Math.floor(Math.random() * 5 + 1); i++)
-          message.react(
+          await message.react(
             emojis[keys[Math.floor(Math.random() * keys.length)]].id
           );
         break;
