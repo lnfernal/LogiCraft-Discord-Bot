@@ -66,7 +66,7 @@ client.on("ready", async () => {
     trollCommand.onMessage(client, message);
     snapshotVote.onMessage(client, message);
     responses.onMessage(client, message);
-    //levels.onMessage(client, message);
+    levels.onMessage(client, message);
     //troll.onMessage(client, message)
   });
 
