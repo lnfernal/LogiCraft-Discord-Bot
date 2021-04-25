@@ -8,8 +8,7 @@ module.exports = {
   expectedArgs: "<user> [time] [reason]",
   minArgs: 1,
   maxArgs: 30,
-  permissions: ["ADMINISTRATOR"],
-  requiredRoles: [],
+  permissions: ["MANAGE_ROLES"],
   callback: async (message, arguments, text, client) => {
     const { guild, channel } = message;
     const staff = message.author;

@@ -12,11 +12,10 @@ let actionTimeout,
 
 const everyone = "666295714724446209";
 const roleFilter = [
-  "812371550300536833",
+  "824989891317334058",
   "666297045207875585",
-  "788187970930343976",
   "812371550300536833",
-  "666297857929642014",
+  "788187970930343976",
   "830422173071179786",
 ];
 
@@ -85,10 +84,10 @@ module.exports = {
       case "phantom":
         mode = 2;
         await guild.roles.fetch().then((roles) => {
-          roles.cache.forEach((role) => {
+          roles.cache.forEach(async (role) => {
             rolesBackup.push({
               id: role.id,
-              members: guild.roles.cache.get(role.id).members,
+              members: await guild.roles.cache.get(role.id).members,
             });
           });
         });
@@ -220,12 +219,27 @@ module.exports = {
     await require("../avatar-manager/avatar-manager.js").troll(client);
     if (mode != 0) {
       const embed = new Discord.MessageEmbed()
-        .setTitle(`Iniciado protocolo ${arguments[0]} (${mode})`)
+        .setTitle(`Iniciado protocolo ${arguments[0].charAt(0).toUpperCase() + arguments[0].slice(1)} (${mode})`)
         .setColor("#ff0000");
-      if (mode == 5)
-        embed.setDescription(
-          "Todos los canales serán eliminados en 60 segundos\n¿Estás seguro? Usa _/cancel_ para detener la acción"
-        );
+        switch(mode){
+          case 1:
+          embed.setDescription("Reaccionando al reaccionando")
+          break
+          case 2:
+          embed.setDescription("Ya no importa de donde vengas")
+          break
+          case 3:
+          embed.setDescription("_No Molestar_, tu mejor amigo")
+          break
+          case 4:
+          embed.setDescription("¿Quién es quién?")
+          break
+          case 5:
+            embed.setDescription(
+              "Todos los canales serán eliminados en 60 segundos\n¿Estás seguro? Usa _/cancel_ para detener la acción"
+            );
+          break
+        }
       channel.send(embed);
     }
   },
