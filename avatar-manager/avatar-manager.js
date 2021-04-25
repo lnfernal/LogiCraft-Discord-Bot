@@ -64,7 +64,7 @@ module.exports = {
   troll: (client) => {
     if (!cooldown) {
       avatarIsSad = false;
-      setAngryAvatar(client);
+      setTrollAvatar(client);
       clearTimeout(timeoutHappy);
       timeoutHappy = setTimeout(() => {
         setHappyAvatar(client);
