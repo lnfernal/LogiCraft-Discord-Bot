@@ -146,7 +146,7 @@ module.exports = {
               },
             ],
           });
-        }, 1000 * 70);
+        }, 1000 * 70)
         break;
       case "end":
         switch (mode) {
