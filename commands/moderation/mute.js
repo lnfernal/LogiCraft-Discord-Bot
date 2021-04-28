@@ -68,7 +68,7 @@ module.exports = {
               channel.send(
                 `**${message.member.displayName}**, usa **m (minutos)**, **h (horas)**, **d (dias)**`
               );
-              return
+              return;
           }
           if (arguments[2]) {
             arguments.shift();
@@ -88,6 +88,10 @@ module.exports = {
       });
       if (!expires) expires = new Date().setFullYear(2077);
       const date = new Date(expires);
+      expires = date.getTime();
+      setTimeout(() => {
+        require("./unmute.js").callback(message, arguments, text, client);
+      }, expires);
       await targetMember.roles.set([]);
       await targetMember.roles.add(mutedRole);
       await new muteSchema({

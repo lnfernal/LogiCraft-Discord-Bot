@@ -92,7 +92,8 @@ module.exports = {
           setTimeout(async () => {
             await guild.members.fetch().then((members) => {
               members.forEach(async (member) => {
-                await member.roles.remove(loverRole).catch(console.log(e));
+                if (member.roles.get(loverRoleId))
+                  await member.roles.remove(loverRole);
               });
             });
           }, msTillMidnight);

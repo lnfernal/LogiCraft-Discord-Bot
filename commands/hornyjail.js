@@ -18,7 +18,6 @@ module.exports = {
   minArgs: 1,
   maxArgs: 1,
   permissions: ["MANAGE_ROLES"],
-  requiredRoles: ["784046874482049064"],
   callback: async (message, arguments, text, client) => {
     const user = message.mentions.users.first();
     const emojis = await require("../utils/emojis.js").logibotEmojis(client);

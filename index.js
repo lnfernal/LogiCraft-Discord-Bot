@@ -73,14 +73,14 @@ client.on("ready", async () => {
   // user joins
   client.on("guildMemberAdd", (member) => {
     if (member.guild.id == "829448956417015828") return;
-    userActivity.onJoin(member);
+    userActivity.onJoin(member, client);
     mute.checkMute(client, member);
   });
 
   // user leaves
   client.on("guildMemberRemove", (member) => {
     if (member.guild.id == "829448956417015828") return;
-    userActivity.onRemove(member);
+    userActivity.onRemove(member, client);
   });
   console.log("¡LogiCraft Engine listo!");
 });

@@ -1,8 +1,8 @@
 module.exports = {
   commands: ["play", "playsound", "p"],
-  expectedArgs: "<link>",
+  expectedArgs: "<link|video name>",
   minArgs: 1,
-  maxArgs: 1,
+  maxArgs: 10,
   callback: async (message, arguments, text, client) => {
     const { channel } = message.member.voice;
     if (!channel)

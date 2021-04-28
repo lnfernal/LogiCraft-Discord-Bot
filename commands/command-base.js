@@ -79,7 +79,12 @@ module.exports = (client, commandOptions, dirName) => {
   client.on("message", (message) => {
     const { member, content, guild } = message;
 
-    if(message.guild.id == "829448956417015828" || message.mentions.has(client.user.id) || message.content.includes("824989001999712337")) return // protecc logibot
+    if (
+      message.guild.id == "829448956417015828" ||
+      message.mentions.has(client.user.id) ||
+      message.content.includes("824989001999712337")
+    )
+      return; // protecc logibot
     for (const alias of commands) {
       const command = `${prefix}${alias.toLowerCase()}`;
 

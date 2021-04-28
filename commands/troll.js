@@ -219,34 +219,38 @@ module.exports = {
     await require("../avatar-manager/avatar-manager.js").troll(client);
     if (mode != 0) {
       const embed = new Discord.MessageEmbed()
-        .setTitle(`Iniciado protocolo ${arguments[0].charAt(0).toUpperCase() + arguments[0].slice(1)} (${mode})`)
+        .setTitle(
+          `Iniciado protocolo ${
+            arguments[0].charAt(0).toUpperCase() + arguments[0].slice(1)
+          } (${mode})`
+        )
         .setColor("#ff0000");
-        switch(mode){
-          case 1:
-          embed.setDescription("Reaccionando al reaccionando")
-          break
-          case 2:
-          embed.setDescription("Ya no importa de donde vengas")
-          break
-          case 3:
-          embed.setDescription("_No Molestar_, tu mejor amigo")
-          break
-          case 4:
-          embed.setDescription("¿Quién es quién?")
-          break
-          case 5:
-            embed.setDescription(
-              "Todos los canales serán eliminados en 60 segundos\n¿Estás seguro? Usa _/cancel_ para detener la acción"
-            );
-          break
-        }
+      switch (mode) {
+        case 1:
+          embed.setDescription("Reaccionando al reaccionando");
+          break;
+        case 2:
+          embed.setDescription("Ya no importa de donde vengas");
+          break;
+        case 3:
+          embed.setDescription("_No Molestar_, tu mejor amigo");
+          break;
+        case 4:
+          embed.setDescription("¿Quién es quién?");
+          break;
+        case 5:
+          embed.setDescription(
+            "Todos los canales serán eliminados en 60 segundos\n¿Estás seguro? Usa _/cancel_ para detener la acción"
+          );
+          break;
+      }
       channel.send(embed);
     }
   },
   onMessage: async (client, message) => {
     const { member, guild, guildId = guild.id } = message;
     emojis = await require("../utils/emojis.js").guildEmojis(client, guildId);
-    if(member.id === guild.ownerID) return
+    if (member.id === guild.ownerID) return;
     switch (mode) {
       case 1:
         var keys = Object.keys(emojis);

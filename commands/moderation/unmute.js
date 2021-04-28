@@ -21,8 +21,7 @@ module.exports = {
   expectedArgs: "<user|id>",
   minArgs: 1,
   maxArgs: 1,
-  permissions: ["ADMINISTRATOR"],
-  requiredRoles: [],
+  permissions: ["MANAGE_ROLES"],
   callback: async (message, arguments, text, client) => {
     const { guild, channel } = message;
     const target = message.mentions.users.first();
