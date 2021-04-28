@@ -92,6 +92,7 @@ module.exports = {
       });
       if (!expires) expires = new Date().setFullYear(2077);
       const date = new Date(expires);
+      date.setHours = date.getHours + 2;
       setTimeout(async () => {
         const result = await muteSchema.updateOne(
           {
@@ -105,6 +106,7 @@ module.exports = {
         );
         if (result.nModified == 1) {
           await unmute.triggerUnmute(targetMember);
+          channel.send(`${targetMember.displayName} ha sido desmuteado`);
         }
       }, expires - new Date().getTime());
       await targetMember.roles.set([]);
@@ -123,7 +125,7 @@ module.exports = {
         .setDescription(
           `Motivo: ${reason}\nId: ${
             targetMember.id
-          }\nTerminio: ${date.toLocaleString()}}`
+          }\nTerminio: ${date.toLocaleString()} UTC +00:00h`
         );
       message.channel.send(embed);
     } else {
