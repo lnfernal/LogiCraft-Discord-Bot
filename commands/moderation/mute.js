@@ -44,7 +44,7 @@ module.exports = {
       if (arguments[1]) {
         const possibleTime = /^\d{1,3}[a-zA-Z]$/.test(arguments[1]);
 
-        if (!possibleTime) {
+        if (isNaN(arguments[1]) && !possibleTime) {
           // means it's reason
           arguments.shift();
           reason = arguments.join(" ");
@@ -102,7 +102,7 @@ module.exports = {
         if (result.nModified == 1) {
           require("./unmute.js").triggerUnmute(targetMember);
         }
-      }, expires);
+      }, expires - (new Date().getTime()));
       await targetMember.roles.set([]);
       await targetMember.roles.add(mutedRole);
       await new muteSchema({
