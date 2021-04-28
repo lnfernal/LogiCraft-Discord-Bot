@@ -1,4 +1,4 @@
-const randomActivity = require("../misc/random-activity.js");
+const randomActivity = require("../misc/random-activity.js")
 
 module.exports = {
   commands: "activity",
