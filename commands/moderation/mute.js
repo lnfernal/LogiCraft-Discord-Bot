@@ -89,7 +89,7 @@ module.exports = {
       if (!expires) expires = new Date().setFullYear(2077);
       const date = new Date(expires);
       expires = date.getTime();
-      setTimeout(() => {
+      setTimeout(async () => {
         const result = await muteSchema.updateOne(
           {
             guildId: guild.id,
