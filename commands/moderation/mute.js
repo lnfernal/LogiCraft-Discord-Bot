@@ -44,7 +44,7 @@ module.exports = {
       if (arguments[1]) {
         const possibleTime = /^\d{1,3}[a-zA-Z]$/.test(arguments[1]);
 
-        if (isNaN(arguments[1]) && !possibleTime) {
+        if (!possibleTime) {
           // means it's reason
           arguments.shift();
           reason = arguments.join(" ");
@@ -88,7 +88,6 @@ module.exports = {
       });
       if (!expires) expires = new Date().setFullYear(2077);
       const date = new Date(expires);
-      expires = date.getTime();
       setTimeout(async () => {
         const result = await muteSchema.updateOne(
           {
