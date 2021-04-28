@@ -28,7 +28,7 @@ client.login(process.env.BOT_TOKEN);
 client.on("ready", async () => {
   // declaring variables
   const baseFile = "command-base.js";
-  //const emojis = require("./utils/emojis.js").guildEmojis(client, guildId);
+  const emojis = require("./utils/emojis.js").guildEmojis(client, guildId);
   var dirName = "";
   const commandBase = require(`./commands/${baseFile}`);
   const readCommands = async (dir) => {
@@ -51,7 +51,7 @@ client.on("ready", async () => {
   await mongo().then(console.log("Conectado a MongoDB!"));
   client.setMaxListeners(40);
   avatarManager.init(client);
-  //userActivity.init(client.guilds.cache.get(guildId));
+  userActivity.init(client.guilds.cache.get(guildId));
   randomActivity.setActivity(client);
   mute.scheduledCheck(client);
   await readCommands("commands").then(
@@ -60,14 +60,14 @@ client.on("ready", async () => {
 
   // listen for messages
   client.on("message", (message) => {
-    // if (message.author.bot || message.guild.id != "666295714724446209") return;
+    if (message.author.bot || message.guild.id != "666295714724446209") return;
     avatarManager.onMessage(client, message);
     antiAd.onMessage(client, message);
     trollCommand.onMessage(client, message);
     snapshotVote.onMessage(client, message);
     responses.onMessage(client, message);
-    //levels.onMessage(client, message);
-    //troll.onMessage(client, message)
+    levels.onMessage(client, message);
+    troll.onMessage(client, message)
   });
 
   // user joins
