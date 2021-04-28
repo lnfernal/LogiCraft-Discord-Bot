@@ -1,11 +1,7 @@
 const muteSchema = require("../../schemas/mute-schema.js");
 const mute = require("./mute.js");
 
-module.exports.triggerUnmute = async (member) => {
-  await unmute(member);
-};
-
-const unmute = (member) => {
+const unmute = async (member) => {
   const rolesBackup = mute.rolesBackup();
   rolesBackup.forEach(async (roles) => {
     if (roles.id == member.id) {
@@ -45,4 +41,8 @@ module.exports = {
       channel.send(`${id} no está muteado`);
     }
   },
+};
+
+module.exports.triggerUnmute = async (member) => {
+  await unmute(member);
 };
