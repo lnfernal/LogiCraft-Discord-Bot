@@ -1,5 +1,5 @@
 module.exports = {
-  commands: ["stop", "s"],
+  commands: "stop",
   callback: async (message, arguments, text, client) => {
     let stopped;
     try {

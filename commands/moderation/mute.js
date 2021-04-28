@@ -93,7 +93,7 @@ module.exports = {
         const result = await muteSchema.updateOne(
           {
             guildId: guild.id,
-            userId: id,
+            userId: targetMember.id,
             current: true,
           },
           {
