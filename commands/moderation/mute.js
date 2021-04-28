@@ -119,7 +119,7 @@ module.exports = {
         .setDescription(
           `Motivo: ${reason}\nId: ${
             targetMember.id
-          }\nTerminio: ${date.toLocaleString()}`
+          }\nTerminio: ${date.toLocaleString()} UTC ${date.getUTCHours()}`
         );
       message.channel.send(embed);
     } else {
