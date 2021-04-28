@@ -90,7 +90,19 @@ module.exports = {
       const date = new Date(expires);
       expires = date.getTime();
       setTimeout(() => {
-        require("./unmute.js").callback(message, arguments, text, client);
+        const result = await muteSchema.updateOne(
+          {
+            guildId: guild.id,
+            userId: id,
+            current: true,
+          },
+          {
+            current: false,
+          }
+        );
+        if (result.nModified == 1) {
+          require("./unmute.js").unmute(targetMember);
+        }
       }, expires);
       await targetMember.roles.set([]);
       await targetMember.roles.add(mutedRole);
