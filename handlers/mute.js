@@ -22,7 +22,7 @@ module.exports.scheduledCheck = async (client) => {
         current: false,
       });
     }
-    setTimeout(checkMutes(), 1000 * 60 * 1);
+    setTimeout(checkMutes, 1000 * 60);
   };
   checkMutes();
 };

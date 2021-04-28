@@ -1,11 +1,12 @@
 const muteSchema = require("../../schemas/mute-schema.js");
+const mute = require("./mute.js");
 
 module.exports.triggerUnmute = async (member) => {
   await unmute(member);
 };
 
 const unmute = (member) => {
-  const rolesBackup = require("./mute.js").rolesBackup();
+  const rolesBackup = mute.rolesBackup();
   rolesBackup.forEach(async (roles) => {
     if (roles.id == member.id) {
       await member.roles.set([]);
