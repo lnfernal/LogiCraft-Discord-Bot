@@ -7,7 +7,7 @@ module.exports = {
   minArgs: 2,
   maxArgs: 499,
   cooldown: 2,
-  permissions: "ADMINISTRATOR",
+  requiredRoles: ["666297857929642014"],
   callback: async (message, arguments, text, client) => {
     const guildId = "666295714724446209",
       desiredChannelName = arguments[0],
