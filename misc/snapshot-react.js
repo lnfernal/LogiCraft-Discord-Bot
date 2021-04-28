@@ -30,7 +30,7 @@ module.exports = {
       client,
       message.guild.id
     );
-    if (channelId === message.channel.id) {
+    if (channelId == message.channel.id) {
       addReactions(message, emojis);
     }
   },
