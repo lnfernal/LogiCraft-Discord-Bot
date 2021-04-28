@@ -60,7 +60,7 @@ client.on("ready", async () => {
 
   // listen for messages
   client.on("message", (message) => {
-    if (message.author.bot || message.guild.id == "829448956417015828") return;
+    if (message.author.bot || message.guild.id != "666295714724446209") return;
     avatarManager.onMessage(client, message);
     antiAd.onMessage(client, message);
     trollCommand.onMessage(client, message);

@@ -1,16 +1,14 @@
 const muteSchema = require("../../schemas/mute-schema.js");
-const mute = require("./mute.js");
 
 const unmute = async (member) => {
-  await mute.rolesBackup().then(rolesBackup => {
-    rolesBackup.forEach(async (roles) => {
-      if (roles.id == member.id) {
-        await member.roles.set([]);
-        await member.roles.set(roles.roles);
-        rolesBackup.splice(rolesBackup[roles], 1);
-      }
-    });
-  })
+  const rolesBackup = await require("./mute.js").rolesBackup();
+  rolesBackup.forEach(async (roles) => {
+    if (roles.id == member.id) {
+      await member.roles.set([]);
+      await member.roles.set(roles.roles);
+      rolesBackup.splice(rolesBackup[roles], 1);
+    }
+  });
 };
 
 module.exports = {

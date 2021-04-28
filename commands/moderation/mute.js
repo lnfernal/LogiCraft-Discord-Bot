@@ -139,7 +139,7 @@ module.exports = {
   },
 };
 
-module.exports.rolesBackup = async () => {
+module.exports.rolesBackup = () => {
   return rolesBackup;
 };
 module.exports.mutedRole = async () => {

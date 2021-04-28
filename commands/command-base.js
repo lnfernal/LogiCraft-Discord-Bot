@@ -80,7 +80,7 @@ module.exports = (client, commandOptions, dirName) => {
     const { member, content, guild } = message;
 
     if (
-      message.guild.id == "829448956417015828" ||
+      message.guild.id != "666295714724446209" ||
       message.mentions.has(client.user.id) ||
       message.content.includes("824989001999712337")
     )
