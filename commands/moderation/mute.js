@@ -101,7 +101,7 @@ module.exports = {
           }
         );
         if (result.nModified == 1) {
-          require("./unmute.js").unmute(targetMember);
+          require("./unmute.js").triggerUnmute(targetMember);
         }
       }, expires);
       await targetMember.roles.set([]);
