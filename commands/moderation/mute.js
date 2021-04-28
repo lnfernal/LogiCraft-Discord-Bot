@@ -2,6 +2,7 @@ const muteSchema = require("../../schemas/mute-schema.js");
 const mutedRoleId = "788187970930343976";
 let rolesBackup = [];
 const Discord = require("discord.js");
+const unmute = require("./unmute.js")
 
 module.exports = {
   commands: "mute",
@@ -100,7 +101,7 @@ module.exports = {
           }
         );
         if (result.nModified == 1) {
-          require("./unmute.js").triggerUnmute(targetMember);
+          await unmute.triggerUnmute(targetMember)
         }
       }, expires - (new Date().getTime()));
       await targetMember.roles.set([]);
@@ -119,7 +120,7 @@ module.exports = {
         .setDescription(
           `Motivo: ${reason}\nId: ${
             targetMember.id
-          }\nTerminio: ${date.toLocaleString()} UTC ${date.getUTCHours()}`
+          }\nTerminio: ${date.toLocaleString()}}`
         );
       message.channel.send(embed);
     } else {
