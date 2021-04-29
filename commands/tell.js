@@ -13,16 +13,26 @@ module.exports = {
       desiredChannelName = arguments[0],
       math = require("../utils/math.js");
     const guild = client.guilds.cache.get(guildId);
-    let channelNames = [];
+    let channelNames = [], channelIds = [], desiredChannelId;
 
     await client.channels.cache.each((channel) => {
-      if (channel.type == "text") channelNames.push(channel.name);
+      if (channel.type == "text") {
+        channelNames.push(channel.name);
+        channelIds.push({
+          name: channel.name,
+          id: channel.id);
+        }
+      }
     });
     const similarChannel = ss.findBestMatch(desiredChannelName, channelNames)
       .bestMatch.target;
-    const desiredChannel = guild.channels.cache.find(
-      (c) => c.name === similarChannel && c.type == "text"
-    );
+    channelIds.forEach(c => {
+      if(c.name === similarChannel){
+       desiredChannelId = c.id
+        return
+      }
+    })
+    const desiredChannel = guild.channels.cache.get(desiredChannelId)
     if (
       ss.compareTwoStrings(desiredChannelName, similarChannel) < 0.1 ||
       desiredChannel.type != "text"
