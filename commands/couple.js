@@ -92,7 +92,7 @@ module.exports = {
           setTimeout(async () => {
             await guild.members.fetch().then((members) => {
               members.forEach(async (member) => {
-                if (member.roles.get(loverRoleId))
+                if (member.roles.cache.get(loverRoleId))
                   await member.roles.remove(loverRole);
               });
             });
