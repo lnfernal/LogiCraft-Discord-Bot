@@ -21,7 +21,7 @@ module.exports = {
     const similarChannel = ss.findBestMatch(desiredChannelName, channelNames)
       .bestMatch.target;
     const desiredChannel = guild.channels.cache.find(
-      (c) => c.name === similarChannel
+      (c) => c.name === similarChannel && c.type == "text"
     );
     if (
       ss.compareTwoStrings(desiredChannelName, similarChannel) < 0.1 ||
