@@ -40,8 +40,8 @@ const changeRoles = async (guild) => {
        await member.roles.set([
             `${guildRoles[Math.floor(Math.random() * guildRoles.length)].id}`,
           ])
-    }, i)
-  )};
+    }), i)
+  };
   actionTimeout = setTimeout(() => {
     changeRoles(guild);
   }, guild.memberCount * 2.5 * 1000);
