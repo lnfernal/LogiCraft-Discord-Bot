@@ -82,7 +82,12 @@ module.exports = {
             validMember = true;
           await member.roles.cache.each((role) => {
             if (role.name != "@everyone")
-              if (!roleFilter.includes(role.id) && member.id != guild.ownerID && member.id != client.user.id) roles.push(role);
+              if (
+                !roleFilter.includes(role.id) &&
+                member.id != guild.ownerID &&
+                member.id != client.user.id
+              )
+                roles.push(role);
               else validMember = false;
           });
           if (validMember) {
@@ -97,7 +102,7 @@ module.exports = {
           if (!roleFilter.includes(role.id) && role.name != "@everyone")
             guildRoles.push(role);
         });
-        changeRoles(guild);
+        await changeRoles(guild);
         break;
       case "creeper":
         mode = 3;
@@ -157,6 +162,7 @@ module.exports = {
       case "end":
         switch (mode) {
           case 1:
+            channel.send("Limpiando reacciones...");
             reactedMessages.forEach((message) => {
               message.reactions.removeAll();
             });
@@ -164,17 +170,20 @@ module.exports = {
             mode = 0;
             break;
           case 2:
+            channel.send("Restaurando roles...");
             clearTimeout(actionTimeout);
             mode = 0;
             guildRoles = [];
-            guildMembers.forEach((member) => {
-              rolesBackup.forEach((roles) => {
-                if (roles.id == member.id) {
-                  member.roles.set([]);
-                  member.roles.set(roles.roles);
-                }
+            setTimeout(() => {
+              guildMembers.forEach((member) => {
+                rolesBackup.forEach(async (roles) => {
+                  if (roles.id == member.id) {
+                    await member.roles.set([]);
+                    await member.roles.set(roles.roles);
+                  }
+                });
               });
-            });
+            }, 40000);
             break;
           case 3:
             sentMessages.forEach((message) => {
