@@ -8,7 +8,7 @@ module.exports = {
   requiredRoles: ["666297045207875585", "666297857929642014"],
   callback: (message, arguments, text, client) => {
     const user = message.mentions.users.first();
-    const modRoleId = "666297857929642014";
+    const modRoleId = "666297045207875585";
 
     if (user) {
       const role = message.guild.roles.cache.get(modRoleId);
