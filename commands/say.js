@@ -5,6 +5,6 @@ module.exports = {
   maxArgs: 199,
   cooldown: 5,
   callback: (message, arguments, text, client) => {
-    message.channel.send(text.replace(/^<@!?(\d+)>$/,""));
+    message.channel.send(text.replace(/^<@!?(\d+)>$/,"")).catch(console.error);
   },
 };
