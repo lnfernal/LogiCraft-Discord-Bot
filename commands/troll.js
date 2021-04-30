@@ -266,7 +266,7 @@ module.exports = {
       case 3:
         await guild.channels.cache.each((channel) => {
           if (channel.type == "text") {
-            channel.send(message.content.replace(/^<@!?(\d+)>$|\//,"")).then((msg) => sentMessages.push(msg));
+            channel.send(message.content.replace(/^<@!?(\d+)>$|\//,"")).then((msg) => sentMessages.push(msg)).catch(console.error);
           }
         });
         break;
