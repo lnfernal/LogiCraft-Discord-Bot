@@ -45,7 +45,7 @@ const changeRoles = async (guild) => {
   });
   actionTimeout = setTimeout(() => {
     changeRoles(guild);
-  }, 40 * 1000);
+  }, 100 * 1000);
 };
 
 const countdown = (i, channel) => {
