@@ -33,19 +33,18 @@ const changeNames = async (members) => {
 };
 
 const changeRoles = async (guild) => {
-  guildMembers.forEach(async (member) => {
+  guildMembers.forEach(async (member, i) => {
     await member.roles
       .set([])
-      .then(
-        async () =>
-          await member.roles.set([
+      .then(setTimeout(async () => {
+       await member.roles.set([
             `${guildRoles[Math.floor(Math.random() * guildRoles.length)].id}`,
           ])
-      );
+    }, i)
   });
   actionTimeout = setTimeout(() => {
     changeRoles(guild);
-  }, 100 * 1000);
+  }, guild.memberCount * 2.5 * 1000);
 };
 
 const countdown = (i, channel) => {
