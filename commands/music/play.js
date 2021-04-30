@@ -6,15 +6,12 @@ module.exports = {
   callback: async (message, arguments, text, client) => {
     const { channel } = message.member.voice;
     const emojis = await require("../../utils/emojis.js").discEmojis(client);
-    let discEmojis = []
-    for (let emoji in emojis) {
-                    discEmojis.push(emojis[emoji]);
-                  }
+    var keys = Object.keys(emojis);
     if (!channel)
       return message.channel.send(
         `**${message.member.displayName}**, necesitas estar en un canal de voz`
       );
     let audio = await client.player.play(message, text);
-    if (audio) await message.channel.send(`${discEmojis[Math.random() * discEmojis.length]} Reproduciendo **${audio.name}**`);
+    if (audio) await message.channel.send(`${emojis[keys[Math.floor(Math.random() * keys.length)]]} Reproduciendo **${audio.name}**`);
   },
 };
