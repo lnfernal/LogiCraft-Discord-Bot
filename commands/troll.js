@@ -184,6 +184,7 @@ module.exports = {
             }, guild.memberCount * 1.5);
             break;
           case 3:
+            channel.send("Eliminando mensajes...");
             mode = 0;
             sentMessages.forEach((message) => {
               message.delete().catch(console.error);
