@@ -184,10 +184,10 @@ module.exports = {
             }, guild.memberCount * 1.5);
             break;
           case 3:
-            sentMessages.forEach((message) => {
-              message.delete();
-            });
             mode = 0;
+            sentMessages.forEach((message) => {
+              message.delete().catch(console.error);
+            });
             sentMessages = [];
             break;
           case 4:
