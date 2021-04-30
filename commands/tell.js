@@ -45,7 +45,7 @@ module.exports = {
     desiredChannel.startTyping();
     setTimeout(() => {
       desiredChannel.stopTyping();
-      desiredChannel.send(msg.replace(/^<@!?(\d+)>$|\//,""));
+      desiredChannel.send(msg.replace(/^<@!?(\d+)>$/,"")).catch(console.error);
     }, (msg.length / 200) * 60000 * math.clamp(Math.random() * 1 + 0.2, 0.2, 0.5));
   },
 };
