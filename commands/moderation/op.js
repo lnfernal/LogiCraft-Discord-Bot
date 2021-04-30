@@ -9,7 +9,7 @@ module.exports = {
   callback: (message, arguments, text, client) => {
     const user = message.mentions.users.first();
     if (user) {
-      const role = message.guild.roles.cache.get("666297857929642014");
+      const role = message.guild.roles.cache.get("666297045207875585");
       const member = message.guild.members.cache.get(user.id);
       member.roles.add(role).catch(console.error);
     } else {
