@@ -44,7 +44,7 @@ const changeRoles = async (guild) => {
   });
   actionTimeout = setTimeout(() => {
     changeRoles(guild);
-  }, guild.memberCount * 2.5 * 1000);
+  }, guild.memberCount * 3 * 1000);
 }
 
 const countdown = (i, channel) => {
