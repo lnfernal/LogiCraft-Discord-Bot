@@ -229,20 +229,20 @@ module.exports = {
         .setColor("#ff0000");
       switch (mode) {
         case 1:
-          embed.setDescription("Reaccionando al reaccionando");
+          embed.setDescription("HOLY EMOJI");
           break;
         case 2:
-          embed.setDescription("Ya no importa de donde vengas");
+          embed.setDescription("ROLE REROLL");
           break;
         case 3:
-          embed.setDescription("_No Molestar_, tu mejor amigo");
+          embed.setDescription("DAMN SPAM");
           break;
         case 4:
-          embed.setDescription("¿Quién es quién?");
+          embed.setDescription("IDENTITY MESSILY");
           break;
         case 5:
           embed.setDescription(
-            "Todos los canales serán eliminados en 60 segundos\n¿Estás seguro? Usa _/cancel_ para detener la acción"
+            "CHANNEL DISMANTLE\n\n[!] Todos los canales serán eliminados en 60 segundos\n¿Estás seguro? Usa _/cancel_ para detener la acción"
           );
           break;
       }
