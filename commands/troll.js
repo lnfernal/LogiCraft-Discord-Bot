@@ -171,7 +171,7 @@ module.exports = {
             channel.send("Restaurando roles...");
             clearTimeout(actionTimeout);
             mode = 0;
-            guildRoles = [];
+            guildRoles = []
             setTimeout(() => {
               guildMembers.forEach((member) => {
                 rolesBackup.forEach(async (roles) => {
