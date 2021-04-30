@@ -266,11 +266,7 @@ module.exports = {
       case 3:
         await guild.channels.cache.each((channel) => {
           if (channel.type == "text") {
-            var content = message.content.replace("/", "")
-            const matches = message.content.match(/^<@!?(\d+)>$/)
-            if(matches)
-              matches.forEach(match => {content.replace(match,"")})
-            channel.send(content).then((msg) => sentMessages.push(msg));
+            channel.send(message.content.replace(/^<@!?(\d+)>$|\//,"").then((msg) => sentMessages.push(msg));
           }
         });
         break;
