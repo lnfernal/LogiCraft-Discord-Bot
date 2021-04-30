@@ -4,7 +4,8 @@ let actionTimeout,
   emojis,
   reactedMessages = [],
   rolesBackup = [],
-  filteredRoles = [],
+  guildRoles = [],
+  guildMembers = [],
   membersBackup = [],
   sentMessages = [],
   channelsBackup = [],
@@ -14,9 +15,11 @@ const everyone = "666295714724446209";
 const roleFilter = [
   "824989891317334058",
   "666297045207875585",
-  "812371550300536833",
-  "788187970930343976",
+  "666297857929642014",
   "830422173071179786",
+  "812371550300536833",
+  "835554369666547743",
+  "834422510166081537",
 ];
 
 const changeNames = async (members) => {
@@ -31,30 +34,19 @@ const changeNames = async (members) => {
 };
 
 const changeRoles = async (guild) => {
-  rolesBackup.forEach((role) => {
-    if (!roleFilter.includes(role.id)) filteredRoles.push(role);
-  });
-  await guild.members.fetch().then((members) => {
-    members
-      .filter((m) => !m.roles.cache.some((r) => roleFilter.includes(r.id)))
-      .forEach(async (member) => {
-        await member.roles
-          .set([])
-          .then(
-            async () =>
-              await member.roles.set([
-                `${
-                  filteredRoles[
-                    Math.floor(Math.random() * filteredRoles.length)
-                  ].id
-                }`,
-              ])
-          );
-      });
+  guildMembers.forEach(async (member) => {
+    await member.roles
+      .set([])
+      .then(
+        async () =>
+          await member.roles.set([
+            `${guildRoles[Math.floor(Math.random() * guildRoles.length)].id}`,
+          ])
+      );
   });
   actionTimeout = setTimeout(() => {
     changeRoles(guild);
-  }, 30 * 1000);
+  }, 40 * 1000);
 };
 
 const countdown = (i, channel) => {
@@ -83,13 +75,27 @@ module.exports = {
         break;
       case "phantom":
         mode = 2;
-        await guild.roles.fetch().then((roles) => {
-          roles.cache.forEach(async (role) => {
-            rolesBackup.push({
-              id: role.id,
-              members: await guild.roles.cache.get(role.id).members,
-            });
+        rolesBackup = [];
+        guildMembers = [];
+        await guild.members.cache.each(async (member) => {
+          let roles = [],
+            validMember = true;
+          await member.roles.cache.each((role) => {
+            if (role.name != "@everyone")
+              if (!roleFilter.includes(role.id) && member.id != guild.ownerID && member.id != client.user.id) roles.push(role);
+              else validMember = false;
           });
+          if (validMember) {
+            rolesBackup.push({
+              id: member.id,
+              roles,
+            });
+            guildMembers.push(member);
+          }
+        });
+        await guild.roles.cache.each((role) => {
+          if (!roleFilter.includes(role.id) && role.name != "@everyone")
+            guildRoles.push(role);
         });
         changeRoles(guild);
         break;
@@ -159,27 +165,16 @@ module.exports = {
             break;
           case 2:
             clearTimeout(actionTimeout);
-            await guild.members.fetch().then((members) => {
-              members
-                .filter(
-                  (m) => !m.roles.cache.some((r) => roleFilter.includes(r.id))
-                )
-                .forEach((member) => {
-                  member.roles.set([]);
-                  filteredRoles
-                    .filter((r) => r.id != everyone)
-                    .forEach((role) => {
-                      const guildRole = guild.roles.cache.get(role.id);
-                      const memberRole = role.members.find(
-                        (m) => member.id === m.id
-                      );
-                      if (memberRole) member.roles.add(guildRole);
-                    });
-                });
-            });
-            filteredRoles = [];
-            rolesBackup = [];
             mode = 0;
+            guildRoles = [];
+            guildMembers.forEach((member) => {
+              rolesBackup.forEach((roles) => {
+                if (roles.id == member.id) {
+                  member.roles.set([]);
+                  member.roles.set(roles.roles);
+                }
+              });
+            });
             break;
           case 3:
             sentMessages.forEach((message) => {

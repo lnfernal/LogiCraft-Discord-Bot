@@ -79,12 +79,12 @@ module.exports = (client, commandOptions, dirName) => {
   client.on("message", (message) => {
     const { member, content, guild } = message;
 
-    if (
+    /*if (
       message.guild.id != "666295714724446209" ||
       message.mentions.has(client.user.id) ||
       message.content.includes("824989001999712337")
     )
-      return; // protecc logibot
+      return; // protecc logibot*/
     for (const alias of commands) {
       const command = `${prefix}${alias.toLowerCase()}`;
 
@@ -130,7 +130,7 @@ module.exports = (client, commandOptions, dirName) => {
         // ensure the user doesn't run command too quickly
         let cooldownString = "";
         if (cooldown > 0 && recentlyRan.includes(cooldownString)) {
-          message.channel.send("Este comando está en cooldown :P");
+          message.channel.send("Espera un poco antes de usarlo de nuevo");
           return;
         }
 

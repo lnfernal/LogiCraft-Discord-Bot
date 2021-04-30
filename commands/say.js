@@ -3,7 +3,7 @@ module.exports = {
   expectedArgs: "<content>",
   minArgs: 1,
   maxArgs: 199,
-  cooldown: 2,
+  cooldown: 5,
   callback: (message, arguments, text, client) => {
     message.channel.send(text);
   },
