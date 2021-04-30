@@ -9,7 +9,7 @@ module.exports = {
   cooldown: 2,
   requiredRoles: ["666297857929642014"],
   callback: async (message, arguments, text, client) => {
-    const guildId = "829448956417015828",
+    const guildId = "666295714724446209",
       desiredChannelName = arguments[0],
       math = require("../utils/math.js");
     const guild = client.guilds.cache.get(guildId);
