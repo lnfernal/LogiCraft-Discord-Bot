@@ -36,7 +36,7 @@ module.exports.checkMute = async (client, member) => {
     current: true,
   });
   if (currentMute) {
-    const role = guild.role.cache.find((role) => {
+    const role = guild.roles.cache.find((role) => {
       return role.id == mutedRoleId;
     });
     if (role) {
