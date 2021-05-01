@@ -1,5 +1,5 @@
 const muteSchema = require("../schemas/mute-schema.js");
-const mutedRoleId = "835455742391222282";
+const mutedRoleId = "788187970930343976";
 
 module.exports.scheduledCheck = async (client) => {
   const checkMutes = async () => {
