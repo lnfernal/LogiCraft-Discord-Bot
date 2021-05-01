@@ -12,6 +12,6 @@ module.exports = {
         `**${message.member.displayName}**, necesitas estar en un canal de voz`
       );
     let audio = await client.player.play(message, text);
-    if (audio) await message.channel.send(`${emojis[keys[Math.floor(Math.random() * keys.length)]]} Reproduciendo **${audio.name}**`);
+    if (audio) await message.channel.send(`${audio.name.includes("Pigstep") ? emojis.musicDiscPigstep : emojis[keys[Math.floor(Math.random() * keys.length)]]} Reproduciendo **${audio.name}**`);
   },
 };
