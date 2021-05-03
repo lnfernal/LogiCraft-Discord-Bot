@@ -174,7 +174,7 @@ module.exports = {
             setTimeout(() => {
               guildMembers.forEach(async (member, i) => {
                  rolesBackup.forEach(async (roles) => {
-                    if (roles.id == member.id) {
+                    if (roles.id == member.id) 
                     setTimeout(async () => {
                       await member.roles.set([]).then(async () => {
                         await member.roles.set(roles.roles)
