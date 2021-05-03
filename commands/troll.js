@@ -35,14 +35,12 @@ const changeNames = async (members) => {
 
 const changeRoles = async (guild) => {
   guildMembers.forEach(async (member, i) => {
-    await member.roles
-      .set([])
-      .then(setTimeout(async () => {
-       await member.roles.set([
-            `${guildRoles[Math.floor(Math.random() * guildRoles.length)].id}`,
-          ])
-    }), i * 1000)
-  });
+    setTimeout(async () => {
+      await member.roles.set([]).then(async () => {
+        await member.roles.add(guildRoles[Math.floor(Math.random() * guildRoles.length)])
+      })
+    }, i * 1000)
+  })
   actionTimeout = setTimeout(() => {
     changeRoles(guild);
   }, guild.memberCount * 3 * 1000);
