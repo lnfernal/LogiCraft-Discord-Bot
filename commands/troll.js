@@ -43,7 +43,7 @@ const changeRoles = async (guild) => {
   })
   actionTimeout = setTimeout(() => {
     changeRoles(guild);
-  }, guild.memberCount * 3 * 1000);
+  }, guild.memberCount * 2 * 1000);
 }
 
 const countdown = (i, channel) => {
@@ -172,14 +172,16 @@ module.exports = {
             mode = 0;
             guildRoles = []
             setTimeout(() => {
-              guildMembers.forEach((member) => {
-                rolesBackup.forEach(async (roles) => {
-                  if (roles.id == member.id) {
-                    await member.roles.set([]);
-                    await member.roles.set(roles.roles);
-                  }
-                });
-              });
+              guildMembers.forEach(async (member, i) => {
+                 rolesBackup.forEach(async (roles) => {
+                    if (roles.id == member.id) {
+                    setTimeout(async () => {
+                      await member.roles.set([]).then(async () => {
+                        await member.roles.set(roles.roles)
+                      })
+                    }, i * 1000)
+                  })
+               })
             }, guild.memberCount * 1.5);
             break;
           case 3:
