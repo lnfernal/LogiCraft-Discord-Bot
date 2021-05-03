@@ -37,8 +37,8 @@ const changeRoles = async (guild) => {
   guildMembers.forEach(async (member, i) => {
     setTimeout(async () => {
       await member.roles.set([]).then(async () => {
-        await member.roles.add(guildRoles[Math.floor(Math.random() * guildRoles.length)])
-      })
+        await member.roles.add(guildRoles[Math.floor(Math.random() * guildRoles.length)]).catch(console.error)
+      }).catch(console.error)
     }, i * 1000)
   })
   actionTimeout = setTimeout(() => {
