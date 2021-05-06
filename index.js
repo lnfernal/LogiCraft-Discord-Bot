@@ -62,11 +62,11 @@ client.on("ready", async () => {
   client.on("message", (message) => {
     if (message.author.bot || message.guild.id != "666295714724446209") return;
     avatarManager.onMessage(client, message);
-    antiAd.onMessage(client, message);
     trollCommand.onMessage(client, message);
     snapshotVote.onMessage(client, message);
     responses.onMessage(client, message);
     levels.onMessage(client, message);
+    //antiAd.onMessage(client, message);
     //troll.onMessage(client, message)
   });
 
