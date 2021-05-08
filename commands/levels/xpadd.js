@@ -1,4 +1,7 @@
-const levels = require("../../handlers/levels.js");
+const levels = require("../../handlers/levels.js")
+require("module-alias/register")
+const messageHandler = require("@messages")
+const s = require("@string")
 
 module.exports = {
   commands: "xpadd",
@@ -7,44 +10,54 @@ module.exports = {
   expectedArgs: "<user> <amount>",
   permissions: "ADMINISTRATOR",
   callback: async (message, arguments, text, client) => {
-    const target = message.mentions.users.first() || message.author;
-    const member = message.guild.members.cache.get(target.id);
-    const guildId = message.guild.id;
-    const userId = target.id;
-    const xpToAdd = arguments[1];
+    const target =
+      message.mentions.users.first() ||
+      (await s.getUserByString(arguments[0], message.member))
+    const targetMember = message.guild.members.cache.get(target.id)
+    var msg
+    const xpToAdd = arguments[1]
+    const maxXPAdd = 400000
 
-    if (!target) {
-      const errorMsg = [
-        `**${message.member.displayName}**, tienes que mencionar al usuario :P`,
-        `**${message.member.displayName}**, eso no parece una mención...`,
-        `**${message.member.displayName}**, prueba mencionando al usuario con su @`,
-      ];
+    if (!target)
       message.channel.send(
-        errorMsg[Math.floor(Math.random() * errorMsg.length)]
-      );
-      return;
-    }
+        s.interpolate(await messageHandler("missingUser", member), {
+          username: member.user.username,
+        })
+      )
     if (isNaN(xpToAdd) && !arguments[2]) {
       message.channel.send(
-        `**${message.member.displayName}**, introduce un número válido de XP`
-      );
-      return;
+        s.interpolate(await messageHandler("xpWrong", member), {
+          username: member.user.username,
+        })
+      )
+      return
     }
     if (xpToAdd > 400000) {
       message.channel.send(
-        `**${message.member.displayName}**, el máximo es de 400.000XP`
-      );
-      return;
+        s.interpolate(await messageHandler("xpCap", member), {
+          username: member.user.username,
+          maxXPAdd,
+        })
+      )
+      return
     }
     levels.addXpCall(
       member,
       xpToAdd,
       message,
       (msg = arguments[2] ? arguments[2] : undefined)
-    );
+    )
     const ann = arguments[2]
-      ? `**${message.member.displayName}**, has dado a <@${userId}> la XP equivalente a **${msg} mensajes**`
-      : `**${message.member.displayName}**, has dado a <@${userId}> **${xpToAdd}XP**`;
-    message.channel.send(ann);
+      ? s.interpolate(await messageHandler("xpGivenMsg", member), {
+          username: member.user.username,
+          targetUsername: target.username,
+          msg,
+        })
+      : s.interpolate(await messageHandler("xpGiven", member), {
+          username: member.user.username,
+          targetUsername: target.username,
+          xpToAdd,
+        })
+    message.channel.send(ann)
   },
-};
+}

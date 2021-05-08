@@ -1,5 +1,5 @@
-module.exports = (client) => {
-  const emojis = require("./emojis.js").logibotEmojis(client);
+module.exports = client => {
+  const emojis = require("./emojis.js").logibotEmojis(client)
   const items = {
     dirtPickaxe: {
       id: 0,
@@ -73,6 +73,6 @@ module.exports = (client) => {
       description: "WIP",
       amount: 0,
     },
-  };
-  return items;
-};
+  }
+  return items
+}

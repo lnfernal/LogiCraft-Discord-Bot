@@ -3,8 +3,9 @@ module.exports = {
   expectedArgs: "<content>",
   minArgs: 1,
   maxArgs: 199,
-  cooldown: 5,
   callback: (message, arguments, text, client) => {
-    message.channel.send(text.replace(/^<@!?(\d+)>$/,"")).catch(console.error);
+    message.channel
+      .send(text.replace(/<@!?(\d+)>|^\/+/g, ""))
+      .catch(console.error)
   },
-};
+}

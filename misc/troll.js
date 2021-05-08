@@ -56,7 +56,7 @@ var emojiFace = [
   "😇",
   "😏",
   "😑",
-];
+]
 
 var emojiChar = {
   a: "🇦",
@@ -100,27 +100,27 @@ var emojiChar = {
   "*": "*️⃣",
   "!": "❗",
   "?": "❓",
-};
+}
 
 module.exports = {
   onMessage: async (client, message) => {
     const emojis = require("../utils/emojis.js").guildEmojis(
       client,
       message.guild.id
-    );
+    )
     if (
       message.member.id === "458738156695584770" &&
       message.content.toLowerCase().includes("sispi")
     ) {
       message.channel.send(
         `**${message.member.displayName}**, deja a Sisplau. Aviso. Desplegaré mis armas`
-      );
+      )
     } else if (message.member.id === "null") {
       for (i = 0; i < 10; i++) {
         await message.react(
           emojiFace[Math.floor(Math.random() * emojis.length)]
-        );
+        )
       }
     }
   },
-};
+}

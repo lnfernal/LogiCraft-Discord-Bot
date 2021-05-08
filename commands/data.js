@@ -1,14 +1,17 @@
-const profileSchema = require("../schemas/profile-schema.js");
-const Discord = require("discord.js");
+const profileSchema = require("../schemas/profile-schema.js")
+const Discord = require("discord.js")
+require("module-alias/register")
+const messageHandler = require("@messages")
+const s = require("@string")
 
 const getUserData = async (guildId, member) => {
-  const userId = member.id;
+  const userId = member.id
   const result = await profileSchema.findOne({
     guildId,
     userId,
-  });
+  })
   if (result) {
-    const { name, totalXp, level, lover, xp } = result;
+    const { name, totalXp, level, lover, xp } = result
     let user = {
       userId,
       name,
@@ -16,8 +19,8 @@ const getUserData = async (guildId, member) => {
       totalXp,
       level,
       lover,
-    };
-    return user;
+    }
+    return user
   } else if (true) {
     let user = {
       userId: member.id,
@@ -26,35 +29,35 @@ const getUserData = async (guildId, member) => {
       totalXp: 0,
       level: 0,
       lover: 0,
-    };
-    return user;
+    }
+    return user
   }
-};
+}
 
-var allUsersColumn1 = (users) => {
-  var content = ``;
+var allUsersColumn1 = users => {
+  var content = ``
 
-  for (i = 0; i < users.length; i++) content += `${users[i].name}\n`;
-  return content;
-};
+  for (i = 0; i < users.length; i++) content += `${users[i].name}\n`
+  return content
+}
 
-var allUsersColumn2 = (users) => {
-  var content = ``;
+var allUsersColumn2 = users => {
+  var content = ``
 
   for (i = 0; i < users.length; i++)
     content += `${new Intl.NumberFormat().format(
       users[i].totalXp
-    )} (${new Intl.NumberFormat().format(users[i].level)})\n`;
-  return content;
-};
+    )} (${new Intl.NumberFormat().format(users[i].level)})\n`
+  return content
+}
 
-var allUsersColumn3 = (users) => {
-  var content = ``;
+var allUsersColumn3 = users => {
+  var content = ``
 
   for (i = 0; i < users.length; i++)
-    content += `${new Intl.NumberFormat().format(users[i].lover)}\n`;
-  return content;
-};
+    content += `${new Intl.NumberFormat().format(users[i].lover)}\n`
+  return content
+}
 
 module.exports = {
   commands: "data",
@@ -63,12 +66,9 @@ module.exports = {
   maxArgs: 50,
   cooldown: 1,
   callback: async (message, arguments, text, client) => {
-    var { guild, guildId = guild.id, channel, member } = message;
-    const emojis = await require("../utils/emojis").guildEmojis(
-      client,
-      guildId
-    );
-    const logiEmojis = await require("../utils/emojis").logibotEmojis(client);
+    var { guild, guildId = guild.id, channel, member } = message
+    const emojis = await require("../utils/emojis").guildEmojis(client, guildId)
+    const logiEmojis = await require("../utils/emojis").logibotEmojis(client)
     switch (arguments[0]) {
       case "get":
         switch (arguments[1]) {
@@ -77,22 +77,22 @@ module.exports = {
               case "@a":
                 if (arguments[3]) {
                 } else {
-                  let usersBad = [];
-                  var needed;
-                  await guild.members.fetch().then(async (members) => {
-                    const promises = [];
-                    members.forEach((member) => {
-                      promises.push(getUserData(guildId, member));
-                    });
-                    usersBad = await Promise.all(promises);
-                  });
-                  let users = usersBad.filter((user) => user !== undefined);
+                  let usersBad = []
+                  var needed
+                  await guild.members.fetch().then(async members => {
+                    const promises = []
+                    members.forEach(member => {
+                      promises.push(getUserData(guildId, member))
+                    })
+                    usersBad = await Promise.all(promises)
+                  })
+                  let users = usersBad.filter(user => user !== undefined)
                   const embed = new Discord.MessageEmbed().setTitle(
                     `Información de todos los miembros de ${guild.name}`
-                  );
-                  users.forEach((user) => {
-                    needed = Math.floor(Math.pow(user.level, 2.5) * 10);
-                    var _member = guild.members.cache.get(user.userId);
+                  )
+                  users.forEach(user => {
+                    needed = Math.floor(Math.pow(user.level, 2.5) * 10)
+                    var _member = guild.members.cache.get(user.userId)
                     embed
                       .addField(
                         `__${_member.displayName} (${user.name})__`,
@@ -108,25 +108,25 @@ module.exports = {
                           user.xp / needed
                         }%)**\nParejas: **${user.lover}**`
                       )
-                      .setColor("#DF5FFF");
-                  });
-                  channel.send(embed);
+                      .setColor("#DF5FFF")
+                  })
+                  channel.send(embed)
                 }
-                break;
+                break
               case "@e":
-                break;
+                break
             }
-            break;
+            break
           case "server":
             if (arguments[2]) {
               switch (arguments[2]) {
                 case "emojis":
-                  var emojiString = "";
+                  var emojiString = ""
                   for (let emoji in emojis) {
-                    emojiString += `${emojis[emoji]}`;
+                    emojiString += `${emojis[emoji]}`
                   }
-                  channel.send(emojiString);
-                  break;
+                  channel.send(emojiString)
+                  break
               }
             } else {
               const embed = new Discord.MessageEmbed()
@@ -153,16 +153,18 @@ module.exports = {
                   }
                 )
                 .setColor("#DF5FFF")
-                .setThumbnail(guild.iconURL());
-              channel.send(embed);
+                .setThumbnail(guild.iconURL())
+              channel.send(embed)
             }
-            break;
+            break
           default:
             channel.send(
-              `**${message.member.displayName}**, los tipos de objeto son **entity** y **server**`
-            );
+              s.interpolate(await messageHandler("dataType", member), {
+                username: member.user.username,
+              })
+            )
         }
-        break;
+        break
       case "set":
         if (member.hasPermission("ADMINISTRATOR")) {
           switch (arguments[1]) {
@@ -173,47 +175,57 @@ module.exports = {
                     switch (arguments[3]) {
                       case "name":
                         if (arguments[4]) {
-                          for (var i = 0; i < 4; i++) arguments.shift();
-                          let name = arguments.join(" ");
-                          await guild.members.fetch().then(async (members) => {
+                          for (var i = 0; i < 4; i++) arguments.shift()
+                          let name = arguments.join(" ")
+                          await guild.members.fetch().then(async members => {
                             members = members.filter(
-                              (m) =>
+                              m =>
                                 m.id !== guild.ownerID &&
                                 m.id !== client.user.id
-                            );
-                            const promises = [];
-                            members.forEach((member) => {
+                            )
+                            const promises = []
+                            members.forEach(member => {
                               promises.push(
                                 member.setNickname(
                                   name.startsWith("reset") ? "" : name
                                 )
-                              );
-                            });
-                            await Promise.all(promises);
-                          });
+                              )
+                            })
+                            await Promise.all(promises)
+                          })
                         } else {
                           channel.send(
-                            `**${message.member.displayName}**, especifica un nombre a poner`
-                          );
+                            s.interpolate(
+                              await messageHandler(
+                                "missingDataNameProperty",
+                                member
+                              ),
+                              { username: member.user.username }
+                            )
+                          )
                         }
-                        break;
+                        break
                     }
                   } else {
                   }
-                  break;
+                  break
               }
-              break;
+              break
           }
         } else {
           channel.send(
-            `**${message.member.displayName}**, necesitas ser Administrador`
-          );
+            s.interpolate(await messageHandler("adminNeeded", member), {
+              username: member.user.username,
+            })
+          )
         }
-        break;
+        break
       default:
         channel.send(
-          `**${message.member.displayName}**, las acciones a realizar son **set** y **get**`
-        );
+          s.interpolate(await messageHandler("dataActions", member), {
+            username: member.user.username,
+          })
+        )
     }
   },
-};
+}

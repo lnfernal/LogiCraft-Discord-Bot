@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const reqString = {
   type: String,
   required: true,
-};
+}
 
 const muteSchema = mongoose.Schema(
   {
@@ -26,6 +26,6 @@ const muteSchema = mongoose.Schema(
   {
     timestamps: true,
   }
-);
+)
 
-module.exports = mongoose.model("mutes", muteSchema);
+module.exports = mongoose.model("mutes", muteSchema)

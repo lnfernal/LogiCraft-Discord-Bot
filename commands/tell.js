@@ -1,4 +1,4 @@
-const ss = require("string-similarity");
+const ss = require("string-similarity")
 
 module.exports = {
   commands: "tell",
@@ -9,43 +9,42 @@ module.exports = {
   cooldown: 2,
   requiredRoles: ["666297857929642014"],
   callback: async (message, arguments, text, client) => {
-    const guildId = "666295714724446209",
-      desiredChannelName = arguments[0],
-      math = require("../utils/math.js");
-    const guild = client.guilds.cache.get(guildId);
+    ;(desiredChannelName = arguments[0]), (math = require("../utils/math.js"))
+    const { guild } = message
     let channelNames = [],
       channelIds = [],
-      desiredChannelId;
+      desiredChannelId
 
-    await client.channels.cache.each((channel) => {
+    await client.channels.cache.each(channel => {
       if (channel.type == "text") {
-        channelNames.push(channel.name);
+        channelNames.push(channel.name)
         channelIds.push({
           name: channel.name,
           id: channel.id,
-        });
+        })
       }
-    });
+    })
     const similarChannel = ss.findBestMatch(desiredChannelName, channelNames)
-      .bestMatch.target;
-    channelIds.forEach((c) => {
-      if (c.name === similarChannel) {
-        desiredChannelId = c.id;
-        return;
+      .bestMatch.target
+    channelIds.forEach(c => {
+      if (c.name == similarChannel) {
+        desiredChannelId = c.id
       }
-    });
-    const desiredChannel = guild.channels.cache.get(desiredChannelId);
+    })
+    const desiredChannel = guild.channels.cache.get(desiredChannelId)
     if (
       ss.compareTwoStrings(desiredChannelName, similarChannel) < 0.1 ||
       desiredChannel.type != "text"
     )
-      return;
-    arguments.shift();
-    msg = arguments.join(" ");
-    desiredChannel.startTyping();
+      return
+    arguments.shift()
+    msg = arguments.join(" ")
+    desiredChannel.startTyping()
     setTimeout(() => {
-      desiredChannel.stopTyping();
-      desiredChannel.send(msg.replace(/^<@!?(\d+)>$/,"")).catch(console.error);
-    }, (msg.length / 200) * 60000 * math.clamp(Math.random() * 1 + 0.2, 0.2, 0.5));
+      desiredChannel.stopTyping()
+      desiredChannel.send(
+        msg.replace(/<@!?(\d+)>|^\/+/g, "").catch(console.error)
+      )
+    }, (msg.length / 200) * 60000 * math.clamp(Math.random() * 1 + 0.2, 0.2, 0.5))
   },
-};
+}

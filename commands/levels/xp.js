@@ -1,68 +1,78 @@
-const mongo = require("../../utils/mongo.js");
-const Discord = require("discord.js");
-const profileSchema = require("../../schemas/profile-schema.js");
-const progressBarPrecision = 25;
+const mongo = require("../../utils/mongo.js")
+const Discord = require("discord.js")
+const profileSchema = require("../../schemas/profile-schema.js")
+require("module-alias/register")
+const messageHandler = require("@messages")
+const s = require("@string")
+const progressBarPrecision = 25
 
-function xpEmbed(message, xp, totalXp, level, needed) {
+const xpEmbed = async (message, target, xp, totalXp, level, needed) => {
+  const targetMember = message.guild.members.cache.get(target.id)
   const progressMade = () => {
-    var i = 0;
-    var progressBar = `**[`;
+    var i = 0
+    var progressBar = `**[`
     for (i; i < progressBarPrecision; i++) {
       if (i / progressBarPrecision < xp / needed) {
-        progressBar += "■";
+        progressBar += "■"
       } else {
-        break;
+        break
       }
     }
     for (i; i < progressBarPrecision; i++) {
-      progressBar += "–";
+      progressBar += "–"
     }
-    progressBar += "]**";
-    return progressBar;
-  };
+    progressBar += "]**"
+    return progressBar
+  }
+  progressMadeCalc = progressMade()
   const embed = new Discord.MessageEmbed()
     .setColor("#DF5FFF")
-    .setTitle(`XP de ${message.member.displayName}`)
-    .setDescription(
-      `Nivel: **${level}**\nTotal XP: **${new Intl.NumberFormat().format(
-        totalXp
-      )}**XP\n\nProgreso para nivel ${
-        level + 1
-      }:\n**${new Intl.NumberFormat().format(
-        xp
-      )} / ${new Intl.NumberFormat().format(needed)}**XP\n${progressMade()} **${
-        Math.round((xp / needed) * 1000) / 10
-      }%**`
+    .setTitle(
+      s.interpolate(await messageHandler("xpTitle", targetMember), {
+        username: target.username,
+      })
     )
-    .setThumbnail(message.author.avatarURL());
-  message.channel.send(embed);
+    .setDescription(
+      s.interpolate(await messageHandler("xp", targetMember), {
+        level,
+        xp,
+        needed,
+        totalXp,
+        progressMade: progressMadeCalc,
+      })
+    )
+    .setThumbnail(target.avatarURL())
+  message.channel.send(embed)
 }
 
 module.exports = {
   commands: "xp",
   expectedArgs: "",
-  permissionError: "no tienes los permisos necesarios :c",
-  minArgs: 0,
-  maxArgs: 0,
   callback: async (message, arguments, text, client) => {
-    const target = message.mentions.users.first() || message.author;
-    const targetId = target.id;
-    const guildId = message.guild.id;
-    const userId = target.id;
+    const target =
+      message.mentions.users.first() ||
+      (await s.getUserByString(
+        arguments[0] ? arguments[0] : ".",
+        message.member
+      )) ||
+      message.author
+    const guildId = message.guild.id
+    const userId = target.id
 
     const result = await profileSchema.findOne({
       guildId,
       userId,
-    });
+    })
     if (result) {
-      const { xp, totalXp, level } = result;
+      const { xp, totalXp, level } = result
       xpEmbed(
         message,
+        target,
         xp,
         totalXp,
         level,
         Math.floor(Math.pow(level, 2.5) * 10)
-      );
+      )
     }
   },
-};
+}

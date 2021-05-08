@@ -1,74 +1,74 @@
-const sadAvatarCooldown = 1000 * 60 * 60 * 3;
-const happyAvatarCooldown = 1000 * 60 * 40;
-const cooldownCooldown = 1000 * 60 * 10;
-var timeoutHappy;
-var timeoutSad;
-var timeoutCooldown;
-var cooldown = false;
-var avatarIsSad = false;
+const sadAvatarCooldown = 1000 * 60 * 60 * 3
+const happyAvatarCooldown = 1000 * 60 * 40
+const cooldownCooldown = 1000 * 60 * 10
+var timeoutHappy
+var timeoutSad
+var timeoutCooldown
+var cooldown = false
+var avatarIsSad = false
 
-setHappyAvatar = (client) => {
-  console.log("[!] avatar-happy loaded");
-  setCooldown();
-  client.user.setAvatar("./avatar-manager/images/avatar-happy.jpg");
-};
+setHappyAvatar = client => {
+  console.log("[!] avatar-happy loaded")
+  setCooldown()
+  client.user.setAvatar("./avatar-manager/images/avatar-happy.jpg")
+}
 
-setSadAvatar = (client) => {
-  console.log("[!] avatar-sad loaded");
-  avatarIsSad = true;
-  client.user.setAvatar("./avatar-manager/images/avatar-sad.jpg");
-};
+setSadAvatar = client => {
+  console.log("[!] avatar-sad loaded")
+  avatarIsSad = true
+  client.user.setAvatar("./avatar-manager/images/avatar-sad.jpg")
+}
 
-setAngryAvatar = (client) => {
-  console.log("[!] avatar-angry loaded");
-  setCooldown();
-  client.user.setAvatar("./avatar-manager/images/avatar-angry.jpg");
-};
+setAngryAvatar = client => {
+  console.log("[!] avatar-angry loaded")
+  setCooldown()
+  client.user.setAvatar("./avatar-manager/images/avatar-angry.jpg")
+}
 
-setTrollAvatar = (client) => {
-  console.log("[!] avatar-troll loaded");
-  setCooldown();
-  client.user.setAvatar("./avatar-manager/images/avatar-troll.png");
-};
+setTrollAvatar = client => {
+  console.log("[!] avatar-troll loaded")
+  setCooldown()
+  client.user.setAvatar("./avatar-manager/images/avatar-troll.png")
+}
 
 setCooldown = () => {
-  clearTimeout(timeoutCooldown);
-  cooldown = true;
+  clearTimeout(timeoutCooldown)
+  cooldown = true
   timeoutCooldown = setTimeout(() => {
-    cooldown = false;
-  }, cooldownCooldown);
-};
+    cooldown = false
+  }, cooldownCooldown)
+}
 
 module.exports = {
-  init: (client) => {
-    setCooldown();
+  init: client => {
+    setCooldown()
     setTimeout(() => {
-      setHappyAvatar(client);
-    }, cooldownCooldown);
+      setHappyAvatar(client)
+    }, cooldownCooldown)
     timeoutSad = setTimeout(() => {
-      setSadAvatar(client);
-    }, sadAvatarCooldown);
+      setSadAvatar(client)
+    }, sadAvatarCooldown)
   },
 
-  angry: (client) => {
+  angry: client => {
     if (!cooldown) {
-      avatarIsSad = false;
-      setAngryAvatar(client);
-      clearTimeout(timeoutHappy);
+      avatarIsSad = false
+      setAngryAvatar(client)
+      clearTimeout(timeoutHappy)
       timeoutHappy = setTimeout(() => {
-        setHappyAvatar(client);
-      }, happyAvatarCooldown);
+        setHappyAvatar(client)
+      }, happyAvatarCooldown)
     }
   },
 
-  troll: (client) => {
+  troll: client => {
     if (!cooldown) {
-      avatarIsSad = false;
-      setTrollAvatar(client);
-      clearTimeout(timeoutHappy);
+      avatarIsSad = false
+      setTrollAvatar(client)
+      clearTimeout(timeoutHappy)
       timeoutHappy = setTimeout(() => {
-        setHappyAvatar(client);
-      }, happyAvatarCooldown);
+        setHappyAvatar(client)
+      }, happyAvatarCooldown)
     }
   },
 
@@ -79,12 +79,12 @@ module.exports = {
       !message.content.includes("/hornyjail") &&
       !message.content.includes("/troll")
     ) {
-      setHappyAvatar(client);
-      avatarIsSad = false;
+      setHappyAvatar(client)
+      avatarIsSad = false
     }
-    clearTimeout(timeoutSad);
+    clearTimeout(timeoutSad)
     timeoutSad = setTimeout(() => {
-      setSadAvatar(client);
-    }, sadAvatarCooldown);
+      setSadAvatar(client)
+    }, sadAvatarCooldown)
   },
-};
+}

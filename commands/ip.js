@@ -1,19 +1,23 @@
-const Discord = require("discord.js");
+const Discord = require("discord.js")
+require("module-alias/register")
+const messageHandler = require("@messages")
+const s = require("@string")
 
 module.exports = {
   commands: ["ip", "server"],
-  callback: (message, arguments, text, client) => {
-    const { guild } = message;
-    const version = 1.17;
-    const modpack = "";
+  callback: async (message, arguments, text, client) => {
+    const { guild, member } = message
+    const version = "1.17"
+    const requirements = "null"
     message.channel.send(
       new Discord.MessageEmbed()
         .setDescription(
-          `Versión: **${version}**\n${
-            modpack ? `Requerido: [**modpack**](${modpack})\n` : ""
-          }IP: \`000.000.00.00\``
+          `${s.interpolate(await messageHandler("ipDescription", member), {
+            version,
+            requirements,
+          })}`
         )
         .setAuthor(guild.name + " MC Server IP", guild.iconURL())
-    );
+    )
   },
-};
+}

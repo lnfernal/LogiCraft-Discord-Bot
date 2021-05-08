@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const reqString = {
   type: String,
   require: true,
-};
+}
 
 const profileSchema = mongoose.Schema({
   name: reqString,
@@ -33,6 +33,6 @@ const profileSchema = mongoose.Schema({
     type: [Object],
     required: true,
   },
-});
+})
 
-module.exports = mongoose.model("profiles", profileSchema);
+module.exports = mongoose.model("profiles", profileSchema)

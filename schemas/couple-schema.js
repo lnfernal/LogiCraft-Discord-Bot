@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const coupleSchema = mongoose.Schema(
   {
@@ -10,6 +10,6 @@ const coupleSchema = mongoose.Schema(
   {
     timestamps: true,
   }
-);
+)
 
-module.exports = mongoose.model("couple", coupleSchema);
+module.exports = mongoose.model("couple", coupleSchema)

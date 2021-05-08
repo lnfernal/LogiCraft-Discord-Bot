@@ -1,8 +1,11 @@
-const Discord = require("discord.js");
-const coupleSchema = require("../schemas/couple-schema.js");
-const profileSchema = require("../schemas/profile-schema.js");
-const mongo = require("../utils/mongo.js");
-const loverRoleId = "835561996450791484";
+const Discord = require("discord.js")
+require("module-alias/register")
+const messageHandler = require("@messages")
+const s = require("@string")
+const coupleSchema = require("../schemas/couple-schema.js")
+const profileSchema = require("../schemas/profile-schema.js")
+const mongo = require("../utils/mongo.js")
+const loverRoleId = "835561996450791484"
 
 const loveSentences = [
   "Salgamos juntos, yo invito a los besos",
@@ -24,62 +27,70 @@ const loveSentences = [
   "Hagan lo que hagan, no podrán separarnos",
   "Felicidad de dos, envidia de miles",
   "Nuestro plan es disfrutar la vida al máximo y tener miles de aventuras, todas juntos",
-];
+]
 
-const loveEmojis = ["💌", "💕", "🥰", "🌷", "💖", "😍", "💘", "😘"];
+const loveEmojis = ["💌", "💕", "🥰", "🌷", "💖", "😍", "💘", "😘"]
 
-checkDaily = async (coupleData) => {
-  const lastCouple = new Date(coupleData.updatedAt).toDateString();
-  const now = new Date().toDateString();
+checkDaily = async coupleData => {
+  const lastCouple = new Date(coupleData.updatedAt).toDateString()
+  const now = new Date().toDateString()
 
-  if (lastCouple !== now) return true;
-  return false;
-};
+  if (lastCouple !== now) return true
+  return false
+}
 
 module.exports = {
   commands: "couple",
   maxArgs: 0,
   callback: async (message, arguments, text, client) => {
-    const guildId = message.guild.id;
+    const guildId = message.guild.id,
+      { member } = message
     checkDaily(await coupleSchema.findOne({ _id: "0" })).then(
-      async (coupleAvbl) => {
+      async coupleAvbl => {
         if (!coupleAvbl) {
-          message.channel.send("Ya se ha escogido la pareja de hoy");
-          return;
+          message.channel.send(
+            s.interpolate(await messageHandler("coupleDailySpent", member), {
+              username: member.user.name,
+            })
+          )
+          return
         }
-        const guild = message.guild;
-        await guild.members.fetch().then(async (members) => {
-          var arr = [];
-          members = members.filter((m) => !m.user.bot).array();
+        const guild = message.guild
+        await guild.members.fetch().then(async members => {
+          var arr = []
+          members = members.filter(m => !m.user.bot).array()
           if (members.length < 2)
             message.channel.send(
-              "No hay suficientes jugadores para elegir pareja :c"
-            );
+              s.interpolate(
+                await messageHandler("coupleInsuficientMembers", member),
+                { username: member.user.name }
+              )
+            )
           while (arr.length < 2) {
-            var r = Math.floor(Math.random() * members.length);
-            if (!arr.includes(members[r])) arr.push(members[r]);
+            var r = Math.floor(Math.random() * members.length)
+            if (!arr.includes(members[r])) arr.push(members[r])
           }
-          var lover1 = Math.floor(Math.random() * 2);
-          var lover2 = lover1 == 0 ? 1 : 0;
+          var lover1 = Math.floor(Math.random() * 2)
+          var lover2 = lover1 == 0 ? 1 : 0
 
           coupleAnn = `${
             loveEmojis[Math.floor(Math.random() * loveEmojis.length)]
-          }  Pareja del día:`;
+          }  Pareja del día:`
           coupleSentence = `**${arr[lover1].displayName} a ${
             arr[lover2].displayName
           }:** _"${
             loveSentences[Math.floor(Math.random() * loveSentences.length)]
-          }  ${loveEmojis[Math.floor(Math.random() * loveEmojis.length)]}"_`;
+          }  ${loveEmojis[Math.floor(Math.random() * loveEmojis.length)]}"_`
 
           // lover role
-          const loverRole = guild.roles.cache.find((role) => {
-            return role.id == loverRoleId;
-          });
-          arr[lover1].roles.add(loverRole);
-          arr[lover2].roles.add(loverRole);
+          const loverRole = guild.roles.cache.find(role => {
+            return role.id == loverRoleId
+          })
+          arr[lover1].roles.add(loverRole)
+          arr[lover2].roles.add(loverRole)
 
           // remove role
-          var now = new Date();
+          var now = new Date()
           var night = new Date(
             now.getFullYear(),
             now.getMonth(),
@@ -87,16 +98,16 @@ module.exports = {
             0,
             0,
             0
-          );
-          var msTillMidnight = night.getTime() - now.getTime();
-          setTimeout(async () => {
-            await guild.members.fetch().then((members) => {
-              members.forEach(async (member) => {
+          )
+          var msTillMidnight = night.getTime() - now.getTime()
+          setTimeout(async guild => {
+            await guild.members.fetch().then(members => {
+              members.forEach(async member => {
                 if (member.roles.cache.get(loverRoleId))
-                  await member.roles.remove(loverRole);
-              });
-            });
-          }, msTillMidnight);
+                  await member.roles.remove(loverRole)
+              })
+            })
+          }, msTillMidnight)
 
           // add lover punctuation
           await profileSchema
@@ -111,16 +122,16 @@ module.exports = {
                 new: true,
               }
             )
-            .then(async (result) => {
+            .then(async result => {
               if (!result) {
                 await new profileSchema({
                   name: arr[lover1].user.username,
                   guildId,
                   userId: arr[lover1].id,
                   lover,
-                }).save();
+                }).save()
               }
-            });
+            })
           await profileSchema
             .findOneAndUpdate(
               {
@@ -133,16 +144,16 @@ module.exports = {
                 new: true,
               }
             )
-            .then(async (result) => {
+            .then(async result => {
               if (!result) {
                 await new profileSchema({
                   name: arr[lover2].user.username,
                   guildId,
                   userId: arr[lover2].id,
                   lover,
-                }).save();
+                }).save()
               }
-            });
+            })
 
           const embed = new Discord.MessageEmbed()
             .setColor("#ba0001")
@@ -151,15 +162,15 @@ module.exports = {
               `**${arr[0].displayName} + ${arr[1].displayName} =  ${
                 loveEmojis[Math.floor(Math.random() * loveEmojis.length)]
               }**\n\n${coupleSentence}`
-            );
-          message.channel.send(embed);
-        });
+            )
+          message.channel.send(embed)
+        })
         await coupleSchema.findOneAndUpdate(
           { _id: "0" },
           { _id: "0" },
           { upsert: true }
-        );
+        )
       }
-    );
+    )
   },
-};
+}
