@@ -9,7 +9,7 @@ module.exports = {
     const { channel, content } = message
 
     const eachLine = text.split("#")
-    const embed = new Discord.MessageEmbed().setTitle("Encuesta").setFooter(`${message.author.username}`,`${message.author.avatarURL()}`),
+    const embed = new Discord.MessageEmbed().setTitle("Encuesta").setFooter(`${message.author.username}`,`${message.author.avatarURL()}`)
     const eachOption = eachLine[1].split(";")
     var optionsEmoji = "", optionsText = "", emojis = []
     for (const line of eachOption) {
