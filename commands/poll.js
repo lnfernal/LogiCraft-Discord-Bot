@@ -22,7 +22,7 @@ module.exports = {
       }
     }
     embed.addFields(
-        { name: "\u200b", value: optionsEmoji, inline: true },
+        { name: "Encuesta", value: optionsEmoji, inline: true },
         { name: "\u200b", value: optionsText, inline: true },
       )
     message.delete()
