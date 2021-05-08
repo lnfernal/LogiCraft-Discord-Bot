@@ -86,8 +86,8 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
         name: member.displayName,
         guildId,
         userId,
-        xp: 0,
-        totalXp: 0,
+        xp: 2,
+        totalXp: 2,
       },
       { upsert: true, new: true }
     )
