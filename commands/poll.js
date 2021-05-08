@@ -9,20 +9,20 @@ module.exports = {
     const { channel, content } = message
 
     const eachLine = text.split("#")
-    const embed = new Discord.MessageEmbed().setTitle(eachLine[0])
+    const embed = new Discord.MessageEmbed().setTitle("Encuesta")
     const eachOption = eachLine[1].split(";")
     var optionsEmoji = "", optionsText = "", emojis = []
     for (const line of eachOption) {
       if (line.includes("=")) {
         const split = line.split("=")
         const emoji = split[0].trim()
-        optionsEmoji += `${emoji}\n`
-        optionsText += `${split[1]}\n`
+        optionsEmoji += `\n${emoji}`
+        optionsText += `\n${split[1]}`
         emojis.push(emoji)
       }
     }
     embed.addFields(
-        { name: "Encuesta", value: optionsEmoji, inline: true },
+        { name: eachLine[0], value: optionsEmoji, inline: true },
         { name: "\u200b", value: optionsText, inline: true },
       )
     message.delete()
