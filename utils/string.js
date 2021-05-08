@@ -16,7 +16,7 @@ module.exports.getUserByString = async (username, member) => {
   })
   const similarUser = ss.findBestMatch(username, usernames).bestMatch.target
   const desiredUser = await guild.members.cache.find(
-    m => m.user.username == similarUser
+    m => m.user.username.toLowerCase() == similarUser
   )
   if (ss.compareTwoStrings(similarUser, username) < 0.1) return null
   else return desiredUser.user
