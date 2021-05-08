@@ -21,6 +21,8 @@ module.exports = {
         emojis.push(emoji)
       }
     }
+    optionsEmoji += "\n"
+    optionsText += "\n"
     embed.addFields(
         { name: "\u200b", value: optionsEmoji, inline: true },
         { name: "\u200b", value: optionsText, inline: true },
