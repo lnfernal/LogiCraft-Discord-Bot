@@ -15,7 +15,7 @@ module.exports = {
     for (const line of eachOption) {
       if (line.includes("=")) {
         const split = line.split("=")
-        const emoji = split[0]
+        const emoji = split[0].trim()
         description += `${emoji} - **${split[1]}**\n`
         emojis.push(emoji)
       }
