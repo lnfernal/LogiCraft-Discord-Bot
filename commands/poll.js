@@ -22,8 +22,8 @@ module.exports = {
       }
     }
     embed.addFields(
-        { name: "˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞ ", value: optionsEmoji, inline: true },
-        { name: "˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞˞ ", value: optionsText, inline: true },
+        { name: "\u200b", value: optionsEmoji, inline: true },
+        { name: "\u200b", value: optionsText, inline: true },
       )
     message.delete()
     channel.send(embed).then(msg => {
