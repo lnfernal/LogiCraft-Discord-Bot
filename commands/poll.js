@@ -9,7 +9,7 @@ module.exports = {
     const { channel, content } = message
 
     const eachLine = text.split("#")
-    const embed = new Discord.MessageEmbed().setTitle("Encuesta").setFooter(`${message.author.username}`,`${message.author.avatarURL()}`)
+    const embed = new Discord.MessageEmbed().setTitle("Encuesta").setFooter(`${message.author.username}`,`${message.author.avatarURL()}`).setDescription(`**${eachLine[0]}**`)
     const eachOption = eachLine[1].split(";")
     var optionsEmoji = "", optionsText = "", emojis = []
     for (const line of eachOption) {
@@ -22,7 +22,7 @@ module.exports = {
       }
     }
     embed.addFields(
-        { name: eachLine[0], value: optionsEmoji, inline: true },
+        { name: "\u200b", value: optionsEmoji, inline: true },
         { name: "\u200b", value: optionsText, inline: true },
       )
     message.delete()
