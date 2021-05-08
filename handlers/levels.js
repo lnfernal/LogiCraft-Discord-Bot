@@ -41,7 +41,7 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
       } while (numMsg > 0)
       if (prevLevel !== level)
         await spamChannel.send(
-          `**${member.displayName}** ha subido del nivel ${prevLevel} al nivel **${level}**!`
+          `**${member.user.username}** ha subido del nivel ${prevLevel} al nivel **${level}**!`
         )
     } else {
       do {
@@ -55,15 +55,15 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
           xp -= xpNeeded
           if (level % 10 == 0)
             spamChannel.send(
-              `**${member.displayName}** ha llegado a nivel **${level}**!`
+              `**${member.user.username}** ha llegado a nivel **${level}**!`
             )
           else if (level === 666)
             spamChannel.send(
-              `**${member.displayName}** ha llegado a nivel **${level}**  😈!`
+              `**${member.user.username}** ha llegado a nivel **${level}** 😈!`
             )
           else if (level === 69)
             spamChannel.send(
-              `**${member.displayName}** ha llegado a nivel **${level}**  😎!`
+              `**${member.user.username}** ha llegado a nivel **${level}** 😎!`
             )
         }
       } while (xp >= xpNeeded)
@@ -76,7 +76,7 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
       { level, xp, totalXp }
     )
   } else {
-    await spamChannel.send(`**${member.displayName}** ha subido a nivel **1**!`)
+    await spamChannel.send(`**${member.user.username}** ha subido a nivel **1**!`)
     await profileSchema.findOneAndUpdate(
       {
         guildId,
