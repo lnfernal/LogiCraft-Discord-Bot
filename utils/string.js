@@ -9,9 +9,10 @@ String.prototype.interpolate = function (params) {
 module.exports.getUserByString = async (username, member) => {
   let usernames = []
   const { guild } = member
+  username = username.toLowerCase()
 
   await guild.members.cache.each(m => {
-    usernames.push(m.user.username)
+    usernames.push(m.user.username.toLowerCase())
   })
   const similarUser = ss.findBestMatch(username, usernames).bestMatch.target
   const desiredUser = await guild.members.cache.find(
