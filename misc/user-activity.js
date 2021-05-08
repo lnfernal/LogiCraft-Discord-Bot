@@ -9,14 +9,14 @@ module.exports = {
     await require("../utils/emojis.js")
       .logibotEmojis(client)
       .then(logiEmojis => {
-        activityUsersChannel.send(`\`\`\`fix\n${member.user.username} joined the game\n\`\`\`)
+        activityUsersChannel.send(`\`\`\`fix\n${member.user.username} joined the game\n\`\`\``)
       })
   },
   onRemove: async (member, client) => {
     await require("../utils/emojis.js")
       .logibotEmojis(client)
       .then(logiEmojis => {
-        activityUsersChannel.send(`\`\`\`fix\n${member.user.username} left the game\n\`\`\`)
+        activityUsersChannel.send(`\`\`\`fix\n${member.user.username} left the game\n\`\`\``)
       })
   },
 }
