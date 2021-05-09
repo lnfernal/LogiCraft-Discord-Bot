@@ -11,14 +11,14 @@ module.exports = {
   callback: async (message, arguments, text, client) => {
     const desiredChannelName = arguments[0], math = require("../utils/math.js")
     const { guild } = message
-    let channelNames = [],
-      channelIds = [],
+    let channels = [],
+        channelNames = [],
       desiredChannelId
 
     await client.channels.cache.each(channel => {
       if (channel.type == "text") {
-        channelNames.push(channel.name.toLowerCase())
-        channelIds.push({
+        channelNames.push(channel.name)
+        channels.push({
           name: channel.name,
           id: channel.id,
         })
@@ -26,17 +26,18 @@ module.exports = {
     })
     const similarChannel = ss.findBestMatch(desiredChannelName, channelNames)
       .bestMatch.target
-    channelIds.forEach(c => {
+    channels.forEach(c => {
       if (c.name == similarChannel) {
         desiredChannelId = c.id
+        return
       }
     })
     const desiredChannel = guild.channels.cache.get(desiredChannelId)
     if (
-      ss.compareTwoStrings(desiredChannelName, similarChannel) < 0.1 ||
-      desiredChannel.type != "text"
+      ss.compareTwoStrings(desiredChannelName, similarChannel) < 0.1
     )
       return
+    console.log(desiredChannel)
     arguments.shift()
     msg = arguments.join(" ")
     desiredChannel.startTyping()
