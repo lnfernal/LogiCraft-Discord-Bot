@@ -12,7 +12,7 @@ const getUserData = async (guildId, member) => {
     userId,
   })
   if (result) {
-    const { name, totalXp, level } = result
+    const { name, totalXp = 0, level = 0 } = result
     let user = {
       name,
       totalXp,

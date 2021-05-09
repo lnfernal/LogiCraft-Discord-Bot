@@ -76,8 +76,8 @@ module.exports = {
           coupleAnn = `${
             loveEmojis[Math.floor(Math.random() * loveEmojis.length)]
           }  Pareja del día:`
-          coupleSentence = `**${arr[lover1].displayName} a ${
-            arr[lover2].displayName
+          coupleSentence = `**${arr[lover1].user.username} a ${
+            arr[lover2].user.username
           }:** _"${
             loveSentences[Math.floor(Math.random() * loveSentences.length)]
           }  ${loveEmojis[Math.floor(Math.random() * loveEmojis.length)]}"_`
@@ -159,7 +159,7 @@ module.exports = {
             .setColor("#ba0001")
             .setTitle(coupleAnn)
             .setDescription(
-              `**${arr[0].displayName} + ${arr[1].displayName} =  ${
+              `**${arr[0].user.username} + ${arr[1].user.username} =  ${
                 loveEmojis[Math.floor(Math.random() * loveEmojis.length)]
               }**\n\n${coupleSentence}`
             )
