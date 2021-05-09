@@ -21,7 +21,7 @@ const getUserData = async (guildId, member) => {
     return user
   } else if (!member.user.bot) {
     let user = {
-      name: member.user.username.replace("_","\\_"),
+      name: member.user.username,
       totalXp: 0,
       level: 0,
     }
