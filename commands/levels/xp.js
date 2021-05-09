@@ -24,7 +24,6 @@ const xpEmbed = async (message, target, xp, totalXp, level, needed) => {
     progressBar += "]"
     return progressBar
   }
-  progressMadeCalc = progressMade()
   const embed = new Discord.MessageEmbed()
     .setColor("#ff5d8f")
     .setTitle(
@@ -36,9 +35,11 @@ const xpEmbed = async (message, target, xp, totalXp, level, needed) => {
       s.interpolate(await messageHandler("xp", targetMember), {
         level,
         xp: s.formatNumber(xp),
+        xpRaw: xp,
         needed: s.formatNumber(needed),
+        neededRaw: needed,
         totalXp: s.formatNumber(totalXp),
-        progressMade: progressMadeCalc,
+        progressMade: progressMade(),
       })
     )
     .setThumbnail(target.avatarURL())

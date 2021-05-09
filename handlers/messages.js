@@ -105,9 +105,9 @@ module.exports = async (key, member) => {
       },
       xp: {
         spanish:
-          "**Nivel**: ${level}\n**XP**: ${totalXp}\n\n**Progreso para nivel ${level + 1}**:\n${xp} / ${needed}\n${progressMade} ${Math.round((xp / needed) * 1000) / 10}%",
+          "**Nivel**: ${level}\n**XP**: ${totalXp}\n\n**Progreso para nivel ${level + 1}**:\n${xp} / ${needed}\n${progressMade} ${Math.round((xpRaw / neededRaw) * 1000) / 10}%",
         english:
-          "**Level**: ${level}\n**XP**: ${totalXp}\n\n**Progress to level ${level + 1}**:\n${xp} / ${needed}\n${progressMade} ${Math.round((xp / needed) * 1000) / 10}%",
+          "**Level**: ${level}\n**XP**: ${totalXp}\n\n**Progress to level ${level + 1}**:\n${xp} / ${needed}\n${progressMade} ${Math.round((xpRaw / neededRaw) * 1000) / 10}%",
       },
       xpTitle: {
         spanish: "XP de **${username}**",
