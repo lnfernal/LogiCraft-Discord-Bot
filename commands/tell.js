@@ -34,10 +34,9 @@ module.exports = {
     })
     const desiredChannel = guild.channels.cache.get(desiredChannelId)
     if (
-      ss.compareTwoStrings(desiredChannelName, similarChannel) < 0.1
+      ss.compareTwoStrings(desiredChannelName, similarChannel) < 0.1 || !desiredChannel
     )
       return
-    console.log(desiredChannel)
     arguments.shift()
     msg = arguments.join(" ")
     desiredChannel.startTyping()
