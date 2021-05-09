@@ -15,7 +15,7 @@ module.exports = {
         channelNames = [],
       desiredChannelId
 
-    await client.channels.cache.each(channel => {
+    await guild.channels.cache.each(channel => {
       if (channel.type == "text") {
         channelNames.push(channel.name)
         channels.push({
