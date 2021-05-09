@@ -32,7 +32,7 @@ const getUserData = async (guildId, member) => {
 var getNames = users => {
   var names = ``
 
-  for (i = 0; i < users.length; i++) names += `${i + 1}. ${users[i].name.replace("_","-")}\n`
+  for (i = 0; i < users.length; i++) names += `${i + 1}. ${users[i].username.replace("_","\_")}\n`
   return names
 }
 
