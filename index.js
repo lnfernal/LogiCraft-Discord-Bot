@@ -53,7 +53,7 @@ client.on("ready", async () => {
   client.setMaxListeners(40)
   clientUtils.setClient(client)
   avatarManager.init(client)
-  userActivity.init(client.guilds.cache.get(guildId));
+  userActivity.init(client.guilds.cache.get(guildId))
   randomActivity.setActivity(client)
   mute.scheduledCheck(client)
   await readCommands("commands").then(
@@ -62,7 +62,7 @@ client.on("ready", async () => {
 
   // listen for messages
   client.on("message", message => {
-    if (message.author.bot || message.guild.id != guildId) return
+    //if (message.author.bot || message.guild.id != guildId) return
     avatarManager.onMessage(client, message)
     trollCommand.onMessage(client, message)
     snapshotVote.onMessage(client, message)

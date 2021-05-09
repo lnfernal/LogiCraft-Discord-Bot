@@ -1,4 +1,5 @@
 const ss = require("string-similarity")
+const s = require("@string")
 
 String.prototype.interpolate = function (params) {
   const names = Object.keys(params)
@@ -23,4 +24,8 @@ module.exports.getUserByString = async (username, member) => {
 
 module.exports.interpolate = (string, params) => {
   return string.interpolate(params)
+}
+
+module.exports.formatNumber = x => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 }

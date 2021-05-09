@@ -1,10 +1,14 @@
 require("module-alias/register")
 const clientUtils = require("@client")
 
+const getServerLanguage = () => {
+  return "spanish"
+}
+
 const getLanguage = async (roles, member) => {
   if (member.roles.cache.has(roles.spanish.id)) return "spanish"
   else if (member.roles.cache.has(roles.english.id)) return "english"
-  else return "spanish"
+  else return getServerLanguage()
 }
 
 const getProp = (object, path) => {
@@ -71,8 +75,7 @@ module.exports = async (key, member) => {
       hj: {
         spanish:
           "**${username}** ha sido encerrado en la Horny Jail ${hjEmoji}",
-        english:
-          "**${username}** has been jailed in the Horny Jail ${hjEmoji}",
+        english: "**${username}** has been jailed in the Horny Jail ${hjEmoji}",
       },
       missingUser: {
         spanish:
@@ -102,9 +105,9 @@ module.exports = async (key, member) => {
       },
       xp: {
         spanish:
-          "Nivel: **${level}**\nTotal XP: **${new Intl.NumberFormat().format(totalXp)}**XP\n\nProgreso para nivel ${level + 1}:\n**${new Intl.NumberFormat().format(xp)} / ${new Intl.NumberFormat().format(needed)}**XP\n${progressMade} **${Math.round((xp / needed) * 1000) / 10}%**",
+          "**Nivel**: ${level}\n**XP**: ${totalXp}\n\n**Progreso para nivel ${level + 1}**:\n${xp} / ${needed}\n${progressMade} ${Math.round((xp / needed) * 1000) / 10}%",
         english:
-          "Level: **${level}**\nTotal XP: **${new Intl.NumberFormat().format(totalXp)}**XP\n\nProgress to level ${level + 1}:\n**${new Intl.NumberFormat().format(xp)} / ${new Intl.NumberFormat().format(needed)}**XP\n${progressMade} **${Math.round((xp / needed) * 1000) / 10}%**",
+          "**Level**: ${level}\n**XP**: ${totalXp}\n\n**Progress to level ${level + 1}**:\n${xp} / ${needed}\n${progressMade} ${Math.round((xp / needed) * 1000) / 10}%",
       },
       xpTitle: {
         spanish: "XP de **${username}**",
@@ -140,7 +143,10 @@ module.exports = async (key, member) => {
         r.name.toLowerCase().includes("english")
       ),
     },
-    userLanguage = await getLanguage(roles, member),
+    userLanguage =
+      roles.spanish && roles.english
+        ? await getLanguage(roles, member)
+        : getServerLanguage(),
     message = getProp(messages, [`${key}`, `${userLanguage}`])
   return message ? message : "*"
 }

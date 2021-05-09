@@ -84,7 +84,7 @@ module.exports = (client, commandOptions, dirName) => {
       message.mentions.has(client.user.id) ||
       message.content.includes("824989001999712337")
     )
-      return; // protecc logibot
+      return // protecc logibot
     for (const alias of commands) {
       const command = `${prefix}${alias.toLowerCase()}`
 

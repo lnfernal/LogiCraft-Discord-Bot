@@ -43,7 +43,7 @@ module.exports = {
         .setTitle(
           `${s.interpolate(await messageHandler("hj", member), {
             username: target.username,
-            hjEmoji: logibotEmojis.GOTOHORNYJAIL
+            hjEmoji: logibotEmojis.GOTOHORNYJAIL,
           })}`
         )
         .setDescription(hjMsg[Math.floor(Math.random() * hjMsg.length)])

@@ -6,7 +6,10 @@ let actionTimeout,
   rolesBackup = [],
   guildRoles = [],
   guildMembers = [],
-  membersBackup = [],
+  witherMembersNameBackup = [],
+  witherRolesNameBackup = [],
+  witherChannelsNameBackup = [],
+  channelsRolesMembers = 0,
   sentMessages = [],
   channelsBackup = [],
   hChannel
@@ -22,15 +25,43 @@ const roleFilter = [
   "834422510166081537",
 ]
 
-const changeNames = async members => {
-  members.forEach(member => {
-    member.setNickname(
-      membersBackup[Math.floor(Math.random() * membersBackup.length)].username
-    )
+const randomName = () => {
+  const withers = [
+    witherChannelsNameBackup,
+    witherMembersNameBackup,
+    witherRolesNameBackup,
+  ]
+  const wither = withers[Math.floor(Math.random() * withers.length)]
+  return wither[Math.floor(Math.random() * wither.length)].name
+}
+
+const changeNames = async guild => {
+  let witherDelay = 1
+  witherChannelsNameBackup.forEach(async c => {
+    setTimeout(async () => {
+      const channel = await guild.channels.cache.get(c.id)
+      await channel.setName(randomName())
+    }, witherDelay * 1000)
+    witherDelay++
+  })
+  witherMembersNameBackup.forEach(async m => {
+    setTimeout(async () => {
+      const member = await guild.members.cache.get(m.id)
+      await member.setNickname(randomName())
+    }, witherDelay * 1000)
+    witherDelay++
+  })
+  witherRolesNameBackup.forEach(async r => {
+    setTimeout(async () => {
+      const role = await guild.roles.cache.get(r.id)
+      await role.setName(randomName())
+      await role.setColor("#24201a")
+    }, witherDelay * 1000)
+    witherDelay++
   })
   actionTimeout = setTimeout(() => {
-    changeNames(members)
-  }, 10 * 1000)
+    changeNames(guild)
+  }, channelsRolesMembers * 1.2 * 1000)
 }
 
 const changeRoles = async guild => {
@@ -111,20 +142,33 @@ module.exports = {
         break
       case "wither":
         mode = 4
-        let members = []
-        await guild.members.fetch().then(m => {
-          m.filter(m => m.id != guild.ownerID /*&& !m.user.bot*/).forEach(
-            member => {
-              membersBackup.push({
-                id: member.id,
-                name: member.displayName,
-                username: member.user.username,
-              })
-              members.push(member)
-            }
-          )
-          changeNames(members)
+        witherRolesNameBackup = []
+        witherChannelsNameBackup = []
+        witherMembersNameBackup = []
+        channelsRolesMembers = 0
+
+        await guild.members.cache.each(member => {
+          if (member.manageable && member.user != client.user)
+            witherMembersNameBackup.push({
+              id: member.id,
+              name: member.user.username,
+            })
+          channelsRolesMembers++
         })
+        await guild.roles.cache.each(role => {
+          if (!role.managed && role != guild.roles.everyone && role.editable)
+            witherRolesNameBackup.push({
+              id: role.id,
+              name: role.name,
+              color: role.hexColor,
+            })
+          channelsRolesMembers++
+        })
+        await guild.channels.cache.each(channel => {
+          witherChannelsNameBackup.push({ id: channel.id, name: channel.name })
+          channelsRolesMembers++
+        })
+        await changeNames(guild)
         break
       case "herobrine":
         mode = 5
@@ -199,12 +243,33 @@ module.exports = {
             break
           case 4:
             mode = 0
+            witherDelay = 1
+            channel.send("Reestableciendo nombres...")
             clearTimeout(actionTimeout)
-            membersBackup.forEach(async member => {
-              const m = await guild.members.cache.get(member.id)
-              if (m) m.setNickname(member.name)
-            })
-            membersBackup = []
+            setTimeout(() => {
+              witherChannelsNameBackup.forEach(async c => {
+                setTimeout(async () => {
+                  const channel = await guild.channels.cache.get(c.id)
+                  await channel.setName(c.name)
+                }, witherDelay * 1000)
+                witherDelay++
+              })
+              witherMembersNameBackup.forEach(async m => {
+                setTimeout(async () => {
+                  const member = await guild.members.cache.get(m.id)
+                  await member.setNickname("")
+                }, witherDelay * 1000)
+                witherDelay++
+              })
+              witherRolesNameBackup.forEach(async r => {
+                setTimeout(async () => {
+                  const role = await guild.roles.cache.get(r.id)
+                  await role.setName(r.name)
+                  await role.setColor(r.color)
+                }, witherDelay * 1000)
+                witherDelay++
+              })
+            }, channelsRolesMembers * 1000 * 1.5)
             break
           case 5:
             mode = 0
@@ -236,16 +301,16 @@ module.exports = {
         .setColor("#ff0000")
       switch (mode) {
         case 1:
-          embed.setDescription("HOLY EMOJI")
+          embed.setDescription("HOLY EMOJI").setColor("#DEDFE5")
           break
         case 2:
-          embed.setDescription("ROLE REROLL")
+          embed.setDescription("ROLE REROLL").setColor("#132572")
           break
         case 3:
-          embed.setDescription("DAMN SPAM")
+          embed.setDescription("DAMN SPAM").setColor("#0db50d")
           break
         case 4:
-          embed.setDescription("IDENTITY MESSILY")
+          embed.setDescription("IDENTITY MESSILY").setColor("#24201a")
           break
         case 5:
           embed.setDescription(

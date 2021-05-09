@@ -10,10 +10,10 @@ const xpEmbed = async (message, target, xp, totalXp, level, needed) => {
   const targetMember = message.guild.members.cache.get(target.id)
   const progressMade = () => {
     var i = 0
-    var progressBar = `**[`
+    var progressBar = `[`
     for (i; i < progressBarPrecision; i++) {
       if (i / progressBarPrecision < xp / needed) {
-        progressBar += "■"
+        progressBar += "□"
       } else {
         break
       }
@@ -21,12 +21,12 @@ const xpEmbed = async (message, target, xp, totalXp, level, needed) => {
     for (i; i < progressBarPrecision; i++) {
       progressBar += "–"
     }
-    progressBar += "]**"
+    progressBar += "]"
     return progressBar
   }
   progressMadeCalc = progressMade()
   const embed = new Discord.MessageEmbed()
-    .setColor("#DF5FFF")
+    .setColor("#ff5d8f")
     .setTitle(
       s.interpolate(await messageHandler("xpTitle", targetMember), {
         username: target.username,
@@ -35,9 +35,9 @@ const xpEmbed = async (message, target, xp, totalXp, level, needed) => {
     .setDescription(
       s.interpolate(await messageHandler("xp", targetMember), {
         level,
-        xp,
-        needed,
-        totalXp,
+        xp: s.formatNumber(xp),
+        needed: s.formatNumber(needed),
+        totalXp: s.formatNumber(totalXp),
         progressMade: progressMadeCalc,
       })
     )

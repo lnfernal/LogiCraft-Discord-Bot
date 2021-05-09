@@ -1,3 +1,6 @@
+require("module-alias/register")
+const messageHandler = require("@messages")
+const s = require("@string")
 const mongo = require("../../utils/mongo.js")
 const profileSchema = require("../../schemas/profile-schema.js")
 const Discord = require("discord.js")
@@ -29,7 +32,7 @@ const getUserData = async (guildId, member) => {
 var getNames = users => {
   var names = ``
 
-  for (i = 0; i < users.length; i++) names += `${i + 1}. ${users[i].name}\n`
+  for (i = 0; i < users.length; i++) names += `${i + 1}. ${users[i].name.replace("_","-")}\n`
   return names
 }
 
@@ -37,7 +40,7 @@ var getXP = users => {
   var xp = ``
 
   for (i = 0; i < users.length; i++)
-    xp += `${new Intl.NumberFormat().format(users[i].totalXp)}\n`
+    xp += `${s.formatNumber(users[i].totalXp)}\n`
   return xp
 }
 
@@ -45,7 +48,7 @@ var getLevel = users => {
   var level = ``
 
   for (i = 0; i < users.length; i++)
-    level += `${new Intl.NumberFormat().format(users[i].level)}\n`
+    level += `${s.formatNumber(users[i].level)}\n`
   return level
 }
 
@@ -68,7 +71,7 @@ module.exports = {
       return b.totalXp - a.totalXp
     })
     const embed = new Discord.MessageEmbed()
-      .setColor("#DF5FFF")
+      .setColor("#ff5d8f")
       .setTitle(`Ranking de ${guild.name}`)
       .addFields(
         { name: "Nombre", value: getNames(users), inline: true },
