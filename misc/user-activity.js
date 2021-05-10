@@ -2,7 +2,7 @@ let activityUsersChannel
 const Discord = require("discord.js")
 
 module.exports = {
-  init: guild => {
+  init: async guild => {
     activityUsersChannel = await guild.channels.cache.get("666295715726622752")
   },
   onJoin: async (member, client) => {
