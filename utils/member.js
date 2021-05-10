@@ -12,7 +12,7 @@ const download = (url, path, callback) => {
 
 module.exports.getAvatarDominantColor = async user => {
   const url = user.avatarURL()
-  path = `${__dirname}/temp/${user.username}.png`
+  path = `./temp/${user.username}.png`
   let returnColor
   download(url, path, () => {
     color(path, function (err, color) {
