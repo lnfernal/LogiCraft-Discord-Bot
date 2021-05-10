@@ -28,7 +28,7 @@ const xpEmbed = async (message, target, xp, totalXp, level, needed) => {
     .setColor("#ff5d8f")
     .setTitle(
       s.interpolate(await messageHandler("xpTitle", targetMember), {
-        username: target.username.replace("_","\\_"),
+        username: target.username.replace("_", "\\_"),
       })
     )
     .setDescription(

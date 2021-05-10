@@ -1,3 +1,6 @@
+require("module-alias/register")
+const messageHandler = require("@messages")
+const s = require("@string")
 const mongo = require("../utils/mongo.js")
 const profileSchema = require("../schemas/profile-schema.js")
 
@@ -41,7 +44,11 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
       } while (numMsg > 0)
       if (prevLevel !== level)
         await spamChannel.send(
-          `**${member.user.username}** ha subido del nivel ${prevLevel} al nivel **${level}**!`
+          s.interpolate(await messageHandler("levelUpCommand", member), {
+            username: member.user.username,
+            prevLevel,
+            level,
+          })
         )
     } else {
       do {
@@ -55,15 +62,24 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
           xp -= xpNeeded
           if (level % 10 == 0)
             spamChannel.send(
-              `**${member.user.username}** ha llegado a nivel **${level}**!`
+              s.interpolate(await messageHandler("levelUp", member), {
+                username: member.user.username,
+                level,
+              })
             )
           else if (level === 666)
             spamChannel.send(
-              `**${member.user.username}** ha llegado a nivel **${level}** 😈!`
+              s.interpolate(await messageHandler("level666", member), {
+                username: member.user.username,
+                level,
+              })
             )
           else if (level === 69)
             spamChannel.send(
-              `**${member.user.username}** ha llegado a nivel **${level}** 😎!`
+              s.interpolate(await messageHandler("level69", member), {
+                username: member.user.username,
+                level,
+              })
             )
         }
       } while (xp >= xpNeeded)
@@ -76,7 +92,11 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
       { level, xp, totalXp }
     )
   } else {
-    await spamChannel.send(`**${member.user.username}** ha subido a nivel **1**!`)
+    await spamChannel.send(
+      s.interpolate(await messageHandler("level1", member), {
+        username: member.user.username,
+      })
+    )
     await profileSchema.findOneAndUpdate(
       {
         guildId,

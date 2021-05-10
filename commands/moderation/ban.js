@@ -20,7 +20,7 @@ module.exports = {
     if (user) {
       if (
         (!protectedRolesFunc(message, member, protectedRoles) && member) ||
-        user.id === "824989001999712337"
+        user.id === "824989001999712337" || user.id == client.user.id
       )
         return
       if (arguments[1]) {

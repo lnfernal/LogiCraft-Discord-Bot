@@ -53,7 +53,7 @@ client.on("ready", async () => {
   client.setMaxListeners(40)
   clientUtils.setClient(client)
   avatarManager.init(client)
-  userActivity.init(client.guilds.cache.get(guildId))
+  //userActivity.init(client.guilds.cache.get(guildId))
   randomActivity.setActivity(client)
   mute.scheduledCheck(client)
   await readCommands("commands").then(
@@ -67,7 +67,7 @@ client.on("ready", async () => {
     trollCommand.onMessage(client, message)
     snapshotVote.onMessage(client, message)
     responses.onMessage(client, message)
-    levels.onMessage(client, message)
+    //levels.onMessage(client, message)
     //antiAd.onMessage(client, message);
     //troll.onMessage(client, message)
   })

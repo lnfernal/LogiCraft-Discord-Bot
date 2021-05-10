@@ -9,9 +9,14 @@ module.exports = {
     const { channel, content } = message
 
     const eachLine = text.split("#")
-    const embed = new Discord.MessageEmbed().setFooter(`${message.author.username}`,`${message.author.avatarURL()}`).setTitle(`__${eachLine[0]}__`).setAuthor(`Encuesta`)
+    const embed = new Discord.MessageEmbed()
+      .setFooter(`${message.author.username}`, `${message.author.avatarURL()}`)
+      .setTitle(`__${eachLine[0]}__`)
+      .setAuthor(`Encuesta`)
     const eachOption = eachLine[1].split(";")
-    var optionsEmoji = "", optionsText = "", emojis = []
+    var optionsEmoji = "",
+      optionsText = "",
+      emojis = []
     for (const line of eachOption) {
       if (line.includes("=")) {
         const split = line.split("=")
@@ -24,9 +29,9 @@ module.exports = {
     optionsEmoji += "\n\u200b"
     optionsText += "\n\u200b"
     embed.addFields(
-        { name: "\u200b", value: optionsEmoji, inline: true },
-        { name: "\u200b", value: optionsText, inline: true },
-      )
+      { name: "\u200b", value: optionsEmoji, inline: true },
+      { name: "\u200b", value: optionsText, inline: true }
+    )
     message.delete()
     channel.send(embed).then(msg => {
       emojis.forEach(emoji => {

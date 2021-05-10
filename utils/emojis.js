@@ -30,3 +30,14 @@ module.exports.discEmojis = async client => {
   })
   return emojis
 }
+
+module.exports.awardEmojis = async client => {
+  let emojis = {}
+
+  const guild = client.guilds.cache.get("829448956417015828")
+
+  guild.emojis.cache.forEach(emoji => {
+    if (emoji.name.includes("award")) emojis[`${emoji.name}`] = emoji
+  })
+  return emojis
+}

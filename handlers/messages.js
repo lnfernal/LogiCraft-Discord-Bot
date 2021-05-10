@@ -5,9 +5,11 @@ const getServerLanguage = () => {
   return "spanish"
 }
 
-const getLanguage = async (roles, member) => {
-  if (member.roles.cache.has(roles.spanish.id)) return "spanish"
-  else if (member.roles.cache.has(roles.english.id)) return "english"
+const getLanguage = async (member) => {
+  if (await member.roles.cache.find(r => r.name.includes("español")))
+    return "spanish"
+  else if (await member.roles.cache.find(r => r.name.includes("english")))
+    return "english"
   else return getServerLanguage()
 }
 
@@ -30,7 +32,7 @@ module.exports = async (key, member) => {
     messages = {
       test: {
         spanish: "spanish :UUUU",
-        english: "english :UOKJO",
+        english: "english :OOOO",
       },
       activityDefault: {
         spanish:
@@ -134,19 +136,38 @@ module.exports = async (key, member) => {
         english:
           "**${username}**, you've given ${targetUsername} the equivalent XP to **${msg}**",
       },
+      award: {
+        spanish: "**${username}**, tienes que responder a un mensaje",
+        english: "**${username}**, you need to reply to a message",
+      },
+      reactionWrong: {
+        spanish: "**${username}**, no se ha encontrado esa reacción",
+        english: "**${username}**, that reaction doesn't exist",
+      },
+      levelUpCommand: {
+        spanish:
+          "**${username}** ha subido del nivel ${prevLevel} al nivel **${level}**!",
+        english:
+          "**${username}** leveled up from level ${prevLevel} to level **${level}**!",
+      },
+      levelUp: {
+        spanish: "**${username}** ha llegado al nivel **${level}**!",
+        english: "**${username}** arrived to level **${level}**!",
+      },
+      level666: {
+        spanish: "**${username}** ha llegado a nivel **${level}** 😈!",
+        english: "**${username}** arrived to level **${level}** 😈!",
+      },
+      level69: {
+        spanish: "**${username}** ha llegado a nivel **${level}** 😎!",
+        english: "**${username}** arrived to level **${level}** 😎!",
+      },
+      level1: {
+        spanish: "**${username}** ha llegado a nivel **1**!",
+        english: "**${username}** arrived to level **1**!",
+      },
     },
-    roles = {
-      spanish: await guild.roles.cache.find(r =>
-        r.name.toLowerCase().includes("español")
-      ),
-      english: await guild.roles.cache.find(r =>
-        r.name.toLowerCase().includes("english")
-      ),
-    },
-    userLanguage =
-      roles.spanish && roles.english
-        ? await getLanguage(roles, member)
-        : getServerLanguage(),
-    message = getProp(messages, [`${key}`, `${userLanguage}`])
+    userLanguage = await getLanguage(member)
+  message = getProp(messages, [`${key}`, `${userLanguage}`])
   return message ? message : "*"
 }
