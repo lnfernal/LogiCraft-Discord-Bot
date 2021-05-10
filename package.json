@@ -21,12 +21,14 @@
     "@discordjs/opus": "^0.5.0",
     "discord-music-player": "^7.1.3",
     "discord.js": "^12.5.3",
+    "dominant-color": "^0.0.1",
     "dotenv": "^8.2.0",
     "erlpack": "^0.1.3",
     "module-alias": "^2.2.2",
     "mongodb": "^3.6.6",
     "mongoose": "^5.12.4",
     "prettier": "^2.2.1",
+    "request": "^2.88.2",
     "string-similarity": "^4.0.4"
   },
   "_moduleAliases": {
@@ -34,7 +36,8 @@
     "@string": "./utils/string.js",
     "@emojis": "./utils/emojis.js",
     "@messages": "./handlers/messages.js",
-    "@client": "./utils/client.js"
+    "@client": "./utils/client.js",
+    "@user": "./utils/member.js"
   },
   "prettier": {
     "semi": false,

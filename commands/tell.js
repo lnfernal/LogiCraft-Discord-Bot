@@ -9,10 +9,11 @@ module.exports = {
   cooldown: 2,
   requiredRoles: ["666297857929642014"],
   callback: async (message, arguments, text, client) => {
-    const desiredChannelName = arguments[0], math = require("../utils/math.js")
+    const desiredChannelName = arguments[0],
+      math = require("../utils/math.js")
     const { guild } = message
     let channels = [],
-        channelNames = [],
+      channelNames = [],
       desiredChannelId
 
     await guild.channels.cache.each(channel => {
@@ -34,7 +35,8 @@ module.exports = {
     })
     const desiredChannel = guild.channels.cache.get(desiredChannelId)
     if (
-      ss.compareTwoStrings(desiredChannelName, similarChannel) < 0.1 || !desiredChannel
+      ss.compareTwoStrings(desiredChannelName, similarChannel) < 0.1 ||
+      !desiredChannel
     )
       return
     arguments.shift()
@@ -42,9 +44,7 @@ module.exports = {
     desiredChannel.startTyping()
     setTimeout(() => {
       desiredChannel.stopTyping()
-      desiredChannel.send(
-        msg.replace(/<@!?(\d+)>|^\/+/g, "")
-      )
+      desiredChannel.send(msg.replace(/<@!?(\d+)>|^\/+/g, ""))
     }, (msg.length / 200) * 60000 * math.clamp(Math.random() * 1 + 0.2, 0.2, 0.5))
   },
 }

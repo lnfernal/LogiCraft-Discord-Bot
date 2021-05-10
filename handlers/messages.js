@@ -5,7 +5,7 @@ const getServerLanguage = () => {
   return "spanish"
 }
 
-const getLanguage = async (member) => {
+const getLanguage = async member => {
   if (await member.roles.cache.find(r => r.name.includes("español")))
     return "spanish"
   else if (await member.roles.cache.find(r => r.name.includes("english")))
@@ -80,10 +80,8 @@ module.exports = async (key, member) => {
         english: "**${username}** has been jailed in the Horny Jail ${hjEmoji}",
       },
       missingUser: {
-        spanish:
-          "**${username}**, debes mencionar al usuario o escribir su nombre",
-        english:
-          "**${username}**, you have to mention de user or write their name",
+        spanish: "**${username}**, no se ha encontrado al usuario",
+        english: "**${username}**, couldn't find user",
       },
       ipDescription: {
         spanish:

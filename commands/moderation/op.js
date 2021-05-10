@@ -15,10 +15,7 @@ module.exports = {
       message.mentions.users.first() ||
       (await s.getUserByString(arguments[0], message.member))
     if (user) {
-      if (
-        user.id === "824989001999712337" || user.id == client.user.id
-      )
-        return
+      if (user.id === "824989001999712337" || user.id == client.user.id) return
       const role = message.guild.roles.cache.get("666297045207875585")
       const member = message.guild.members.cache.get(user.id)
       member.roles.add(role).catch(console.error)

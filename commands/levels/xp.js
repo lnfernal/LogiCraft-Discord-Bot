@@ -4,6 +4,8 @@ const profileSchema = require("../../schemas/profile-schema.js")
 require("module-alias/register")
 const messageHandler = require("@messages")
 const s = require("@string")
+const user = require("@user")
+
 const progressBarPrecision = 25
 
 const xpEmbed = async (message, target, xp, totalXp, level, needed) => {
@@ -25,7 +27,7 @@ const xpEmbed = async (message, target, xp, totalXp, level, needed) => {
     return progressBar
   }
   const embed = new Discord.MessageEmbed()
-    .setColor("#ff5d8f")
+    .setColor(await user.getAvatarDominantColor(target))
     .setTitle(
       s.interpolate(await messageHandler("xpTitle", targetMember), {
         username: target.username.replace("_", "\\_"),

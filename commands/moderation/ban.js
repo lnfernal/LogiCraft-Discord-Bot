@@ -14,39 +14,34 @@ module.exports = {
   callback: async (message, arguments, text, client) => {
     const user =
       message.mentions.users.first() ||
-      (await s.getUserByString(arguments[0], message.member))
-    const member = message.guild.members.cache.get(user.id)
+      (await s.getUserByString(arguments[0], message.member)) ||
+      (await client.users.fetch(arguments[0]))
     var reason = "_No especificado_"
-    if (user) {
-      if (
-        (!protectedRolesFunc(message, member, protectedRoles) && member) ||
-        user.id === "824989001999712337" || user.id == client.user.id
-      )
-        return
-      if (arguments[1]) {
-        arguments.shift()
-        reason = arguments.join(" ")
-      }
-      try {
-        await member.ban().then(() => {
-          const embed = new Discord.MessageEmbed()
-            .setColor("#ff0000")
-            .setTitle(`${member.displayName} ha sido baneado`)
-            .setDescription(`Motivo: ${reason}\nId: ${member.id}`)
-          message.channel.send(embed)
-        })
-      } catch (e) {
-        message.channel.send("Este usuario ya está baneado")
-      }
-    } else {
-      const errorMsg = [
-        `**${message.member.displayName}**, tienes que mencionar al usuario :P`,
-        `**${message.member.displayName}**, eso no parece una mención...`,
-        `**${message.member.displayName}**, prueba mencionando al usuario con su @`,
-      ]
-      message.channel.send(
-        errorMsg[Math.floor(Math.random() * errorMsg.length)]
-      )
+    if (!user)
+      s.interpolation(messageHandler("missingUser"), {
+        username: message.member.user.username,
+      })
+    if (
+      (!protectedRolesFunc(message, member, protectedRoles) && member) ||
+      user.id === "824989001999712337" ||
+      user.id == client.user.id
+    )
+      return
+    const member = message.guild.members.cache.get(user.id)
+    if (arguments[1]) {
+      arguments.shift()
+      reason = arguments.join(" ")
+    }
+    try {
+      await member.ban().then(() => {
+        const embed = new Discord.MessageEmbed()
+          .setColor("#ff0000")
+          .setTitle(`${member.displayName} ha sido baneado`)
+          .setDescription(`Motivo: ${reason}\nId: ${member.id}`)
+        message.channel.send(embed)
+      })
+    } catch (e) {
+      message.channel.send("Este usuario ya está baneado")
     }
   },
 }

@@ -21,7 +21,8 @@ module.exports = {
       const member = message.guild.members.cache.get(user.id)
       if (
         !protectedRolesFunc(message, member, protectedRoles) ||
-        user.id === "824989001999712337" || user.id == client.user.id
+        user.id === "824989001999712337" ||
+        user.id == client.user.id
       )
         return
       const embed = new Discord.MessageEmbed()

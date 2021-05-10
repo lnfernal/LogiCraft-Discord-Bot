@@ -17,10 +17,7 @@ module.exports = {
     const modRoleId = "666297045207875585"
 
     if (user) {
-      if (
-        user.id === "824989001999712337" || user.id == client.user.id
-      )
-        return
+      if (user.id === "824989001999712337" || user.id == client.user.id) return
       const role = message.guild.roles.cache.get(modRoleId)
       const member = message.guild.members.cache.get(user.id)
       if (member.roles.cache.has(modRoleId))
