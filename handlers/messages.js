@@ -6,9 +6,9 @@ const getServerLanguage = () => {
 }
 
 const getLanguage = async member => {
-  if (await member.roles.cache.find(r => r.name.includes("español")))
+  if (await member.roles.cache.find(r => r.name.toLowerCase().includes("español")))
     return "spanish"
-  else if (await member.roles.cache.find(r => r.name.includes("english")))
+  else if (await member.roles.cache.find(r => r.name.toLowerCase().includes("english")))
     return "english"
   else return getServerLanguage()
 }
