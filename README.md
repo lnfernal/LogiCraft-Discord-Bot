@@ -16,7 +16,7 @@
 
 - For fun
 
-```js
+```
 /couple: selects two random users to be lovers forever
 /coupletop: who are the most loved
 /activity: change current Bot activity
