@@ -1,7 +1,7 @@
 # LogiCraft Discord Bot
 
-[![Discord](https://img.shields.io/discord/666295714724446209?color=%23ff5d8f&label=LogiCraftSMP)](https://discord.gg/mv684bdpwp)
-[![DiscordJS](https://img.shields.io/npm/v/discordjs)](https://discord.gg/mv684bdpwp)
+[![Discord](https://img.shields.io/discord/666295714724446209?label=LogiCraftSMP&logo=discord)](https://discord.gg/mv684bdpwp)
+[![DiscordJS](https://img.shields.io/npm/v/discord.js)](https://github.com/discordjs/discord.js/)
 
 ### Commands
 
