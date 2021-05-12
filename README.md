@@ -12,47 +12,38 @@
 
 # LogiCraft Discord Bot
 
-### Commands
+## Commands
 
-- For fun
-  - **/couple**
+### Economy commands
 
-- General
+**/balance**
+**/shop**
 
-```js
-/ping
-/data
-```
+### XP commands
 
-- For moderation
+**/xp**
+**/xptop**
 
-```js
-/ban
-/pardon: remove ban to a user
-/kick
-/op: give Mod Role
-/deop
-```
+### Music commands
 
-- Music
+**/play**
+**/stop**
+**/pause**
+**/queue**
+**/getqueue**
+**/clearqueue**
+**/shuffle**
 
-```js
-/play
-/stop
-/queue
-/clearqueue
-/getqueue
-/nowplaying
-/shuffle
-```
-
-### Levels
-
-You can level up by texting and reach the maximum level 999. Check your progress with `/xp` and the ranking for all users with `/xptop`
-
-### Functionalities
-
-**anti-ad**: prevents users to spam Discord Channels
-**responses**: reply to some specific messages :P
-**troll**: monkey time
-**user activity alert**: notify when a user joins or leaves the server
+### Other commands
+**/couple**
+**/coupletop**
+**/bonk**
+**/troll**
+**/say**
+**/tell**
+**/data**
+**/ip**
+**/ping**
+**/poll**
+**/award**
+**/activity**
