@@ -1,11 +1,11 @@
 <div align="center">
   <br />
   <p>
-    <a href="https://discord.gg/mv684bdpwp"><img src="https://i.imgur.com/22csyLE.jpeg" width="1000" alt="discord.js" /></a>
+    <a href="https://discord.gg/mv684BdPwP"><img src="https://i.imgur.com/22csyLE.jpeg" width="1000" alt="discord.js" /></a>
   </p>
   <br />
   <p>
-    <a href="https://discord.gg/mv684bdpwp"><img src="https://img.shields.io/discord/666295714724446209?label=LogiCraftSMP&logo=discord" alt="Discord server" /></a>
+    <a href="https://discord.gg/mv684BdPwP"><img src="https://img.shields.io/discord/666295714724446209?label=LogiCraftSMP&logo=discord" alt="Discord server" /></a>
     <a href="https://github.com/discordjs/discord.js/"><img src="https://img.shields.io/npm/v/discord.js" alt="DiscordJS" /></a>
   </p>
 </div>
