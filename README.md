@@ -6,7 +6,7 @@
   <br />
   <p>
     <a href="https://discord.gg/mv684BdPwP"><img src="https://img.shields.io/discord/666295714724446209?label=LogiCraftSMP&logo=discord" alt="Discord server" /></a>
-    <a href="https://github.com/discordjs/discord.js/"><img src="https://img.shields.io/npm/v/discord.jslabelDiscordJS" alt="DiscordJS" /></a>
+    <a href="https://github.com/discordjs/discord.js/"><img src="https://img.shields.io/npm/v/discord.js?label=DiscordJS" alt="DiscordJS" /></a>
   </p>
 </div>
 
