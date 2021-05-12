@@ -14,7 +14,8 @@
 
 ### Commands
 
-- **/couple**
+- For fun
+  - **/couple**
 
 - General
 
