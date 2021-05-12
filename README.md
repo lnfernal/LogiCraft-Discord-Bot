@@ -14,14 +14,11 @@
 
 ### Commands
 
-- For fun
-
-  -```
-/couple: selects two random users to be lovers forever
-/coupletop: who are the most loved
-/activity: change current Bot activity
-/hornyjail: B O N K people
-/say: echo command
+```
+/couple
+```
+```
+/coupletop
 ```
 
 - General
