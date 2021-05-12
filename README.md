@@ -1,6 +1,8 @@
 # LogiCraft Discord Bot
 This Bot contains lots of functionalities.
 
+[![Discord](https://img.shields.io/discord/716390832034414685?logo=discord&style=for-the-badge)](https://discord.gg/mv684bdpwp)
+
 ### Commands
 
 - For fun
