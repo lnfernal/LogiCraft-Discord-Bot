@@ -14,12 +14,7 @@
 
 ### Commands
 
-```
-/couple
-```
-```
-/coupletop
-```
+- **/couple**
 
 - General
 
