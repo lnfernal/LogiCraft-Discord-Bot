@@ -16,34 +16,34 @@
 
 ### Economy commands
 
-**/balance**
-**/shop**
+- **/balance**
+- **/shop**
 
 ### XP commands
 
-**/xp**
-**/xptop**
+- **/xp**
+- **/xptop**
 
 ### Music commands
 
-**/play**
-**/stop**
-**/pause**
-**/queue**
-**/getqueue**
-**/clearqueue**
-**/shuffle**
+- **/play**
+- **/stop**
+- **/pause**
+- **/queue**
+- **/getqueue**
+- **/clearqueue**
+- **/shuffle**
 
 ### Other commands
-**/couple**
-**/coupletop**
-**/bonk**
-**/troll**
-**/say**
-**/tell**
-**/data**
-**/ip**
-**/ping**
-**/poll**
-**/award**
-**/activity**
+- **/couple**
+- **/coupletop**
+- **/bonk**
+- **/troll**
+- **/say**
+- **/tell**
+- **/data**
+- **/ip**
+- **/ping**
+- **/poll**
+- **/award**
+- **/activity**
