@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <p>
-    <a href="https://discord.gg/mv684BdPwP"><img src="https://i.imgur.com/zMZWGHC.png" width="1000" unselectable="on"/></a>
+    <a href="https://i.imgur.com/zMZWGHC.png"><img src="https://i.imgur.com/zMZWGHC.png" width="1000" unselectable="on"/></a>
   </p>
   <br />
   <p>
