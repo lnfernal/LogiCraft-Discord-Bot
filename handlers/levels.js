@@ -81,6 +81,13 @@ const addXP = async (guildId, member, xpToAdd, message, msg) => {
                 level,
               })
             )
+          else if (level === 777)
+            spamChannel.send(
+              s.interpolate(await messageHandler("level777", member), {
+                username: member.user.username,
+                level,
+              })
+            )
         }
       } while (xp >= xpNeeded)
     }
