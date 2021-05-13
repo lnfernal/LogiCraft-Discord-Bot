@@ -164,6 +164,10 @@ module.exports = async (key, member) => {
         spanish: "**${username}** ha llegado a nivel **1**!",
         english: "**${username}** arrived to level **1**!",
       },
+      level777: {
+        spanish: "**${username}** ha llegado a nivel **${level}** 🎰!",
+        english: "**${username}** arrived to level **${level}** 🎰!",
+      },
     },
     userLanguage = await getLanguage(member)
   message = getProp(messages, [`${key}`, `${userLanguage}`])
