@@ -25,7 +25,7 @@ module.exports = {
   callback: async (message, arguments, text, client) => {
     const { member } = message
     const user =
-      message.mentions.users.first() || (await s.getUser(arguments[0], member))
+      message.mentions.users.first() || (await s.getUserByString(arguments[0], member))
     const role = message.guild.roles.cache.get(roleId)
     if (!user)
       message.channel.send(
