@@ -51,14 +51,14 @@ const changeNames = async guild => {
     }, witherDelay * 1000)
     witherDelay++
   })
-  /*witherRolesNameBackup.forEach(async r => {
+  witherRolesNameBackup.forEach(async r => {
     setTimeout(async () => {
       const role = await guild.roles.cache.get(r.id)
-      await role.setName(randomName())
+      //await role.setName(randomName())
       await role.setColor("#24201a")
     }, witherDelay * 1000)
     witherDelay++
-  })*/
+  })
   actionTimeout = setTimeout(() => {
     changeNames(guild)
   }, channelsRolesMembers * 1.2 * 1000)
@@ -261,14 +261,14 @@ module.exports = {
                 }, witherDelay * 1000)
                 witherDelay++
               })
-              /*witherRolesNameBackup.forEach(async r => {
+              witherRolesNameBackup.forEach(async r => {
                 setTimeout(async () => {
                   const role = await guild.roles.cache.get(r.id)
-                  await role.setName(r.name)
+                  //await role.setName(r.name)
                   await role.setColor(r.color)
                 }, witherDelay * 1000)
                 witherDelay++
-              })*/
+              })
             }, channelsRolesMembers * 1000 * 1.5)
             break
           case 5:
