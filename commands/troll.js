@@ -11,7 +11,9 @@ let actionTimeout,
   witherChannelsNameBackup = [],
   channelsRolesMembers = 0,
   sentMessages = [],
+  herobrineTimeout,
   channelsBackup = [],
+  cancelled = false,
   hChannel
 
 const everyone = "666295714724446209"
@@ -84,7 +86,7 @@ const changeRoles = async guild => {
 
 const countdown = (i, channel) => {
   setTimeout(async () => {
-    await channel.send(`${i}s`)
+    if(i % 5 == 0 && !cancelled) await channel.send(`**${i}s**`)
     i--
     if (i > 0) countdown(i, channel)
   }, 1 * 1000)
@@ -172,8 +174,10 @@ module.exports = {
         break
       case "herobrine":
         mode = 5
+        cancelled = false
         countdown(60, channel)
-        setTimeout(async () => {
+        channelsBackup = []
+        herobrineTimeout = setTimeout(async () => {
           await guild.channels.cache.each(channel => {
             channelsBackup.push({
               id: channel.id,
@@ -186,7 +190,7 @@ module.exports = {
                   deny: ["VIEW_CHANNEL"],
                 },
               ],
-              "Herobrine joined the chat"
+              "Herobrine joined the game"
             )
           })
           hChannel = await guild.channels.create("general", {
@@ -277,7 +281,7 @@ module.exports = {
               const c = await guild.channels.cache.get(channel.id)
               if (c) c.overwritePermissions(channel.permissionOverwrites)
             })
-            await hChannel.delete("Herobrine left the chat")
+            await hChannel.delete("Herobrine left the game")
             break
           default:
             channel.send("No hay acciones activas")
@@ -315,7 +319,7 @@ module.exports = {
         case 5:
           embed.setDescription(
             "CHANNEL DISMANTLE\n\n[!] Todos los canales serán eliminados en 60 segundos\n¿Estás seguro? Usa _/cancel_ para detener la acción"
-          )
+          ).setColor("#ffdbac")
           break
       }
       channel.send(embed)
@@ -346,4 +350,9 @@ module.exports = {
         break
     }
   },
+  cancel: (client, message) => {
+    clearTimeout(herobrineTimeout)
+    cancelled = true
+    mode = 0
+  }
 }
