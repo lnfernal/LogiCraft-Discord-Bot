@@ -350,7 +350,7 @@ module.exports = {
         break
     }
   },
-  cancel: (client, message) => {
+  cancel: () => {
     clearTimeout(herobrineTimeout)
     cancelled = true
     mode = 0
