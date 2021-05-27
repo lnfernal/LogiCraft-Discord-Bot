@@ -1,4 +1,6 @@
+require("module-alias/register")
 const { prefix } = require("../config.json")
+const messageHandler = require("@messages")
 
 const validatePermissions = permissions => {
   const validPermissions = [
@@ -62,11 +64,7 @@ module.exports = (client, commandOptions, dirName) => {
     commands = [commands]
   }
 
-  console.log(
-    `Registrando comando: "${prefix}${commands[0]}" ${
-      dirName === null ? "" : `(/${dirName})`
-    }`
-  )
+  console.log(`Registrando comando: "${prefix}${commands[0]}" ${dirName === null ? "" : `(/${dirName})`}`)
 
   // Ensure the permissions are in an array and are all valid
   if (permissions.length) {
@@ -76,27 +74,24 @@ module.exports = (client, commandOptions, dirName) => {
     validatePermissions(permissions)
   }
 
-  client.on("message", message => {
+  client.on("message", async message => {
     const { member, content, guild } = message
 
-    if (
+    /*if (
       message.guild.id != "666295714724446209" ||
       message.mentions.has(client.user.id) ||
       message.content.includes("824989001999712337")
     )
-      return // protecc logibot
+      return // protecc logibot*/
     for (const alias of commands) {
       const command = `${prefix}${alias.toLowerCase()}`
 
-      if (
-        content.toLowerCase().startsWith(`${command} `) ||
-        content.toLowerCase() === command
-      ) {
+      if (content.toLowerCase().startsWith(`${command} `) || content.toLowerCase() === command) {
         // a command has been ran
 
         // ensure Siber is not exploiting
         if (message.author.bot) {
-          message.channel.send(`nope :)`)
+          message.channel.send(await messageHandler("nestedCommand", message.member))
           return
         }
 
@@ -119,9 +114,7 @@ module.exports = (client, commandOptions, dirName) => {
           }
         }
         if (!hasAtLeastOneRole && requiredRoles > 0) {
-          message.channel.send(
-            `**${message.member.displayName}**, necesitas un rol especial para usar este comando`
-          )
+          message.channel.send(`**${message.member.displayName}**, necesitas un rol especial para usar este comando`)
           return
         }
 
@@ -133,16 +126,13 @@ module.exports = (client, commandOptions, dirName) => {
         }
 
         // split on any number of spaces
-        const arguments = content.split(/[ ]+/)
+        const args = content.split(/[ ]+/)
 
         // remove the command which is the first index
-        arguments.shift()
+        args.shift()
 
-        // ensure we have the correct number of arguments
-        if (
-          arguments.length < minArgs ||
-          (maxArgs !== null && arguments.length > maxArgs)
-        ) {
+        // ensure we have the correct number of args
+        if (args.length < minArgs || (maxArgs !== null && args.length > maxArgs)) {
           message.channel.send(
             `**${message.member.displayName}**, sintaxis incorrecta! Usa **"${prefix}${alias} ${expectedArgs}"**`
           )
@@ -158,8 +148,8 @@ module.exports = (client, commandOptions, dirName) => {
           }, 1000 * cooldown)
         }
 
-        // Handle the custom command code
-        callback(message, arguments, arguments.join(" "), client)
+        // handle the custom command code
+        callback(message, args, args.join(" "), client)
 
         return
       }

@@ -21,9 +21,7 @@ module.exports = {
       console.log("Código: ", code)
       const isOurInvite = await isInvite(guild, code)
       if (!isOurInvite) {
-        console.log(
-          `${member.displayName} ha spammeado: ${content} en ${message.channel.name}`
-        )
+        console.log(`${member.displayName} ha spammeado: ${content} en ${message.channel.name}`)
         message.channel.send(
           `${member.displayName}, links de invitación a otros servers están prohibidos :P\n${member.displayName}, inviting links to other servers are forbidden :P`
         )

@@ -3,9 +3,7 @@ require("module-alias/register")
 const messageHandler = require("@messages")
 const s = require("@string")
 const coupleSchema = require("../schemas/couple-schema.js")
-const profileSchema = require("../schemas/profile-schema.js")
-const mongo = require("../utils/mongo.js")
-const loverRoleId = "835561996450791484"
+const userUtils = require("@user")
 
 const loveSentences = [
   "Salgamos juntos, yo invito a los besos",
@@ -41,136 +39,81 @@ checkDaily = async coupleData => {
 
 module.exports = {
   commands: "couple",
-  maxArgs: 0,
-  callback: async (message, arguments, text, client) => {
+  callback: async (message, args, text, client) => {
     const guildId = message.guild.id,
-      { member } = message
-    checkDaily(await coupleSchema.findOne({ _id: "0" })).then(
-      async coupleAvbl => {
-        if (!coupleAvbl) {
-          message.channel.send(
-            s.interpolate(await messageHandler("coupleDailySpent", member), {
-              username: member.user.name,
-            })
-          )
-          return
-        }
-        const guild = message.guild
-        await guild.members.fetch().then(async members => {
-          var arr = []
-          members = members.filter(m => !m.user.bot).array()
-          if (members.length < 2)
-            message.channel.send(
-              s.interpolate(
-                await messageHandler("coupleInsuficientMembers", member),
-                { username: member.user.name }
-              )
-            )
-          while (arr.length < 2) {
-            var r = Math.floor(Math.random() * members.length)
-            if (!arr.includes(members[r])) arr.push(members[r])
-          }
-          var lover1 = Math.floor(Math.random() * 2)
-          var lover2 = lover1 == 0 ? 1 : 0
+      { member, guild } = message
 
-          coupleAnn = `${
-            loveEmojis[Math.floor(Math.random() * loveEmojis.length)]
-          }  Pareja del día:`
-          coupleSentence = `**${arr[lover1].user.username} a ${
-            arr[lover2].user.username
-          }:** _"${
-            loveSentences[Math.floor(Math.random() * loveSentences.length)]
-          }  ${loveEmojis[Math.floor(Math.random() * loveEmojis.length)]}"_`
+    let result = await coupleSchema.findOne({ _id: guildId })
+    if (!result)
+      await new coupleSchema({
+        _id: guildId,
+      }).save()
+    result = await coupleSchema.findOne({ _id: guildId })
 
-          // lover role
-          const loverRole = guild.roles.cache.find(role => {
-            return role.id == loverRoleId
-          })
-          arr[lover1].roles.add(loverRole)
-          arr[lover2].roles.add(loverRole)
-
-          // remove role
-          var now = new Date()
-          var night = new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate() + 1,
-            0,
-            0,
-            0
-          )
-          var msTillMidnight = night.getTime() - now.getTime()
-          setTimeout(async guild => {
-            await guild.members.fetch().then(members => {
-              members.forEach(async member => {
-                if (member.roles.cache.get(loverRoleId))
-                  await member.roles.remove(loverRole)
-              })
-            })
-          }, msTillMidnight)
-
-          // add lover punctuation
-          await profileSchema
-            .findOneAndUpdate(
-              {
-                guildId,
-                userId: arr[lover1].id,
-              },
-              { $inc: { lover: 1 }, name: arr[lover1].user.username },
-              {
-                upsert: true,
-                new: true,
-              }
-            )
-            .then(async result => {
-              if (!result) {
-                await new profileSchema({
-                  name: arr[lover1].user.username,
-                  guildId,
-                  userId: arr[lover1].id,
-                  lover,
-                }).save()
-              }
-            })
-          await profileSchema
-            .findOneAndUpdate(
-              {
-                guildId,
-                userId: arr[lover2].id,
-              },
-              { $inc: { lover: 1 }, name: arr[lover2].user.username },
-              {
-                upsert: true,
-                new: true,
-              }
-            )
-            .then(async result => {
-              if (!result) {
-                await new profileSchema({
-                  name: arr[lover2].user.username,
-                  guildId,
-                  userId: arr[lover2].id,
-                  lover,
-                }).save()
-              }
-            })
-
-          const embed = new Discord.MessageEmbed()
-            .setColor("#ba0001")
-            .setTitle(coupleAnn)
-            .setDescription(
-              `**${arr[0].user.username} + ${arr[1].user.username} =  ${
-                loveEmojis[Math.floor(Math.random() * loveEmojis.length)]
-              }**\n\n${coupleSentence}`
-            )
-          message.channel.send(embed)
+    if (!checkDaily(result)) {
+      message.channel.send(
+        await messageHandler("coupleDailySpent", member, {
+          username: member.user.name,
         })
-        await coupleSchema.findOneAndUpdate(
-          { _id: "0" },
-          { _id: "0" },
-          { upsert: true }
+      )
+      return
+    }
+    await guild.members.fetch().then(async members => {
+      let arr = []
+      members = members.filter(m => !m.user.bot)
+      members = members.array()
+      if (members.length < 2) {
+        message.channel.send(
+          await messageHandler("coupleInsuficientMembers", member, { username: member.user.username })
         )
+        return
       }
-    )
+      console.log(members)
+      while (arr.length < 2) {
+        let m = Math.floor(Math.random() * members.length)
+        if (!arr.includes(members[m])) arr.push(members[m])
+      }
+      var lover1 = Math.floor(Math.random() * 2)
+      var lover2 = lover1 == 0 ? 1 : 0
+      coupleAnn = `${loveEmojis[Math.floor(Math.random() * loveEmojis.length)]}  Pareja del día:`
+      coupleSentence = `**${arr[lover1].user.username} a ${arr[lover2].user.username}:** _"${
+        loveSentences[Math.floor(Math.random() * loveSentences.length)]
+      }  ${loveEmojis[Math.floor(Math.random() * loveEmojis.length)]}"_`
+
+      // lover role
+      const loverRole = await guild.roles.cache.find(role => {
+        role.name.toLowerCase().includes("love")
+      })
+      if (!loverRole) return
+      arr[lover1].roles.add(loverRole)
+      arr[lover2].roles.add(loverRole)
+
+      // remove role
+      var now = new Date()
+      var night = new Date()
+      night.setHours(16, 0, 20, 0)
+      var msTillMidnight = night.getTime() - now.getTime()
+      setTimeout(async guild => {
+        await guild.members.fetch().then(members => {
+          members.forEach(async member => {
+            if (member.roles.cache.get(loverRoleId)) await member.roles.remove(loverRole)
+          })
+        })
+      }, msTillMidnight)
+
+      // add lover punctuation
+      userUtils.incUserSchema(guild, arr[lover1].user, "lover", 1)
+      userUtils.incUserSchema(guild, arr[lover2].user, "lover", 1)
+      const embed = new Discord.MessageEmbed()
+        .setColor("#ba0001")
+        .setTitle(coupleAnn)
+        .setDescription(
+          `**${arr[0].user.username} + ${arr[1].user.username} =  ${
+            loveEmojis[Math.floor(Math.random() * loveEmojis.length)]
+          }**\n\n${coupleSentence}`
+        )
+      message.channel.send(embed)
+    })
+    await coupleSchema.findOneAndUpdate({ _id: guildId }, { _id: guildId }, { upsert: true })
   },
 }

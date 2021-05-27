@@ -6,10 +6,10 @@ module.exports = {
   minArgs: 1,
   maxArgs: 1,
   permissions: ["BAN_MEMBERS"],
-  callback: async (message, arguments, text, client) => {
-    if (!isNaN(arguments[0])) {
+  callback: async (message, args, text, client) => {
+    if (!isNaN(args[0])) {
       try {
-        await client.users.fetch(arguments[0]).then(async user => {
+        await client.users.fetch(args[0]).then(async user => {
           try {
             await message.guild.members.unban(user.id).then(() => {
               const embed = new Discord.MessageEmbed()
@@ -27,9 +27,7 @@ module.exports = {
         message.channel.send("Usuario incorrecto")
       }
     } else {
-      message.channel.send(
-        `**${message.member.displayName}**, se necesita el id del usuario`
-      )
+      message.channel.send(`**${message.member.displayName}**, se necesita el id del usuario`)
     }
   },
 }

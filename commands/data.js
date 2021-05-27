@@ -45,17 +45,16 @@ var allUsersColumn2 = users => {
   var content = ``
 
   for (i = 0; i < users.length; i++)
-    content += `${new Intl.NumberFormat().format(
-      users[i].totalXp
-    )} (${new Intl.NumberFormat().format(users[i].level)})\n`
+    content += `${new Intl.NumberFormat().format(users[i].totalXp)} (${new Intl.NumberFormat().format(
+      users[i].level
+    )})\n`
   return content
 }
 
 var allUsersColumn3 = users => {
   var content = ``
 
-  for (i = 0; i < users.length; i++)
-    content += `${new Intl.NumberFormat().format(users[i].lover)}\n`
+  for (i = 0; i < users.length; i++) content += `${new Intl.NumberFormat().format(users[i].lover)}\n`
   return content
 }
 
@@ -65,17 +64,17 @@ module.exports = {
   minArgs: 2,
   maxArgs: 50,
   cooldown: 1,
-  callback: async (message, arguments, text, client) => {
+  callback: async (message, args, text, client) => {
     var { guild, guildId = guild.id, channel, member } = message
     const emojis = await require("../utils/emojis").guildEmojis(client, guildId)
     const logiEmojis = await require("../utils/emojis").logibotEmojis(client)
-    switch (arguments[0]) {
+    switch (args[0]) {
       case "get":
-        switch (arguments[1]) {
+        switch (args[1]) {
           case "entity":
-            switch (arguments[2]) {
+            switch (args[2]) {
               case "@a":
-                if (arguments[3]) {
+                if (args[3]) {
                 } else {
                   let usersBad = []
                   var needed
@@ -98,13 +97,9 @@ module.exports = {
                         `__${_member.displayName} (${user.name})__`,
                         `Fecha de unión: **${_member.joinedAt
                           .toLocaleString("es-ES")
-                          .replace(" ", " - ")}**\nNivel: **${
-                          user.level
-                        }**\nTotal XP: **${
+                          .replace(" ", " - ")}**\nNivel: **${user.level}**\nTotal XP: **${
                           user.totalXp
-                        }**XP - Siguiente nivel (${user.level + 1}): **${
-                          user.xp
-                        } / ${needed}**XP **(${
+                        }**XP - Siguiente nivel (${user.level + 1}): **${user.xp} / ${needed}**XP **(${
                           user.xp / needed
                         }%)**\nParejas: **${user.lover}**`
                       )
@@ -118,8 +113,8 @@ module.exports = {
             }
             break
           case "server":
-            if (arguments[2]) {
-              switch (arguments[2]) {
+            if (args[2]) {
+              switch (args[2]) {
                 case "emojis":
                   var emojiString = ""
                   for (let emoji in emojis) {
@@ -134,15 +129,11 @@ module.exports = {
                 .addFields(
                   {
                     name: "Servidor",
-                    value: `Id: **${
-                      guild.id
-                    }**\nFecha creación: **${guild.createdAt
+                    value: `Id: **${guild.id}**\nFecha creación: **${guild.createdAt
                       .toLocaleString("es-ES")
                       .replace(" ", " - ")}****\nDescripción: **${
                       guild.description ? guild.description : ""
-                    }**\nPropietario: **${guild.owner.displayName}** (${
-                      guild.owner.user.username
-                    })\nEstado: **${
+                    }**\nPropietario: **${guild.owner.displayName}** (${guild.owner.user.username})\nEstado: **${
                       guild.verified ? "Verificado" : "No verificado"
                     }**\n`,
                   },
@@ -167,41 +158,29 @@ module.exports = {
         break
       case "set":
         if (member.hasPermission("ADMINISTRATOR")) {
-          switch (arguments[1]) {
+          switch (args[1]) {
             case "entity":
-              switch (arguments[2]) {
+              switch (args[2]) {
                 case "@a":
-                  if (arguments[3]) {
-                    switch (arguments[3]) {
+                  if (args[3]) {
+                    switch (args[3]) {
                       case "name":
-                        if (arguments[4]) {
-                          for (var i = 0; i < 4; i++) arguments.shift()
-                          let name = arguments.join(" ")
+                        if (args[4]) {
+                          for (var i = 0; i < 4; i++) args.shift()
+                          let name = args.join(" ")
                           await guild.members.fetch().then(async members => {
-                            members = members.filter(
-                              m =>
-                                m.id !== guild.ownerID &&
-                                m.id !== client.user.id
-                            )
+                            members = members.filter(m => m.id !== guild.ownerID && m.id !== client.user.id)
                             const promises = []
                             members.forEach(member => {
-                              promises.push(
-                                member.setNickname(
-                                  name.startsWith("reset") ? "" : name
-                                )
-                              )
+                              promises.push(member.setNickname(name.startsWith("reset") ? "" : name))
                             })
                             await Promise.all(promises)
                           })
                         } else {
                           channel.send(
-                            s.interpolate(
-                              await messageHandler(
-                                "missingDataNameProperty",
-                                member
-                              ),
-                              { username: member.user.username }
-                            )
+                            s.interpolate(await messageHandler("missingDataNameProperty", member), {
+                              username: member.user.username,
+                            })
                           )
                         }
                         break

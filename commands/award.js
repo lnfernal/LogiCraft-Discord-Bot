@@ -8,7 +8,7 @@ module.exports = {
   maxArgs: 1,
   expectedArgs: "<silver|gold|platinum|argentium|ternion>",
   minArgs: 1,
-  callback: async (message, arguments, text, client) => {
+  callback: async (message, args, text, client) => {
     const { guild, channel, member } = message
     if (!message.reference) {
       channel.send(
@@ -21,12 +21,7 @@ module.exports = {
     const targetMsg = await channel.messages.fetch(message.reference.messageID)
     const awardEmojis = await emojis.awardEmojis(client)
     const reaction =
-      awardEmojis[
-        `award${
-          arguments[0].toLowerCase().charAt(0).toUpperCase() +
-          arguments[0].toLowerCase().slice(1)
-        }`
-      ]
+      awardEmojis[`award${args[0].toLowerCase().charAt(0).toUpperCase() + args[0].toLowerCase().slice(1)}`]
     if (!reaction) {
       channel.send(
         s.interpolate(await messageHandler("reactionWrong", member), {

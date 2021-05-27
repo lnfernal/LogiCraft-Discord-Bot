@@ -26,11 +26,7 @@ const roleFilter = [
 ]
 
 const randomName = () => {
-  const withers = [
-    witherChannelsNameBackup,
-    witherMembersNameBackup,
-    witherRolesNameBackup,
-  ]
+  const withers = [witherChannelsNameBackup, witherMembersNameBackup, witherRolesNameBackup]
   const wither = withers[Math.floor(Math.random() * withers.length)]
   return wither[Math.floor(Math.random() * wither.length)].name
 }
@@ -70,9 +66,7 @@ const changeRoles = async guild => {
       await member.roles
         .set([])
         .then(async () => {
-          await member.roles
-            .add(guildRoles[Math.floor(Math.random() * guildRoles.length)])
-            .catch(console.error)
+          await member.roles.add(guildRoles[Math.floor(Math.random() * guildRoles.length)]).catch(console.error)
         })
         .catch(console.error)
     }, i * 1000)
@@ -95,14 +89,14 @@ module.exports = {
   minArgs: 1,
   expectedArgs: "<mode|end>",
   permissions: ["ADMINISTRATOR"],
-  callback: async (message, arguments, text, client) => {
+  callback: async (message, args, text, client) => {
     const { guild, member, guildId = guild.id, channel } = message
-    if (arguments[0] !== "end" && mode != 0) {
+    if (args[0] !== "end" && mode != 0) {
       channel.send("Ya hay un troleo activo")
       return
     }
 
-    switch (arguments[0]) {
+    switch (args[0]) {
       case "silverfish":
         mode = 1
         break
@@ -115,11 +109,7 @@ module.exports = {
             validMember = true
           await member.roles.cache.each(role => {
             if (role.name != "@everyone")
-              if (
-                !roleFilter.includes(role.id) &&
-                member.id != guild.ownerID &&
-                member.id != client.user.id
-              )
+              if (!roleFilter.includes(role.id) && member.id != guild.ownerID && member.id != client.user.id)
                 roles.push(role)
               else validMember = false
           })
@@ -132,8 +122,7 @@ module.exports = {
           }
         })
         await guild.roles.cache.each(role => {
-          if (!roleFilter.includes(role.id) && role.name != "@everyone")
-            guildRoles.push(role)
+          if (!roleFilter.includes(role.id) && role.name != "@everyone") guildRoles.push(role)
         })
         await changeRoles(guild)
         break
@@ -151,7 +140,7 @@ module.exports = {
           if (member.manageable && member.user != client.user)
             witherMembersNameBackup.push({
               id: member.id,
-              name: member.user.username,
+              name: member.displayName,
             })
           channelsRolesMembers++
         })
@@ -165,7 +154,10 @@ module.exports = {
           channelsRolesMembers++
         })
         await guild.channels.cache.each(channel => {
-          witherChannelsNameBackup.push({ id: channel.id, name: channel.name })
+          witherChannelsNameBackup.push({
+            id: channel.id,
+            name: channel.name,
+          })
           channelsRolesMembers++
         })
         await changeNames(guild)
@@ -194,12 +186,7 @@ module.exports = {
             permissionOverwrites: [
               {
                 id: everyone,
-                deny: [
-                  "MANAGE_CHANNELS",
-                  "CREATE_INSTANT_INVITE",
-                  "MANAGE_MESSAGES",
-                  "MENTION_EVERYONE",
-                ],
+                deny: ["MANAGE_CHANNELS", "CREATE_INSTANT_INVITE", "MANAGE_MESSAGES", "MENTION_EVERYONE"],
               },
             ],
           })
@@ -257,7 +244,7 @@ module.exports = {
               witherMembersNameBackup.forEach(async m => {
                 setTimeout(async () => {
                   const member = await guild.members.cache.get(m.id)
-                  await member.setNickname("")
+                  await member.setNickname(m.name)
                 }, witherDelay * 1000)
                 witherDelay++
               })
@@ -285,19 +272,13 @@ module.exports = {
         }
         break
       default:
-        channel.send(
-          "Selecciona una acción con su palabra clave o _end_ para detenerlo"
-        )
+        channel.send("Selecciona una acción con su palabra clave o _end_ para detenerlo")
         return
     }
     await require("../avatar-manager/avatar-manager.js").troll(client)
     if (mode != 0) {
       const embed = new Discord.MessageEmbed()
-        .setTitle(
-          `Iniciado protocolo ${
-            arguments[0].charAt(0).toUpperCase() + arguments[0].slice(1)
-          } (${mode})`
-        )
+        .setTitle(`Iniciado protocolo ${args[0].charAt(0).toUpperCase() + args[0].slice(1)} (${mode})`)
         .setColor("#ff0000")
       switch (mode) {
         case 1:
@@ -330,15 +311,13 @@ module.exports = {
         var keys = Object.keys(emojis)
         reactedMessages.push(message)
         for (var i = 0; i < Math.floor(Math.random() * 5 + 1); i++)
-          await message.react(
-            emojis[keys[Math.floor(Math.random() * keys.length)]].id
-          )
+          await message.react(emojis[keys[Math.floor(Math.random() * keys.length)]].id)
         break
       case 3:
         await guild.channels.cache.each(channel => {
           if (channel.type == "text") {
             channel
-              .send(message.content.replace(/^<@!?(\d+)>$|\//, ""))
+              .send(message.content.replace(/<@!?(\d+)>|^\/+(\s*\/*)*/gm, ""))
               .then(msg => sentMessages.push(msg))
               .catch(console.error)
           }

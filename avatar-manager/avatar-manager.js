@@ -73,12 +73,7 @@ module.exports = {
   },
 
   onMessage: (client, message) => {
-    if (
-      !cooldown &&
-      avatarIsSad &&
-      !message.content.includes("/hornyjail") &&
-      !message.content.includes("/troll")
-    ) {
+    if (!cooldown && avatarIsSad && !message.content.includes("/hornyjail") && !message.content.includes("/troll")) {
       setHappyAvatar(client)
       avatarIsSad = false
     }

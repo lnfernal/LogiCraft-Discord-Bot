@@ -1,6 +1,6 @@
 module.exports = {
   commands: "pause",
-  callback: async (message, arguments, text, client) => {
+  callback: async (message, args, text, client) => {
     try {
       let pause = await client.player.pause(message)
       if (pause) message.channel.send(`Se ha pausado`)

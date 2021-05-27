@@ -5,7 +5,7 @@ module.exports = {
   expectedArgs: "<title#emoji=option1;emoji=option2...>",
   minArgs: 1,
   maxArgs: 199,
-  callback: (message, arguments, text, client) => {
+  callback: (message, args, text, client) => {
     const { channel, content } = message
 
     const eachLine = text.split("#")
@@ -29,8 +29,16 @@ module.exports = {
     optionsEmoji += "\n\u200b"
     optionsText += "\n\u200b"
     embed.addFields(
-      { name: "\u200b", value: optionsEmoji, inline: true },
-      { name: "\u200b", value: optionsText, inline: true }
+      {
+        name: "\u200b",
+        value: optionsEmoji,
+        inline: true,
+      },
+      {
+        name: "\u200b",
+        value: optionsText,
+        inline: true,
+      }
     )
     message.delete()
     channel.send(embed).then(msg => {

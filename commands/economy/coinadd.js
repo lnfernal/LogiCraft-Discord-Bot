@@ -10,15 +10,13 @@ module.exports = {
   minArgs: 2,
   expectedArgs: "<user> <amount>",
   permissions: "ADMINISTRATOR",
-  callback: async (message, arguments, text, client) => {
+  callback: async (message, args, text, client) => {
     const { member } = message
-    const target =
-      message.mentions.users.first() ||
-      (await s.getUserByString(arguments[0], message.member))
+    const target = message.mentions.users.first() || (await s.getUserByString(args[0], message.member))
     const logiEmojis = await require("@emojis").logibotEmojis(client)
     const guildId = message.guild.id
     const userId = target.id
-    const coins = arguments[1]
+    const coins = args[1]
 
     if (!target)
       message.channel.send(

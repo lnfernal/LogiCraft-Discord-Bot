@@ -1,11 +1,12 @@
 require("module-alias/register")
 const messageHandler = require("@messages")
 const s = require("@string")
+const userUtils = require("@user")
 const muteSchema = require("../../schemas/mute-schema.js")
 const mutedRoleId = "788187970930343976"
-let rolesBackup = []
 const Discord = require("discord.js")
 const unmute = require("./unmute.js")
+let rolesBackup = []
 
 module.exports = {
   commands: "mute",
@@ -13,138 +14,135 @@ module.exports = {
   minArgs: 1,
   maxArgs: 30,
   permissions: ["MANAGE_ROLES"],
-  callback: async (message, arguments, text, client) => {
+  callback: async (message, args, text, client) => {
     const { guild, channel } = message
     const staff = message.author
-    const target =
-      message.mentions.users.first() ||
-      (await s.getUserByString(arguments[0], message.member))
+    const target = message.mentions.users.first() || (await s.getUserByString(args[0], message.member))
+    const emojis = await require("@emojis").logibotEmojis(client)
     let reason = "_No especificado_",
       duration,
       timeUnit,
+      timeout = 0,
+      roles = [],
       expires
-    if (target) {
-      const previousMutes = await muteSchema.find({
-        userId: target.id,
-        guildId: guild.id,
-      })
 
-      const currentlyMuted = previousMutes.filter(mute => {
-        return mute.current === true
-      })
+    if (!target) {
+      channel.send("no target")
+      return
+    }
 
-      if (currentlyMuted.length) {
-        channel.send(
-          `**${message.member.displayName}**, este usuario ya está muteado`
-        )
-        return
-      }
-      const mutedRole = await guild.roles.cache.find(role => {
-        return role.name.toLowerCase().includes("mute")
-      })
+    const previousMutes = await muteSchema.find({
+      userId: target.id,
+      guildId: guild.id,
+    })
 
-      if (!mutedRole) return
+    const currentlyMuted = previousMutes.filter(mute => {
+      return mute.current === true
+    })
 
-      if (target.bot || target.id == guild.ownerID) return
+    if (currentlyMuted.length) {
+      channel.send(`**${message.author.username}**, este usuario ya está muteado`)
+      return
+    }
+    const mutedRole = await guild.roles.cache.find(role => {
+      return role.name.toLowerCase().includes("mute")
+    })
 
-      if (arguments[1]) {
-        const possibleTime = /^\d{1,3}[a-zA-Z]$/.test(arguments[1])
+    if (!mutedRole) return
 
-        if (isNaN(arguments[1]) && !possibleTime) {
-          // means it's reason
-          arguments.shift()
-          reason = arguments.join(" ")
-        } else {
-          // means it's time
-          duration = arguments[1].replace(/\D/g, "")
-          timeUnit = arguments[1].slice(-1).toLowerCase()
-          expires = new Date()
+    //if (target.bot || target.id == guild.ownerID) return
 
-          switch (timeUnit) {
-            case "s":
-              expires = expires.getTime() + duration * 1000
-              break
-            case "m":
-              expires = expires.getTime() + duration * 60000
-              break
-            case "h":
-              expires = expires.getTime() + duration * 60 * 60000
-              break
-            case "d":
-              expires = expires.getTime() + duration * 24 * 60000
-              break
-            default:
-              channel.send(
-                `**${message.member.displayName}**, usa **m (minutos)**, **h (horas)**, **d (dias)**`
-              )
-              return
-          }
-          if (arguments[2]) {
-            arguments.shift()
-            arguments.shift()
-            reason = arguments.join(" ")
-          }
+    expires = new Date()
+    if (args[1]) {
+      const uptime = args[1].match(/\d+\.?\d*[a-zA-Z](\s|$)/) ? args[1].match(/\d+\.?\d*[a-zA-Z](\s|$)/)[0] : null
+      if (!uptime) {
+        // means no time limit provided
+        args.shift()
+        reason = args.join(" ")
+      } else {
+        // means time provided
+        duration = args[1].match(/\d*\.?\d*/)[0]
+        timeUnit = args[1].match(/[a-zA-Z]/)[0].toLowerCase()
+        switch (timeUnit) {
+          case "s":
+            timeout = duration * 1000
+            break
+          case "m":
+            timeout = duration * 60000
+            break
+          case "h":
+            timeout = duration * 60 * 60000
+            break
+          case "d":
+            timeout = duration * 24 * 60 * 60000
+            break
+          default:
+            channel.send(
+              `**${message.member.displayName}**, usa **s (segundos)**, **m (minutos)**, **h (horas)**, **d (dias)**`
+            )
+            return
+        }
+        if (timeout > 2147483647) {
+          channel.send(`**${message.member.displayName}**, el valor introducido no es válido`)
+          return
+        }
+        if (args[2]) {
+          args.shift()
+          args.shift()
+          reason = args.join(" ")
         }
       }
-      const targetMember = (await guild.members.fetch()).get(target.id)
-      let roles = []
-      await targetMember.roles.cache.each(role => {
-        if (role.name != "@everyone") roles.push(role)
-      })
-      rolesBackup.push({
-        id: targetMember.id,
-        roles,
-      })
-      if (!expires) expires = new Date().setFullYear(2077)
-      const date = new Date(expires)
-      date.setHours = date.getHours + 2
-      if (date.getFullYear < 2030) {
-        setTimeout(async () => {
-          const result = await muteSchema.updateOne(
-            {
-              guildId: guild.id,
-              userId: targetMember.id,
-              current: true,
-            },
-            {
-              current: false,
-            }
-          )
-          if (result.nModified == 1) {
-            await unmute.triggerUnmute(targetMember)
-            channel.send(`${targetMember.displayName} ha sido desmuteado`)
-          }
-        }, expires - new Date().getTime())
-      }
-      await targetMember.roles.set([])
-      await targetMember.roles.add(mutedRole)
-      await new muteSchema({
-        userId: target.id,
-        guildId: guild.id,
-        reason,
-        staffId: staff.id,
-        staffTag: staff.tag,
-        expires,
-        current: true,
-      }).save()
-      const embed = new Discord.MessageEmbed()
-        .setTitle(`${targetMember.displayName} ha sido muteado`)
-        .setDescription(
-          `Motivo: ${reason}\nId: ${
-            targetMember.id
-          }\nTerminio: ${date.toLocaleString("es-ES")}`
-        )
-      message.channel.send(embed)
-    } else {
-      const errorMsg = [
-        `**${message.member.displayName}**, tienes que mencionar al usuario :P`,
-        `**${message.member.displayName}**, eso no parece una mención...`,
-        `**${message.member.displayName}**, prueba mencionando al usuario con su @`,
-      ]
-      message.channel.send(
-        errorMsg[Math.floor(Math.random() * errorMsg.length)]
-      )
     }
+    const targetMember = (await guild.members.fetch()).get(target.id)
+    await targetMember.roles.cache.each(role => {
+      if (role != guild.roles.everyone) roles.push(role)
+    })
+    rolesBackup.forEach(roleBackup => {
+      if (roleBackup.id == target.id) rolesBackup.splice(rolesBackup[roleBackup], 1)
+    })
+    rolesBackup.push({
+      roles,
+      id: target.id,
+    })
+    if (timeout == 0) expires.setFullYear(2077)
+    expires = new Date(expires.getTime() + timeout + 120 * 60000)
+    if (expires < new Date().setFullYear(new Date().getFullYear() + 1)) {
+      setTimeout(async () => {
+        const result = await muteSchema.updateOne(
+          {
+            guildId: guild.id,
+            userId: targetMember.id,
+            current: true,
+          },
+          {
+            current: false,
+          }
+        )
+        if (result.nModified == 1) {
+          await unmute.triggerUnmute(targetMember, client.user, { unmuted: emojis.unmuted, channel })
+        }
+      }, timeout)
+    }
+    await userUtils.incUserSchema(guild, target, "mutes", 1)
+    await targetMember.roles.set([])
+    await targetMember.roles.add(mutedRole)
+    await new muteSchema({
+      userId: target.id,
+      guildId: guild.id,
+      reason,
+      staffId: staff.id,
+      staffTag: staff.tag,
+      expires,
+      current: true,
+    }).save()
+    const embed = new Discord.MessageEmbed()
+      .setTitle(`${targetMember.displayName} ha sido muteado ${emojis.muted}`)
+      .setFooter(`Muteado por ${message.author.username}`, `${message.author.avatarURL()}`)
+      .setColor("#ff4646")
+      .setDescription(
+        `**ID Usuario**: ${target.id}\n**Motivo**: ${reason}\n**Terminio**: ${expires.toLocaleString("es-ES")} GTM+2`
+      )
+    message.channel.send(embed)
   },
 }
 

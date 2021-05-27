@@ -1,9 +1,8 @@
 require("module-alias/register")
-const messageHandler = require("@messages")
+const userUtils = require("@user")
 const s = require("@string")
-const mongo = require("../../utils/mongo.js")
-const profileSchema = require("../../schemas/profile-schema.js")
 const Discord = require("discord.js")
+const pages = require("@pages")
 
 const getUserData = async (guildId, member) => {
   const userId = member.id
@@ -29,59 +28,44 @@ const getUserData = async (guildId, member) => {
   }
 }
 
-var getNames = users => {
-  var names = ``
-
-  for (i = 0; i < users.length; i++)
-    names += `${i + 1}. ${users[i].name.replace("_", "\\_")}\n`
-  return names
-}
-
-var getXP = users => {
-  var xp = ``
-
-  for (i = 0; i < users.length; i++)
-    xp += `${s.formatNumber(users[i].totalXp)}\n`
-  return xp
-}
-
-var getLevel = users => {
-  var level = ``
-
-  for (i = 0; i < users.length; i++)
-    level += `${s.formatNumber(users[i].level)}\n`
-  return level
-}
-
 module.exports = {
   commands: "xptop",
   maxArgs: 0,
-  callback: async (message, arguments, text, client) => {
-    const guild = message.guild
-    const guildId = guild.id
-    let usersBad = []
+  callback: async (message, args, text, client) => {
+    const guild = message.guild,
+      usersPerPage = 20
+    let users = [],
+      usersCurrentPage = 0,
+      currentPage = {},
+      names = ``,
+      xp = ``,
+      level = ``,
+      xpTopPages = []
+
     await guild.members.fetch().then(async members => {
       const promises = []
       members.forEach(member => {
-        promises.push(getUserData(guildId, member))
+        promises.push(userUtils.getUserProfile(guild, member.user))
       })
-      usersBad = await Promise.all(promises)
+      users = await Promise.all(promises)
     })
-    let users = usersBad.filter(user => user !== undefined)
     users.sort(function (a, b) {
       return b.totalXp - a.totalXp
     })
-    const embed = new Discord.MessageEmbed()
-      .setColor("#ff5d8f")
-      .setTitle(`Ranking de ${guild.name}`)
-      .addFields(
-        { name: "Nombre", value: getNames(users), inline: true },
-        { name: "XP", value: getXP(users), inline: true },
-        { name: "Nivel", value: getLevel(users), inline: true }
-      )
-      .setTimestamp()
-      .setFooter(`Ranking de ${guild.name} por XP`)
-      .setThumbnail(guild.iconURL())
-    message.channel.send(embed)
+    for (let i = 0; i < users.length; i++) {
+      names += `${i + 1}. ${users[i].name.replace("_", "\\_")}\n`
+      xp += `${s.formatNumber(users[i].totalXp)}\n`
+      level += `${s.formatNumber(users[i].level)}\n`
+      usersCurrentPage++
+      if (usersCurrentPage == usersPerPage || i == users.length - 1) {
+        usersCurrentPage = 0
+        currentPage = { names, xp, level }
+        xpTopPages.push(currentPage)
+        names = ``
+        xp = ``
+        level = ``
+      }
+    }
+    pages.createPages(message, xpTopPages, "xptop")
   },
 }

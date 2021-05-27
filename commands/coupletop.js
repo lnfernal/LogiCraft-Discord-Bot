@@ -41,7 +41,7 @@ var getCouples = users => {
 module.exports = {
   commands: "coupletop",
   maxArgs: 0,
-  callback: async (message, arguments, text, client) => {
+  callback: async (message, args, text, client) => {
     const { guild } = message
     const promises = []
     guildId = guild.id
@@ -61,8 +61,16 @@ module.exports = {
       .setColor("#ba0001")
       .setTitle(`🥰 Ranking de parejas 💕`)
       .addFields(
-        { name: "Nombre", value: getNames(users), inline: true },
-        { name: "Amores <3", value: getCouples(users), inline: true }
+        {
+          name: "Nombre",
+          value: getNames(users),
+          inline: true,
+        },
+        {
+          name: "Amores <3",
+          value: getCouples(users),
+          inline: true,
+        }
       )
       .setTimestamp()
       .setFooter(`Ranking de parejas de ${guild.name}`)

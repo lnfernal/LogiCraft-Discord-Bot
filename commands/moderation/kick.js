@@ -13,10 +13,8 @@ module.exports = {
   maxArgs: 1,
   permissions: ["KICK_MEMBERS"],
   requiredRoles: [],
-  callback: async (message, arguments, text, client) => {
-    const user =
-      message.mentions.users.first() ||
-      (await s.getUserByString(arguments[0], message.member))
+  callback: async (message, args, text, client) => {
+    const user = message.mentions.users.first() || (await s.getUserByString(args[0], message.member))
     if (user) {
       const member = message.guild.members.cache.get(user.id)
       if (
@@ -27,9 +25,7 @@ module.exports = {
         return
       const embed = new Discord.MessageEmbed()
         .setColor("#ffff00")
-        .setTitle(
-          `${member.displayName} was slained by ${message.member.displayName}`
-        )
+        .setTitle(`${member.displayName} was slained by ${message.member.displayName}`)
       message.channel.send(embed)
       member.kick()
     } else {
@@ -38,9 +34,7 @@ module.exports = {
         `**${message.member.displayName}**, eso no parece una mención...`,
         `**${message.member.displayName}**, prueba mencionando al usuario con su @`,
       ]
-      message.channel.send(
-        errorMsg[Math.floor(Math.random() * errorMsg.length)]
-      )
+      message.channel.send(errorMsg[Math.floor(Math.random() * errorMsg.length)])
     }
   },
 }

@@ -11,11 +11,11 @@ module.exports = {
   minArgs: 1,
   maxArgs: 19,
   permissions: ["BAN_MEMBERS"],
-  callback: async (message, arguments, text, client) => {
+  callback: async (message, args, text, client) => {
     const user =
       message.mentions.users.first() ||
-      (await s.getUserByString(arguments[0], message.member)) ||
-      (await client.users.fetch(arguments[0]))
+      (await s.getUserByString(args[0], message.member)) ||
+      (await client.users.fetch(args[0]))
     var reason = "_No especificado_"
     if (!user)
       s.interpolation(messageHandler("missingUser"), {
@@ -28,9 +28,9 @@ module.exports = {
     )
       return
     const member = message.guild.members.cache.get(user.id)
-    if (arguments[1]) {
-      arguments.shift()
-      reason = arguments.join(" ")
+    if (args[1]) {
+      args.shift()
+      reason = args.join(" ")
     }
     try {
       await member.ban().then(() => {

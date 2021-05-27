@@ -23,15 +23,19 @@ const profileSchema = mongoose.Schema({
   },
   level: {
     type: Number,
-    default: 1,
+    default: 0,
   },
   lover: {
     type: Number,
     default: 0,
   },
-  inventory: {
-    type: [Object],
-    required: true,
+  mutes: {
+    type: Number,
+    default: 0,
+  },
+  pongs: {
+    type: Number,
+    default: 0,
   },
 })
 

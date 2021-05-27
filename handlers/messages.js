@@ -1,33 +1,19 @@
 require("module-alias/register")
 const clientUtils = require("@client")
+const s = require("@string")
 
 const getServerLanguage = () => {
   return "spanish"
 }
 
 const getLanguage = async member => {
-  if (await member.roles.cache.find(r => r.name.toLowerCase().includes("español")))
-    return "spanish"
-  else if (await member.roles.cache.find(r => r.name.toLowerCase().includes("english")))
-    return "english"
+  if (await member.roles.cache.find(r => r.name.toLowerCase().includes("español"))) return "spanish"
+  else if (await member.roles.cache.find(r => r.name.toLowerCase().includes("english"))) return "english"
   else return getServerLanguage()
 }
 
-const getProp = (object, path) => {
-  if (path.length === 1) return object[path[0]]
-  else if (path.length === 0) throw error
-  else {
-    if (object[path[0]]) return getProp(object[path[0]], path.slice(1))
-    else {
-      object[path[0]] = {}
-      return getProp(object[path[0]], path.slice(1))
-    }
-  }
-}
-
-module.exports = async (key, member) => {
-  const { guild } = member,
-    client = clientUtils.getClient(),
+module.exports = async (key, member, params = {}) => {
+  const client = clientUtils.getClient(),
     emojis = await require("@emojis").logibotEmojis(client),
     messages = {
       test: {
@@ -37,28 +23,23 @@ module.exports = async (key, member) => {
       activityDefault: {
         spanish:
           "**${username}**, las acciones disponibles son: **viendo**, **escuchando**, **jugando** y **retransmitiendo**",
-        english:
-          "**${username}**, available actions are: **watching**, **listening**, **playing** y **streaming**",
+        english: "**${username}**, available actions are: **watching**, **listening**, **playing** y **streaming**",
       },
       activityDefault: {
         spanish:
           "**${username}**, las acciones disponibles son: **viendo**, **escuchando**, **jugando** y **retransmitiendo**",
-        english:
-          "**${username}**, available actions are: **watching**, **listening**, **playing** y **streaming**",
+        english: "**${username}**, available actions are: **watching**, **listening**, **playing** y **streaming**",
       },
       coupleDailySpent: {
         spanish: "**${username}**, ya se ha reclamado la pareja de hoy",
         english: "**${username}**, today's couple has already been claimed",
       },
       coupleInsuficientMembers: {
-        spanish:
-          "**${username}**, no hay suficientes miembros para elegir pareja",
-        english:
-          "**${username}**, there aren't enough members to choose a couple",
+        spanish: "**${username}**, no hay suficientes miembros para elegir pareja",
+        english: "**${username}**, there aren't enough members to choose a couple",
       },
       dataType: {
-        spanish:
-          "**${username}**, los tipos de objeto son **entity** y **server**",
+        spanish: "**${username}**, los tipos de objeto son **entity** y **server**",
         english: "**${username}**, object types are **entity** and **server**",
       },
       missingDataNameProperty: {
@@ -66,38 +47,44 @@ module.exports = async (key, member) => {
         english: "**${username}**, write a name",
       },
       dataActions: {
-        spanish:
-          "**${username}**, las acciones disponibles son **get** y **set**",
+        spanish: "**${username}**, las acciones disponibles son **get** y **set**",
         english: "**${username}**, available actions are **get** and **set**",
       },
       adminNeeded: {
         spanish: "**${username}**, necesitas ser un Administrador",
         english: "**${username}**, you need to be an Administrator",
       },
-      hj: {
-        spanish:
-          "**${username}** ha sido encerrado en la Horny Jail ${hjEmoji}",
+      nestedCommand: {
+        spanish: "Buen intento",
+        english: "Nice try",
+      },
+      horny: {
+        spanish: "**${username}** ha sido encerrado en la Horny Jail ${hjEmoji}",
         english: "**${username}** has been jailed in the Horny Jail ${hjEmoji}",
+      },
+      hornier: {
+        spanish: "${hjEmoji} **${username}** ha sido encerrado en la HORNIER JAIL ${hjEmoji}",
+        english: "${hjEmoji} **${username}** has been jailed in the HORNIER JAIL ${hjEmoji}",
       },
       missingUser: {
         spanish: "**${username}**, no se ha encontrado al usuario",
         english: "**${username}**, couldn't find user",
       },
+      missingRole: {
+        spanish: "**${username}**, no se ha encontrado el rol",
+        english: "**${username}**, couldn't find role",
+      },
       ipDescription: {
-        spanish:
-          "Versión: **${version}**\n[**Modpack**](${requirements})IP: `0`",
-        english:
-          "Version: **${version}**\n[**Modpack**](${requirements})IP: `0`",
+        spanish: "Versión: **${version}**\n[**Modpack**](${requirements})IP: `0`",
+        english: "Version: **${version}**\n[**Modpack**](${requirements})IP: `0`",
       },
       balance: {
-        spanish: "**${username}**, tienes **${coins}** ${logiCoin}",
-        english: "**${username}**, you have **${coins}** ${logiCoin}",
+        spanish: "**${username}**, tienes ${logiCoin}${coins}",
+        english: "**${username}**, you have ${logiCoin}${coins}",
       },
       coinsAdded: {
-        spanish:
-          "**${username}**, has dado a ${targetUsername} **${coins}** ${logiCoin}",
-        english:
-          "**${username}**, you've given **${coins}** ${logiCoin} to ${targetUsername}",
+        spanish: "**${username}**, has dado a ${targetUsername} **${coins}** ${logiCoin}",
+        english: "**${username}**, you've given **${coins}** ${logiCoin} to ${targetUsername}",
       },
       coinsWrong: {
         spanish: "**${username}**, introduce un número válido de monedas",
@@ -105,9 +92,9 @@ module.exports = async (key, member) => {
       },
       xp: {
         spanish:
-          "**Nivel**: ${level}\n**XP**: ${totalXp}\n\n**Progreso para nivel ${level + 1}**:\n${xp} / ${needed}\n${progressMade} ${Math.round((xpRaw / neededRaw) * 1000) / 10}%",
+          "**Nivel**: ${level}\n**XP**: ${totalXp}\n\n**Progreso para nivel ${level + 1}**: ${xp} / ${needed} XP\n${progressMade} ${Math.round((xpRaw / neededRaw) * 100) / 100}%",
         english:
-          "**Level**: ${level}\n**XP**: ${totalXp}\n\n**Progress to level ${level + 1}**:\n${xp} / ${needed}\n${progressMade} ${Math.round((xpRaw / neededRaw) * 1000) / 10}%",
+          "**Level**: ${level}\n**XP**: ${totalXp}\n\n**Progress to level ${level + 1}**: ${xp} / ${needed} XP\n${progressMade} ${Math.round((xpRaw / neededRaw) * 100) / 100}%",
       },
       xpTitle: {
         spanish: "XP de **${username}**",
@@ -118,21 +105,20 @@ module.exports = async (key, member) => {
         english: "**${username}**, enter a valid XP amount",
       },
       xpCap: {
-        spanish: "**${username}**, el máximo que puedes añadir son ${maxXPAdd}",
-        english:
-          "**${username}**, the maximum amount you can add is ${maxXPAdd}",
+        spanish: "**${username}**, el máximo que puedes añadir son ${maxXpAdd}",
+        english: "**${username}**, the maximum amount you can add is ${maxXpAdd}",
       },
       xpGiven: {
-        spanish:
-          "**${username}**, has dado a ${targetUsername} **${xpToAdd}XP**",
-        english:
-          "**${username}**, you have given ${targetUsername} **${xpToAdd}XP**",
+        spanish: "**${username}**, has dado a ${targetUsername} **${xpAdd} XP**",
+        english: "**${username}**, you have given ${targetUsername} **${xpAdd} XP**",
       },
       xpGivenMsg: {
-        spanish:
-          "**${username}**, has dado a ${targetUsername} la XP equivalente a **${msg}**",
-        english:
-          "**${username}**, you've given ${targetUsername} the equivalent XP to **${msg}**",
+        spanish: "**${username}**, has dado a ${targetUsername} la XP equivalente a **${msg}** men",
+        english: "**${username}**, you've given ${targetUsername} the equivalent XP to **${msg}** messages",
+      },
+      xpGivenLvl: {
+        spanish: "**${username}**, has dado a ${targetUsername} **${lvls}** niveles",
+        english: "**${username}**, you've given ${targetUsername} **${lvls}** levels",
       },
       award: {
         spanish: "**${username}**, tienes que responder a un mensaje",
@@ -143,33 +129,36 @@ module.exports = async (key, member) => {
         english: "**${username}**, that reaction doesn't exist",
       },
       levelUpCommand: {
-        spanish:
-          "**${username}** ha subido del nivel ${prevLevel} al nivel **${level}**!",
-        english:
-          "**${username}** leveled up from level ${prevLevel} to level **${level}**!",
+        spanish: "**${username}** ha subido del nivel ${prevLevel} al nivel **${level}**!",
+        english: "**${username}** leveled up from level ${prevLevel} to level **${level}**!",
       },
       levelUp: {
         spanish: "**${username}** ha llegado al nivel **${level}**!",
         english: "**${username}** arrived to level **${level}**!",
       },
       level666: {
-        spanish: "**${username}** ha llegado a nivel **${level}** 😈!",
+        spanish: "**${username}** ha llegado al nivel **${level}** 😈!",
         english: "**${username}** arrived to level **${level}** 😈!",
       },
       level69: {
-        spanish: "**${username}** ha llegado a nivel **${level}** 😎!",
+        spanish: "**${username}** ha llegado al nivel **${level}** 😎!",
         english: "**${username}** arrived to level **${level}** 😎!",
       },
       level1: {
-        spanish: "**${username}** ha llegado a nivel **1**!",
+        spanish: "**${username}** ha llegado al nivel **1**!",
         english: "**${username}** arrived to level **1**!",
       },
       level777: {
-        spanish: "**${username}** ha llegado a nivel **${level}** 🎰!",
+        spanish: "**${username}** ha llegado al nivel **${level}** 🎰!",
         english: "**${username}** arrived to level **${level}** 🎰!",
+      },
+      level1000Title: {
+        spanish: "**${username}** ha llegado al nivel **${level}**!",
+        english: "**${username}** arrived to level **${level}**!",
       },
     },
     userLanguage = await getLanguage(member)
-  message = getProp(messages, [`${key}`, `${userLanguage}`])
-  return message ? message : "*"
+
+  message = s.getNestedProperty(messages, [`${key}`, `${userLanguage}`])
+  return message ? s.interpolate(message, params) : `_null_ ${emojis.fix}`
 }

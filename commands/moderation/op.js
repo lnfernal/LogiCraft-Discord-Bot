@@ -10,10 +10,8 @@ module.exports = {
   maxArgs: 1,
   permissions: ["MANAGE_ROLES"],
   requiredRoles: ["666297045207875585", "666297857929642014"],
-  callback: async (message, arguments, text, client) => {
-    const user =
-      message.mentions.users.first() ||
-      (await s.getUserByString(arguments[0], message.member))
+  callback: async (message, args, text, client) => {
+    const user = message.mentions.users.first() || (await s.getUserByString(args[0], message.member))
     if (user) {
       if (user.id === "824989001999712337" || user.id == client.user.id) return
       const role = message.guild.roles.cache.get("666297045207875585")
@@ -25,9 +23,7 @@ module.exports = {
         `**${message.member.displayName}**, eso no parece una mención...`,
         `**${message.member.displayName}**, prueba mencionando al usuario con su @`,
       ]
-      message.channel.send(
-        errorMsg[Math.floor(Math.random() * errorMsg.length)]
-      )
+      message.channel.send(errorMsg[Math.floor(Math.random() * errorMsg.length)])
     }
   },
 }

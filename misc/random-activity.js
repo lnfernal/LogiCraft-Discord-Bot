@@ -2,23 +2,9 @@ let activityTimeout,
   activityTriggered = false
 const activities = [
   // jugando
-  [
-    "esclavizar aldeanos",
-    "PvP sin skills",
-    "crear canales",
-    "ser Dios",
-    "a farmear cobble",
-    "a raidear bastiones",
-  ],
+  ["esclavizar aldeanos", "PvP sin skills", "crear canales", "ser Dios", "a farmear cobble", "a raidear bastiones"],
   // escuchando
-  [
-    "pistones",
-    "zombies gruñir",
-    "a Siber morir",
-    "pasos",
-    "dispenser llenándose",
-    "Sweden - C418",
-  ],
+  ["pistones", "zombies gruñir", "a Siber morir", "pasos", "dispenser llenándose", "Sweden - C418"],
   // viendo
   [
     "tutoriales para copiar",
@@ -33,7 +19,7 @@ const activities = [
 ]
 
 const getRandomActivity = () => {
-  let type = Math.floor(Math.random() * activities.length)
+  let type = Math.floor(Math.random() * (activities.length - 1)) + 1
   let activityType = activities[type]
   let activity = {
     type,
@@ -42,16 +28,15 @@ const getRandomActivity = () => {
   return activity
 }
 
-const setActivity = client => {
-  const activity = getRandomActivity()
+const setActivity = (client, activity, skipCooldown) => {
   setTimeout(() => {
     setActivity(client)
   }, 60 * 60 * 1000)
-  if (!activityTriggered) {
+  if (!activityTriggered || skipCooldown) {
     client.user.setPresence({
       activity: {
-        name: activity.text,
-        type: activity.type + 1,
+        name: "v1.0", //activity.text,
+        type: 3, //activity.type,
       },
       status: "online",
     })
@@ -59,8 +44,8 @@ const setActivity = client => {
 }
 
 module.exports = {
-  setActivity: client => {
-    setActivity(client)
+  setActivity: (client, activity = getRandomActivity(), skipCooldown = false) => {
+    setActivity(client, activity, skipCooldown)
   },
   activityTrigger: () => {
     clearTimeout(activityTimeout)

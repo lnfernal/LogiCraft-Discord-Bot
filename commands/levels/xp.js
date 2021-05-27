@@ -1,40 +1,38 @@
-const mongo = require("../../utils/mongo.js")
-const Discord = require("discord.js")
-const profileSchema = require("../../schemas/profile-schema.js")
 require("module-alias/register")
+const Discord = require("discord.js")
+const userUtils = require("@user")
 const messageHandler = require("@messages")
 const s = require("@string")
-const user = require("@user")
+const math = require("@math")
 
 const progressBarPrecision = 25
 
-const xpEmbed = async (message, target, xp, totalXp, level, needed) => {
+const xpEmbed = async (message, target, profile, needed) => {
   const targetMember = message.guild.members.cache.get(target.id)
+  const { xp, totalXp, level } = profile
   const progressMade = () => {
     var i = 0
     var progressBar = `[`
     for (i; i < progressBarPrecision; i++) {
-      if (i / progressBarPrecision < xp / needed) {
+      if (i / progressBarPrecision < xp / math.clamp(needed, 1, needed)) {
         progressBar += "□"
       } else {
         break
       }
     }
-    for (i; i < progressBarPrecision; i++) {
-      progressBar += "–"
-    }
+    for (i; i < progressBarPrecision; i++) progressBar += "–"
     progressBar += "]"
     return progressBar
   }
   const embed = new Discord.MessageEmbed()
-    .setColor("#ff5d8f"/*await user.getAvatarDominantColor(target)*/)
+    .setColor("#ff5d8f")
     .setTitle(
-      s.interpolate(await messageHandler("xpTitle", targetMember), {
+      await messageHandler("xpTitle", targetMember, {
         username: target.username.replace("_", "\\_"),
       })
     )
     .setDescription(
-      s.interpolate(await messageHandler("xp", targetMember), {
+      await messageHandler("xp", targetMember, {
         level,
         xp: s.formatNumber(xp),
         xpRaw: xp,
@@ -44,38 +42,21 @@ const xpEmbed = async (message, target, xp, totalXp, level, needed) => {
         progressMade: progressMade(),
       })
     )
-    .setThumbnail(target.avatarURL())
+    .setThumbnail(userUtils.getUserAvatar(target))
   message.channel.send(embed)
 }
 
 module.exports = {
   commands: "xp",
-  expectedArgs: "",
-  callback: async (message, arguments, text, client) => {
+  maxArgs: 1,
+  expectedArgs: "<user>",
+  callback: async (message, args, text, client) => {
     const target =
       message.mentions.users.first() ||
-      (await s.getUserByString(
-        arguments[0] ? arguments[0] : ".",
-        message.member
-      )) ||
+      (await s.getUserByString(args[0] ? args[0] : ".", message.member)) ||
       message.author
-    const guildId = message.guild.id
-    const userId = target.id
 
-    const result = await profileSchema.findOne({
-      guildId,
-      userId,
-    })
-    if (result) {
-      const { xp, totalXp, level } = result
-      xpEmbed(
-        message,
-        target,
-        xp,
-        totalXp,
-        level,
-        Math.floor(Math.pow(level, 2.5) * 10)
-      )
-    }
+    const profile = await userUtils.getUserProfile(message.guild, target)
+    xpEmbed(message, target, profile, Math.floor(Math.pow(profile.level, 2.5) * 10))
   },
 }

@@ -26,10 +26,7 @@ module.exports = {
   //reactToPrevMsg(client)
 
   onMessage: async (client, message) => {
-    const emojis = await require("../utils/emojis.js").logibotEmojis(
-      client,
-      message.guild.id
-    )
+    const emojis = await require("../utils/emojis.js").logibotEmojis(client, message.guild.id)
     if (channelId == message.channel.id) {
       addReactions(message, emojis)
     }

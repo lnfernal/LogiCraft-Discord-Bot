@@ -1,6 +1,6 @@
-const randomActivity = require("../misc/random-activity.js")
 require("module-alias/register")
 const messageHandler = require("@messages")
+const randomActivity = require("@randomActivity")
 const s = require("@string")
 
 module.exports = {
@@ -8,41 +8,30 @@ module.exports = {
   expectedArgs: "<watching|listening|playing|streaming> <content>",
   minArgs: 2,
   maxArgs: 20,
-  cooldown: 60,
-  callback: async (message, arguments, text, client) => {
-    var type, name
+  cooldown: 1,
+  callback: async (message, args, text, client) => {
+    var type, text
     const { member } = message
 
-    switch (arguments[0]) {
-      case "viendo":
-        type = 3
-        break
-      case "escuchando":
-        type = 2
-        break
-      case "jugando":
-        type = 1
-        break
-      case "retransmitiendo":
-        type = 4
-        break
-      default:
-        message.channel.send(
-          s.interpolate(await messageHandler("activityDefault", member), {
-            username: member.user.username,
-          })
-        )
-        return
+    if (args[0] == "watching" || args[0] == "viendo") {
+      type = 3
+    } else if (args[0] == "listening" || args[0] == "escuchando") {
+      type = 2
+    } else if (args[0] == "playing" || args[0] == "jugando") {
+      type = 1
+    } else if (args[0] == "streaming" || args[0] == "retransmitiendo") {
+      type = 4
+    } else {
+      message.channel.send(
+        s.interpolate(await messageHandler("activityDefault", member), {
+          username: member.user.username,
+        })
+      )
+      return
     }
+    args.shift()
+    text = args.join(" ")
+    randomActivity.setActivity(client, { text, type }, true)
     randomActivity.activityTrigger()
-    arguments.shift()
-    name = arguments.join(" ")
-    client.user.setPresence({
-      activity: {
-        name,
-        type,
-      },
-      status: "online",
-    })
   },
 }

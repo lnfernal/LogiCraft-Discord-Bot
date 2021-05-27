@@ -5,7 +5,7 @@ const s = require("@string")
 
 module.exports = {
   commands: ["ip", "server"],
-  callback: async (message, arguments, text, client) => {
+  callback: async (message, args, text, client) => {
     const { guild, member } = message
     const version = "1.17"
     const requirements = "null"
