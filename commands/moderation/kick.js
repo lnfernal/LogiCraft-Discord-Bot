@@ -1,40 +1,46 @@
 require("module-alias/register")
 const messageHandler = require("@messages")
+const userUtils = require("@user")
 const s = require("@string")
 const Discord = require("discord.js")
-const protectedRolesFunc = require("../../misc/protected-roles.js")
-const protectedRoles = ["666297045207875585", "666297857929642014"]
+const protectedRoles = ["mod", "staff"]
 
 module.exports = {
   commands: ["kick", "kill"],
   expectedArgs: "<user>",
-  permissionError: "no tienes los permisos necesarios :c",
   minArgs: 1,
   maxArgs: 1,
   permissions: ["KICK_MEMBERS"],
-  requiredRoles: [],
   callback: async (message, args, text, client) => {
-    const user = message.mentions.users.first() || (await s.getUserByString(args[0], message.member))
-    if (user) {
-      const member = message.guild.members.cache.get(user.id)
-      if (
-        !protectedRolesFunc(message, member, protectedRoles) ||
-        user.id === "824989001999712337" ||
-        user.id == client.user.id
+    const target = message.mentions.users.first() || (await s.getUserByString(args[0], message.member))
+
+    if (!target) {
+      message.channel.send(
+        await messageHandler("missingUser", message.member, {
+          username: message.author.username,
+        })
       )
-        return
-      const embed = new Discord.MessageEmbed()
-        .setColor("#ffff00")
-        .setTitle(`${member.displayName} was slained by ${message.member.displayName}`)
-      message.channel.send(embed)
-      member.kick()
-    } else {
-      const errorMsg = [
-        `**${message.member.displayName}**, tienes que mencionar al usuario :P`,
-        `**${message.member.displayName}**, eso no parece una mención...`,
-        `**${message.member.displayName}**, prueba mencionando al usuario con su @`,
-      ]
-      message.channel.send(errorMsg[Math.floor(Math.random() * errorMsg.length)])
+      return
     }
+
+    if (await userUtils.checkImmunity(message, target, protectedRoles)) return
+
+    const member = await message.guild.members.cache.get(target.id)
+
+    if (!member) {
+      message.channel.send(
+        await messageHandler("missingUser", message.member, {
+          username: message.author.username,
+        })
+      )
+      return
+    }
+
+    const embed = new Discord.MessageEmbed()
+      .setColor("#ff4646")
+      .setFooter(`Muteado por ${message.author.username}`, `${message.author.avatarURL()}`)
+      .setTitle(`${target.username} was slained by ${message.author.username}`)
+    message.channel.send(embed)
+    member.kick()
   },
 }

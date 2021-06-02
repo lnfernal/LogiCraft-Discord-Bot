@@ -35,7 +35,7 @@ const setActivity = (client, activity, skipCooldown) => {
   if (!activityTriggered || skipCooldown) {
     client.user.setPresence({
       activity: {
-        name: "v1.0", //activity.text,
+        name: "/help", //activity.text,
         type: 3, //activity.type,
       },
       status: "online",

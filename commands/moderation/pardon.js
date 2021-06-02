@@ -1,33 +1,49 @@
+require("module-alias/register")
+const messageHandler = require("@messages")
 const Discord = require("discord.js")
 
 module.exports = {
   commands: "pardon",
-  expectedArgs: "<user_id>",
+  expectedArgs: "<userId>",
   minArgs: 1,
   maxArgs: 1,
   permissions: ["BAN_MEMBERS"],
   callback: async (message, args, text, client) => {
-    if (!isNaN(args[0])) {
-      try {
-        await client.users.fetch(args[0]).then(async user => {
-          try {
-            await message.guild.members.unban(user.id).then(() => {
-              const embed = new Discord.MessageEmbed()
-                .setColor("#30fc03")
-                .setTitle(`${user.username} ha sido desbaneado`)
-              message.channel.send(embed)
-            })
-          } catch (e) {
-            message.channel.send(
-              `El usuario ${user.username} no está baneado. Puedes consultar los usuarios baneados en _"Configuracón del servidor > Bans"_`
-            )
-          }
+    if (isNaN(args[0])) {
+      message.channel.send(
+        await messageHandler("missingUser", message.member, {
+          username: message.author.username,
         })
-      } catch (e) {
-        message.channel.send("Usuario incorrecto")
-      }
-    } else {
-      message.channel.send(`**${message.member.displayName}**, se necesita el id del usuario`)
+      )
+      return
+    }
+
+    try {
+      await client.users.fetch(args[0]).then(async user => {
+        try {
+          await message.guild.members.unban(user.id).then(() => {
+            const embed = new Discord.MessageEmbed()
+              .setColor("#4aa96c")
+              .setTitle(`${user.username} ha sido desbaneado`)
+              .setFooter(`Muteado por ${message.author.username}`, `${message.author.avatarURL()}`)
+            message.channel.send(embed)
+          })
+        } catch (e) {
+          message.channel.send(
+            await messageHandler("missingBan", message.member, {
+              username: message.author.username,
+            })
+          )
+          return
+        }
+      })
+    } catch (e) {
+      message.channel.send(
+        await messageHandler("missingUser", message.member, {
+          username: message.author.username,
+        })
+      )
+      return
     }
   },
 }

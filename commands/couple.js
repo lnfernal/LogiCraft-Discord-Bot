@@ -1,7 +1,6 @@
 const Discord = require("discord.js")
 require("module-alias/register")
 const messageHandler = require("@messages")
-const s = require("@string")
 const coupleSchema = require("../schemas/couple-schema.js")
 const userUtils = require("@user")
 
@@ -41,7 +40,9 @@ module.exports = {
   commands: "couple",
   callback: async (message, args, text, client) => {
     const guildId = message.guild.id,
-      { member, guild } = message
+      { member, guild } = message,
+      roleID = "835087933476044810", //CHANGE
+      emojis = await require("@emojis").logibotEmojis(client)
 
     let result = await coupleSchema.findOne({ _id: guildId })
     if (!result)
@@ -60,7 +61,7 @@ module.exports = {
     }
     await guild.members.fetch().then(async members => {
       let arr = []
-      members = members.filter(m => !m.user.bot)
+      //members = members.filter(m => !m.user.bot)
       members = members.array()
       if (members.length < 2) {
         message.channel.send(
@@ -68,52 +69,57 @@ module.exports = {
         )
         return
       }
-      console.log(members)
+
       while (arr.length < 2) {
         let m = Math.floor(Math.random() * members.length)
         if (!arr.includes(members[m])) arr.push(members[m])
       }
       var lover1 = Math.floor(Math.random() * 2)
       var lover2 = lover1 == 0 ? 1 : 0
-      coupleAnn = `${loveEmojis[Math.floor(Math.random() * loveEmojis.length)]}  Pareja del día:`
-      coupleSentence = `**${arr[lover1].user.username} a ${arr[lover2].user.username}:** _"${
-        loveSentences[Math.floor(Math.random() * loveSentences.length)]
-      }  ${loveEmojis[Math.floor(Math.random() * loveEmojis.length)]}"_`
 
       // lover role
-      const loverRole = await guild.roles.cache.find(role => {
-        role.name.toLowerCase().includes("love")
-      })
-      if (!loverRole) return
-      arr[lover1].roles.add(loverRole)
-      arr[lover2].roles.add(loverRole)
+      const loverRole = await guild.roles.cache.get(roleID)
+      if (!loverRole) {
+        message.channel.send(
+          await messageHandler("missingRole", message.member, {
+            username: message.author.username,
+          })
+        )
+        return
+      }
+      await arr[lover1].roles.add(loverRole)
+      await arr[lover2].roles.add(loverRole)
 
       // remove role
       var now = new Date()
       var night = new Date()
       night.setHours(16, 0, 20, 0)
       var msTillMidnight = night.getTime() - now.getTime()
-      setTimeout(async guild => {
+      setTimeout(async () => {
         await guild.members.fetch().then(members => {
           members.forEach(async member => {
-            if (member.roles.cache.get(loverRoleId)) await member.roles.remove(loverRole)
+            if (member.roles.cache.get(roleID)) await member.roles.remove(await guild.roles.cache.get(roleID))
           })
         })
       }, msTillMidnight)
 
       // add lover punctuation
-      userUtils.incUserSchema(guild, arr[lover1].user, "lover", 1)
-      userUtils.incUserSchema(guild, arr[lover2].user, "lover", 1)
+      await userUtils.incUserSchema(guild, arr[lover1].user, "lover", 1)
+      await userUtils.incUserSchema(guild, arr[lover2].user, "lover", 1)
+
       const embed = new Discord.MessageEmbed()
         .setColor("#ba0001")
-        .setTitle(coupleAnn)
+        .setTitle(`${emojis.heart} Pareja del día ${emojis.heart}`)
         .setDescription(
-          `**${arr[0].user.username} + ${arr[1].user.username} =  ${
+          `**${arr[0].user.username}** + **${arr[1].user.username}** =  ${
             loveEmojis[Math.floor(Math.random() * loveEmojis.length)]
-          }**\n\n${coupleSentence}`
+          }`
         )
-      message.channel.send(embed)
+        .addField(
+          `**${arr[lover1].user.username} a ${arr[lover2].user.username}**`,
+          `_\"${loveSentences[Math.floor(Math.random() * loveSentences.length)]}\"_`
+        )
+      await message.channel.send(embed)
     })
-    await coupleSchema.findOneAndUpdate({ _id: guildId }, { _id: guildId }, { upsert: true })
   },
 }

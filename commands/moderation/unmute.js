@@ -2,10 +2,15 @@ require("module-alias/register")
 const messageHandler = require("@messages")
 const s = require("@string")
 const muteSchema = require("../../schemas/mute-schema.js")
+const userUtils = require("@user")
 const Discord = require("discord.js")
 
 const unmute = async (member, author, params) => {
-  const rolesBackup = await require("./mute.js").rolesBackup()
+  const rolesBackup = await require("./mute.js").rolesBackup(),
+    createdAt = await userUtils.getCreatedAt(member.guild, member.user),
+    mutedSince = s.formatDate(createdAt),
+    mutedFor = s.msToTime(new Date().getTime() - createdAt.getTime())
+
   rolesBackup.forEach(async roleBackup => {
     if (roleBackup.id == member.id) {
       await member.roles.set(roleBackup.roles)
@@ -16,6 +21,7 @@ const unmute = async (member, author, params) => {
       .setTitle(`${member.user.username} ha sido desmuteado ${params.unmuted}`)
       .setFooter(`Desmuteado por ${author.username}`, `${author.avatarURL()}`)
       .setColor("#4aa96c")
+      .setDescription(`**Muteado desde**: ${mutedSince}\n**Muteado durante**: ${mutedFor}`)
   )
 }
 
@@ -36,18 +42,23 @@ module.exports = {
 
     if (!target) id = args[0]
     else id = target.id
-    const result = await muteSchema.updateOne(
-      {
-        guildId: guild.id,
-        userId: id,
-        current: true,
-      },
-      {
-        current: false,
-      }
-    )
-    if (result.nModified == 1) {
+    const result = await muteSchema.findOne({
+      guildId: guild.id,
+      userId: id,
+      current: true,
+    })
+    if (result) {
       unmute((await guild.members.fetch()).get(target.id), message.author, { unmuted: emojis.unmuted, channel })
+      await muteSchema.updateOne(
+        {
+          guildId: guild.id,
+          userId: id,
+          current: true,
+        },
+        {
+          current: false,
+        }
+      )
     } else {
       channel.send(`${target.username} no está muteado`)
     }

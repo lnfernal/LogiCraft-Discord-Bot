@@ -1,6 +1,6 @@
 require("module-alias/register")
 const Discord = require("discord.js")
-const avatarManager = require("../avatar-manager/avatar-manager.js")
+const avatarManager = require("../misc/avatar-manager.js")
 const messageHandler = require("@messages")
 const s = require("@string")
 
@@ -17,7 +17,12 @@ module.exports = {
     const { member, channel } = message
     const target = message.mentions.users.first() || (await s.getUserByString(args[0], member))
     const horny = await message.guild.roles.cache.find(r => r.name.toLowerCase().includes("horny"))
-    const hornier = await message.guild.roles.cache.find(r => r.name.toLowerCase().includes("hornier"))
+    const hornier = await message.guild.roles.cache.find(r => r.name.toLowerCase().includes("hornier")),
+      images = [
+        "https://media1.tenor.com/images/4fd0fd16a296d42b9fb08f9df2063ab8/tenor.gif?itemid=19294476",
+        "https://i.redd.it/9ejnyj8tnzi61.png",
+        "https://i.redd.it/4s9s1gdt1v351.jpg",
+      ]
     let embed, targetMember
 
     if (!target) {
@@ -50,7 +55,7 @@ module.exports = {
             hjEmoji: emojis.GOTOHORNYJAIL,
           })}`
         )
-        .setImage("https://i.redd.it/4s9s1gdt1v351.jpg")
+        .setImage(images[Math.floor(Math.random() * images.length)])
         .setDescription(
           `${member.user.username} a ${target.username}: "_${hjMsg[Math.floor(Math.random() * hjMsg.length)]}_"`
         )

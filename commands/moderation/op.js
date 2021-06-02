@@ -5,25 +5,43 @@ const s = require("@string")
 module.exports = {
   commands: "op",
   expectedArgs: "<user>",
-  permissionError: "no tienes los permisos necesarios :c",
   minArgs: 1,
   maxArgs: 1,
   permissions: ["MANAGE_ROLES"],
-  requiredRoles: ["666297045207875585", "666297857929642014"],
   callback: async (message, args, text, client) => {
-    const user = message.mentions.users.first() || (await s.getUserByString(args[0], message.member))
-    if (user) {
-      if (user.id === "824989001999712337" || user.id == client.user.id) return
-      const role = message.guild.roles.cache.get("666297045207875585")
-      const member = message.guild.members.cache.get(user.id)
-      member.roles.add(role).catch(console.error)
-    } else {
-      const errorMsg = [
-        `**${message.member.displayName}**, tienes que mencionar al usuario :P`,
-        `**${message.member.displayName}**, eso no parece una mención...`,
-        `**${message.member.displayName}**, prueba mencionando al usuario con su @`,
-      ]
-      message.channel.send(errorMsg[Math.floor(Math.random() * errorMsg.length)])
+    const target = message.mentions.users.first() || (await s.getUserByString(args[0], message.member))
+
+    if (!target) {
+      message.channel.send(
+        await messageHandler("missingUser", message.member, {
+          username: message.author.username,
+        })
+      )
+      return
     }
+
+    const role = message.guild.roles.cache.get("666297045207875585")
+
+    if (!role) {
+      message.channel.send(
+        await messageHandler("missingRole", message.member, {
+          username: message.author.username,
+        })
+      )
+      return
+    }
+
+    const member = await message.guild.members.cache.get(target.id)
+
+    if (!member) {
+      message.channel.send(
+        await messageHandler("missingUser", message.member, {
+          username: message.author.username,
+        })
+      )
+      return
+    }
+
+    await member.roles.add(role).catch(console.error)
   },
 }

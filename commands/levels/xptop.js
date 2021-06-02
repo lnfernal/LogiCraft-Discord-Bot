@@ -4,36 +4,13 @@ const s = require("@string")
 const Discord = require("discord.js")
 const pages = require("@pages")
 
-const getUserData = async (guildId, member) => {
-  const userId = member.id
-  const result = await profileSchema.findOne({
-    guildId,
-    userId,
-  })
-  if (result) {
-    const { name, totalXp = 0, level = 0 } = result
-    let user = {
-      name,
-      totalXp,
-      level,
-    }
-    return user
-  } else if (!member.user.bot) {
-    let user = {
-      name: member.user.username,
-      totalXp: 0,
-      level: 0,
-    }
-    return user
-  }
-}
-
 module.exports = {
   commands: "xptop",
   maxArgs: 0,
   callback: async (message, args, text, client) => {
     const guild = message.guild,
       usersPerPage = 20
+    emojis = await require("@emojis").logibotEmojis(client)
     let users = [],
       usersCurrentPage = 0,
       currentPage = {},
@@ -44,6 +21,7 @@ module.exports = {
 
     await guild.members.fetch().then(async members => {
       const promises = []
+
       members.forEach(member => {
         promises.push(userUtils.getUserProfile(guild, member.user))
       })
@@ -53,7 +31,9 @@ module.exports = {
       return b.totalXp - a.totalXp
     })
     for (let i = 0; i < users.length; i++) {
-      names += `${i + 1}. ${users[i].name.replace("_", "\\_")}\n`
+      names += `${i === 0 ? emojis.one : i === 1 ? emojis.two : i === 2 ? emojis.three : i + 1 + "."} ${users[
+        i
+      ].name.replace("_", "\\_")}\n`
       xp += `${s.formatNumber(users[i].totalXp)}\n`
       level += `${s.formatNumber(users[i].level)}\n`
       usersCurrentPage++

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\"",
-    "update": "npm i -g && ncu -u && npm update"
+    "update": "npm i -g && ncu -u && npm update",
+    "start": "tsc && node index.js"
   },
   "repository": {
     "type": "git",
@@ -20,14 +21,17 @@
   "homepage": "https://github.com/mariod8/LogiDiscordBot#readme",
   "dependencies": {
     "@discordjs/opus": "^0.5.0",
+    "color-thief-node": "^1.0.4",
     "discord-music-player": "^7.1.4",
     "discord-rpc": "^3.2.0",
     "discord.js": "^12.5.3",
+    "discord.js-menu": "^2.3.1",
     "dotenv": "^10.0.0",
     "erlpack": "^0.1.3",
     "module-alias": "^2.2.2",
-    "mongodb": "^3.6.8",
-    "mongoose": "^5.12.11",
+    "moment": "^2.29.1",
+    "mongodb": "^3.6.9",
+    "mongoose": "^5.12.12",
     "prettier": "^2.3.0",
     "string-similarity": "^4.0.4"
   },
@@ -42,7 +46,8 @@
     "@math": "./utils/math.js",
     "@rpc": "./misc/rpc.js",
     "@randomActivity": "./misc/random-activity.js",
-    "@pages": "./utils/pages.js"
+    "@pages": "./utils/pages.js",
+    "@utils": "./utils"
   },
   "prettier": {
     "semi": false,

@@ -27,9 +27,15 @@ module.exports = {
       expires
 
     if (!target) {
-      channel.send("no target")
+      message.channel.send(
+        await messageHandler("missingUser", message.member, {
+          username: message.author.username,
+        })
+      )
       return
     }
+
+    if (await userUtils.checkImmunity(message, target)) return
 
     const previousMutes = await muteSchema.find({
       userId: target.id,
@@ -41,16 +47,25 @@ module.exports = {
     })
 
     if (currentlyMuted.length) {
-      channel.send(`**${message.author.username}**, este usuario ya está muteado`)
+      message.channel.send(
+        await messageHandler("alreadyMuted", message.member, {
+          username: message.author.username,
+        })
+      )
       return
     }
     const mutedRole = await guild.roles.cache.find(role => {
       return role.name.toLowerCase().includes("mute")
     })
 
-    if (!mutedRole) return
-
-    //if (target.bot || target.id == guild.ownerID) return
+    if (!mutedRole) {
+      message.channel.send(
+        await messageHandler("missingRole", message.member, {
+          username: message.author.username,
+        })
+      )
+      return
+    }
 
     expires = new Date()
     if (args[1]) {
@@ -61,7 +76,7 @@ module.exports = {
         reason = args.join(" ")
       } else {
         // means time provided
-        duration = args[1].match(/\d*\.?\d*/)[0]
+        duration = parseInt(args[1].match(/\d*\.?\d*/)[0])
         timeUnit = args[1].match(/[a-zA-Z]/)[0].toLowerCase()
         switch (timeUnit) {
           case "s":
@@ -82,7 +97,7 @@ module.exports = {
             )
             return
         }
-        if (timeout > 2147483647) {
+        if (timeout > 2147483647 || timeout < 5000) {
           channel.send(`**${message.member.displayName}**, el valor introducido no es válido`)
           return
         }
@@ -105,21 +120,26 @@ module.exports = {
       id: target.id,
     })
     if (timeout == 0) expires.setFullYear(2077)
-    expires = new Date(expires.getTime() + timeout + 120 * 60000)
+    expires = new Date(expires.getTime() + timeout)
     if (expires < new Date().setFullYear(new Date().getFullYear() + 1)) {
       setTimeout(async () => {
-        const result = await muteSchema.updateOne(
-          {
-            guildId: guild.id,
-            userId: targetMember.id,
-            current: true,
-          },
-          {
-            current: false,
-          }
-        )
-        if (result.nModified == 1) {
+        const result = await muteSchema.findOne({
+          guildId: guild.id,
+          userId: targetMember.id,
+          current: true,
+        })
+        if (result) {
           await unmute.triggerUnmute(targetMember, client.user, { unmuted: emojis.unmuted, channel })
+          await muteSchema.updateOne(
+            {
+              guildId: guild.id,
+              userId: targetMember.id,
+              current: true,
+            },
+            {
+              current: false,
+            }
+          )
         }
       }, timeout)
     }
@@ -140,7 +160,9 @@ module.exports = {
       .setFooter(`Muteado por ${message.author.username}`, `${message.author.avatarURL()}`)
       .setColor("#ff4646")
       .setDescription(
-        `**ID Usuario**: ${target.id}\n**Motivo**: ${reason}\n**Terminio**: ${expires.toLocaleString("es-ES")} GTM+2`
+        `**ID Usuario**: ${target.id}\n**Motivo**: ${reason}\n**Inicio**: ${s.formatDate(
+          new Date()
+        )}\n**Terminio**: ${s.formatDate(expires)}`
       )
     message.channel.send(embed)
   },

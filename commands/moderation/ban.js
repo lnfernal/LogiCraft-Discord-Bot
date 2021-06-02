@@ -1,9 +1,9 @@
-const Discord = require("discord.js")
 require("module-alias/register")
+const Discord = require("discord.js")
 const messageHandler = require("@messages")
 const s = require("@string")
-const protectedRolesFunc = require("../../misc/protected-roles.js")
-const protectedRoles = ["666297045207875585", "666297857929642014"]
+const userUtils = require("@user")
+const protectedRoles = ["mod", "staff"]
 
 module.exports = {
   commands: "ban",
@@ -12,36 +12,54 @@ module.exports = {
   maxArgs: 19,
   permissions: ["BAN_MEMBERS"],
   callback: async (message, args, text, client) => {
-    const user =
+    const target =
       message.mentions.users.first() ||
       (await s.getUserByString(args[0], message.member)) ||
       (await client.users.fetch(args[0]))
     var reason = "_No especificado_"
-    if (!user)
-      s.interpolation(messageHandler("missingUser"), {
-        username: message.member.user.username,
-      })
-    if (
-      (!protectedRolesFunc(message, member, protectedRoles) && member) ||
-      user.id === "824989001999712337" ||
-      user.id == client.user.id
-    )
+
+    if (!target) {
+      message.channel.send(
+        await messageHandler("missingUser", message.member, {
+          username: message.author.username,
+        })
+      )
       return
-    const member = message.guild.members.cache.get(user.id)
+    }
+
+    if (await userUtils.checkImmunity(message, target, protectedRoles)) return
+
+    const member = await message.guild.members.cache.get(target.id)
+
+    if (!member) {
+      message.channel.send(
+        await messageHandler("missingUser", message.member, {
+          username: message.author.username,
+        })
+      )
+      return
+    }
+
     if (args[1]) {
       args.shift()
       reason = args.join(" ")
     }
+
     try {
       await member.ban().then(() => {
         const embed = new Discord.MessageEmbed()
-          .setColor("#ff0000")
-          .setTitle(`${member.displayName} ha sido baneado`)
-          .setDescription(`Motivo: ${reason}\nId: ${member.id}`)
+          .setColor("#ff4646")
+          .setTitle(`${target.username} ha sido baneado`)
+          .setDescription(`Motivo: ${reason}\nId: ${target.id}`)
+          .setFooter(`Muteado por ${message.author.username}`, `${message.author.avatarURL()}`)
         message.channel.send(embed)
       })
     } catch (e) {
-      message.channel.send("Este usuario ya está baneado")
+      message.channel.send(
+        await messageHandler("alreadyBanned", message.member, {
+          username: message.author.username,
+        })
+      )
     }
   },
 }

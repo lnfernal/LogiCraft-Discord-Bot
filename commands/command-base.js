@@ -50,12 +50,13 @@ module.exports = (client, commandOptions, dirName) => {
   let {
     commands,
     expectedArgs = "",
-    permissionError = "no tienes permiso para usar este comando :c",
+    permissionError = "no tienes permiso para usar este comando",
     minArgs = 0,
-    maxArgs = null,
+    maxArgs = 0,
     cooldown = -1,
     permissions = [],
     requiredRoles = [],
+    dm = false,
     callback,
   } = commandOptions
 
@@ -89,6 +90,41 @@ module.exports = (client, commandOptions, dirName) => {
       if (content.toLowerCase().startsWith(`${command} `) || content.toLowerCase() === command) {
         // a command has been ran
 
+        // check if is dm
+        if (message.channel.type == "dm") {
+          if (!dm) {
+            await message.author.send(await messageHandler("dmCommand"))
+            return
+          }
+          // split on any number of spaces
+          const args = content.split(/[ ]+/)
+
+          // remove the command which is the first index
+          args.shift()
+
+          // ensure we have the correct number of args
+          if (args.length < minArgs || args.length > maxArgs) {
+            message.channel.send(
+              `**${message.member.displayName}**, sintaxis incorrecta! Usa \`${prefix}${alias} ${expectedArgs}\``
+            )
+            return
+          }
+
+          if (cooldown > 0) {
+            recentlyRan.push(cooldownString)
+            setTimeout(() => {
+              recentlyRan = recentlyRan.filter(string => {
+                return string !== cooldownString
+              })
+            }, 1000 * cooldown)
+          }
+
+          // handle the custom command code
+          callback(message, args, args.join(" "), client)
+
+          return
+        }
+
         // ensure Siber is not exploiting
         if (message.author.bot) {
           message.channel.send(await messageHandler("nestedCommand", message.member))
@@ -104,18 +140,24 @@ module.exports = (client, commandOptions, dirName) => {
         }
 
         // ensure the user has the required roles
-        var hasAtLeastOneRole = false
         for (const requiredRole of requiredRoles) {
-          const role = guild.roles.cache.find(role => role.id === requiredRole)
+          const role = await guild.roles.cache.find(role => role.name.toLowerCase().includes(requiredRole))
           if (role) {
-            if (member.roles.cache.get(role.id)) {
-              hasAtLeastOneRole = true
+            if (!(await member.roles.cache.get(role.id))) {
+              message.channel.send(
+                await messageHandler("requiredRole", message.member, {
+                  username: message.author.username,
+                  rolename: role.name,
+                })
+              )
+              return
             }
+          } else {
+            message.channel.send(
+              await messageHandler("missingRole", message.member, { username: message.author.username })
+            )
+            return
           }
-        }
-        if (!hasAtLeastOneRole && requiredRoles > 0) {
-          message.channel.send(`**${message.member.displayName}**, necesitas un rol especial para usar este comando`)
-          return
         }
 
         // ensure the user doesn't run command too quickly
@@ -132,9 +174,11 @@ module.exports = (client, commandOptions, dirName) => {
         args.shift()
 
         // ensure we have the correct number of args
-        if (args.length < minArgs || (maxArgs !== null && args.length > maxArgs)) {
+        if (args.length < minArgs || args.length > maxArgs) {
           message.channel.send(
-            `**${message.member.displayName}**, sintaxis incorrecta! Usa **"${prefix}${alias} ${expectedArgs}"**`
+            `**${message.member.displayName}**, sintaxis incorrecta! Usa \`${prefix}${alias}${
+              expectedArgs ? " " + expectedArgs : ""
+            }\``
           )
           return
         }

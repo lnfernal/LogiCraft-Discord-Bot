@@ -3,7 +3,7 @@ const userUtils = require("@user")
 const math = require("@math")
 const fResponseChance = 0.5
 
-const fSentences = ["F :c", "Super F", "F", "Pulsa F -> `F`"]
+const fSentences = ["F :c", "Super F", "F", "Pulsa F -> `F`", ":regional_indicator_f:"]
 
 module.exports = {
   onMessage: async (client, message) => {
@@ -24,7 +24,7 @@ module.exports = {
       str += "ng"
       await channel.send(str)
 
-      if (pongs === 1997) channel.send("**MEGA PONG**")
+      if (pongs === 1997) await channel.send(`${author.username} ha hecho un **MEGA PONG**`)
     }
   },
 }

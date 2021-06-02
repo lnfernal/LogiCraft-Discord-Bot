@@ -12,4 +12,4 @@ const coupleSchema = mongoose.Schema(
   }
 )
 
-module.exports = mongoose.model("couple", coupleSchema)
+module.exports = mongoose.model("couples", coupleSchema)

@@ -66,3 +66,24 @@ module.exports.fixNumber = x => {
     ? Math.abs(Number(x)) / 1.0e3 + "K"
     : Math.abs(Number(x))
 }
+
+module.exports.msToTime = duration => {
+  var seconds = Math.ceil((duration / 1000) % 60),
+    minutes = Math.floor((duration / (1000 * 60)) % 60),
+    hours = Math.floor((duration / (1000 * 60 * 60)) % 24),
+    days = Math.floor(duration / (1000 * 60 * 60 * 24))
+
+  days = days < 10 ? "" + days : days
+  hours = hours < 10 ? "" + hours : hours
+  minutes = minutes < 10 ? "" + minutes : minutes
+  seconds = seconds < 10 ? "" + seconds : seconds
+
+  return days + "d " + hours + "h " + minutes + "m " + seconds + "s"
+}
+
+module.exports.formatDate = date => {
+  const timezone = 2
+
+  date = new Date(date.getTime() + 3600 * 1000 * timezone)
+  return `${date.toLocaleString("es-ES")} GTM+2`
+}

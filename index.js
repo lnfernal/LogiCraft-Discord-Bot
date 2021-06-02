@@ -2,11 +2,9 @@ require("module-alias/register")
 const path = require("path")
 const fs = require("fs")
 const Discord = require("discord.js")
-const client = new Discord.Client()
+const client = new Discord.Client({ ws: new Discord.Intents(Discord.Intents.ALL) })
 const { Player } = require("discord-music-player")
-const player = new Player(client, {
-  leaveOnEmpty: false,
-})
+const player = new Player(client, { leaveOnEmpty: false })
 const mongo = require("./utils/mongo.js")
 const rpc = require("@rpc")
 const config = require("./config.json")
@@ -17,12 +15,14 @@ const randomActivity = require("./misc/random-activity.js")
 const trollCommand = require("./commands/troll.js")
 const mute = require("./handlers/mute.js")
 const userActivity = require("./misc/user-activity.js")
-const avatarManager = require("./avatar-manager/avatar-manager.js")
+const avatarManager = require("./misc/avatar-manager.js")
 const snapshotVote = require("./misc/snapshot-react.js")
 const clientUtils = require("@client")
 const userUtils = require("@user")
+const presence = require("./misc/presence.js")
+const weeklyUser = require("./misc/weekly-user.js")
 const chatMode = require("@chatMode")
-const guildId = "829448956417015828"
+const guildId = "829448956417015828" //CHANGE
 
 var commandCount = 0
 
@@ -34,6 +34,7 @@ client.login(process.env.BOT_TOKEN)
 client.on("ready", async () => {
   // declaring variables
   const baseFile = "command-base.js"
+  const guild = await client.guilds.cache.get(guildId)
   var dirName = ""
   const commandBase = require(`./commands/${baseFile}`)
   const readCommands = async dir => {
@@ -59,20 +60,25 @@ client.on("ready", async () => {
   await userUtils.checkSchemaOnStart(client, guildId)
   //rpc.init()
   avatarManager.init(client)
-  //userActivity.init(client.guilds.cache.get(guildId))
+  //userActivity.init(guild)
+  await presence.init(guild)
+  weeklyUser.init(guild)
   randomActivity.setActivity(client)
-  mute.scheduledCheck(client)
+  await mute.scheduledCheck(client)
   await readCommands("commands").then(console.log(`¡${commandCount} comandos registrados!`))
 
   // listen for messages
-  client.on("message", message => {
-    //if (message.author.bot || message.guild.id != guildId) return
+  client.on("message", async message => {
+    //CHANGE
+    if (/*message.author.bot || message.guild.id != guildId*/ message.channel.type == "dm") return
     avatarManager.onMessage(client, message)
     chatMode.onMessage(client, message)
     trollCommand.onMessage(client, message)
     snapshotVote.onMessage(client, message)
     responses.onMessage(client, message)
     levels.onMessage(client, message)
+    presence.addPoints(message)
+    weeklyUser.inc(message)
     //antiAd.onMessage(client, message)
   })
 
@@ -88,6 +94,17 @@ client.on("ready", async () => {
   client.on("guildMemberRemove", member => {
     if (member.guild.id != guildId) return
     userActivity.onRemove(member, client)
+  })
+
+  // reaction add
+  client.on("messageReactionAdd", (reaction, user) => {
+    if (reaction.message.guild.id != guildId || reaction.me) return
+    presence.addPoints(null, reaction, user)
+  })
+
+  // reaction remove
+  client.on("messageReactionRemove", (reaction, user) => {
+    if (reaction.message.guild.id != guildId || reaction.me) return
   })
   console.log("¡LogiCraft Engine listo!")
 })

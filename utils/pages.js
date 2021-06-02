@@ -66,8 +66,7 @@ module.exports.createPages = async (message, pages, preset) => {
   let page = 1
 
   msg = message
-
-  message.channel.send(getPage(pages, page, preset)).then(msg => {
+  await message.channel.send(await getPage(pages, page, preset)).then(msg => {
     msg.react(logiEmojis.leftArrow.id).then(r => {
       msg.react(logiEmojis.rightArrow.id)
       const backwardsFilter = (reaction, user) => reaction.emoji.id === leftArrow.id && user.id === message.author.id
@@ -80,19 +79,19 @@ module.exports.createPages = async (message, pages, preset) => {
         time: storeUpTime * 1000,
       })
 
-      backwards.on("collect", (r, user) => {
+      backwards.on("collect", async (r, user) => {
         r.users.remove(user.id)
         if (page === 1) return
         page--
-        msg.edit(getPage(pages, page, preset))
+        msg.edit(await getPage(pages, page, preset))
         backwards.resetTimer()
         forwards.resetTimer()
       })
-      forwards.on("collect", (r, user) => {
+      forwards.on("collect", async (r, user) => {
         r.users.remove(user.id)
         if (page === pages.length) return
         page++
-        msg.edit(getPage(pages, page, preset))
+        msg.edit(await getPage(pages, page, preset))
         backwards.resetTimer()
         forwards.resetTimer()
       })

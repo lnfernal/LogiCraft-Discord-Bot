@@ -6,7 +6,10 @@ const reqString = {
 }
 
 const profileSchema = mongoose.Schema({
-  name: reqString,
+  name: {
+    type: String,
+    default: "",
+  },
   guildId: reqString,
   userId: reqString,
   coins: {
@@ -36,6 +39,23 @@ const profileSchema = mongoose.Schema({
   pongs: {
     type: Number,
     default: 0,
+  },
+  presence: {
+    type: Number,
+    default: 0,
+  },
+  points: {
+    // presence
+    type: Number,
+    default: 0,
+  },
+  weeklyUser: {
+    type: Object,
+    default: {
+      messages: 0,
+      images: 0,
+      words: 0,
+    },
   },
 })
 

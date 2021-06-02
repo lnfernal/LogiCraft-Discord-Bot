@@ -1,34 +1,34 @@
 const sadAvatarCooldown = 1000 * 60 * 60 * 3
-const happyAvatarCooldown = 1000 * 60 * 40
+const idleAvatarCooldown = 1000 * 60 * 40
 const cooldownCooldown = 1000 * 60 * 10
-var timeoutHappy
+var timeoutIdle
 var timeoutSad
 var timeoutCooldown
 var cooldown = false
 var avatarIsSad = false
 
-setHappyAvatar = client => {
-  console.log("[!] avatar-happy loaded")
+setIdleAvatar = client => {
+  console.log("[!] avatar-idle loaded")
   setCooldown()
-  client.user.setAvatar("./avatar-manager/images/avatar-happy.jpg")
+  client.user.setAvatar("./utils/images/avatar-manager/avatar-idle.png")
 }
 
 setSadAvatar = client => {
   console.log("[!] avatar-sad loaded")
   avatarIsSad = true
-  client.user.setAvatar("./avatar-manager/images/avatar-sad.jpg")
+  client.user.setAvatar("./utils/images/avatar-manager/avatar-sad.png")
 }
 
 setAngryAvatar = client => {
   console.log("[!] avatar-angry loaded")
   setCooldown()
-  client.user.setAvatar("./avatar-manager/images/avatar-angry.jpg")
+  client.user.setAvatar("./utils/images/avatar-manager/avatar-angry.png")
 }
 
 setTrollAvatar = client => {
   console.log("[!] avatar-troll loaded")
   setCooldown()
-  client.user.setAvatar("./avatar-manager/images/avatar-troll.png")
+  client.user.setAvatar("./utils/images/avatar-manager/avatar-troll.png")
 }
 
 setCooldown = () => {
@@ -43,7 +43,7 @@ module.exports = {
   init: client => {
     setCooldown()
     setTimeout(() => {
-      setHappyAvatar(client)
+      setIdleAvatar(client)
     }, cooldownCooldown)
     timeoutSad = setTimeout(() => {
       setSadAvatar(client)
@@ -54,10 +54,10 @@ module.exports = {
     if (!cooldown) {
       avatarIsSad = false
       setAngryAvatar(client)
-      clearTimeout(timeoutHappy)
-      timeoutHappy = setTimeout(() => {
-        setHappyAvatar(client)
-      }, happyAvatarCooldown)
+      clearTimeout(timeoutIdle)
+      timeoutIdle = setTimeout(() => {
+        setIdleAvatar(client)
+      }, idleAvatarCooldown)
     }
   },
 
@@ -65,16 +65,16 @@ module.exports = {
     if (!cooldown) {
       avatarIsSad = false
       setTrollAvatar(client)
-      clearTimeout(timeoutHappy)
-      timeoutHappy = setTimeout(() => {
-        setHappyAvatar(client)
-      }, happyAvatarCooldown)
+      clearTimeout(timeoutIdle)
+      timeoutIdle = setTimeout(() => {
+        setIdleAvatar(client)
+      }, idleAvatarCooldown)
     }
   },
 
   onMessage: (client, message) => {
     if (!cooldown && avatarIsSad && !message.content.includes("/hornyjail") && !message.content.includes("/troll")) {
-      setHappyAvatar(client)
+      setIdleAvatar(client)
       avatarIsSad = false
     }
     clearTimeout(timeoutSad)

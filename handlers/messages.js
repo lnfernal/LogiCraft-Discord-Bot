@@ -12,7 +12,7 @@ const getLanguage = async member => {
   else return getServerLanguage()
 }
 
-module.exports = async (key, member, params = {}) => {
+module.exports = async (key, member = null, params = {}) => {
   const client = clientUtils.getClient(),
     emojis = await require("@emojis").logibotEmojis(client),
     messages = {
@@ -75,8 +75,8 @@ module.exports = async (key, member, params = {}) => {
         english: "**${username}**, couldn't find role",
       },
       ipDescription: {
-        spanish: "Versión: **${version}**\n[**Modpack**](${requirements})IP: `0`",
-        english: "Version: **${version}**\n[**Modpack**](${requirements})IP: `0`",
+        spanish: "**Versión**: ${version}\n**Modpack**: [iLogiCraft v1.0](${requirements})\n**IP**: ${ip}",
+        english: "**Version**: ${version}\n**Modpack**: [iLogiCraft v1.0](${requirements})\n**IP**: ${ip}",
       },
       balance: {
         spanish: "**${username}**, tienes ${logiCoin}${coins}",
@@ -92,9 +92,9 @@ module.exports = async (key, member, params = {}) => {
       },
       xp: {
         spanish:
-          "**Nivel**: ${level}\n**XP**: ${totalXp}\n\n**Progreso para nivel ${level + 1}**: ${xp} / ${needed} XP\n${progressMade} ${Math.round((xpRaw / neededRaw) * 100) / 100}%",
+          "**Nivel**: ${level}\n**XP**: ${totalXp}\n\n**Progreso para nivel ${level + 1}**: ${xp} / ${needed} XP\n${progressMade} ${Math.round((xpRaw / neededRaw == 0 ? 1 : neededRaw) * 1000) / 10}%",
         english:
-          "**Level**: ${level}\n**XP**: ${totalXp}\n\n**Progress to level ${level + 1}**: ${xp} / ${needed} XP\n${progressMade} ${Math.round((xpRaw / neededRaw) * 100) / 100}%",
+          "**Level**: ${level}\n**XP**: ${totalXp}\n\n**Progress to level ${level + 1}**: ${xp} / ${needed} XP\n${progressMade} ${Math.round((xpRaw / neededRaw) * 1000) / 10}%",
       },
       xpTitle: {
         spanish: "XP de **${username}**",
@@ -156,8 +156,44 @@ module.exports = async (key, member, params = {}) => {
         spanish: "**${username}** ha llegado al nivel **${level}**!",
         english: "**${username}** arrived to level **${level}**!",
       },
+      dmCommand: {
+        spanish: "No puedes usar este comando aquí",
+        english: "You can't use this command here",
+      },
+      immuneUser: {
+        spanish: "**${username}**, el usuario ${targetUsername} está protegido de este comando",
+        english: "**${username}**, user ${targetUsername} is protected from this command",
+      },
+      immuneRole: {
+        spanish: "**${username}**, el rol ${roleName} está protegido de este comando",
+        english: "**${username}**, the ${roleName} role is protected from this command",
+      },
+      alreadyBanned: {
+        spanish: "**${username}**, este usuario ya está baneado",
+        english: "**${username}**, this user is already banned",
+      },
+      alreadyMuted: {
+        spanish: "**${username}**, este usuario ya está muteado",
+        english: "**${username}**, this user is already muted",
+      },
+      missingBan: {
+        spanish:
+          '**${username}**, este usuario no está baneado. Puedes consultar los usuarios baneados en _"Configuración del servidor > Bans"_',
+        english:
+          '**${username}**, this user is not banned. You can check banned users at _"Server Configuration > Bans"_',
+      },
+      helpStartDesc: {
+        spanish:
+          '**${username}**, este usuario no está baneado. Puedes consultar los usuarios baneados en _"Configuración del servidor > Bans"_',
+        english:
+          '**${username}**, this user is not banned. You can check banned users at _"Server Configuration > Bans"_',
+      },
+      requiredRole: {
+        spanish: "**${username}**, necesitas el rol ${rolename} para usar este comando",
+        english: "**${username}**, you need the ${rolename} role to execute this command",
+      },
     },
-    userLanguage = await getLanguage(member)
+    userLanguage = member ? await getLanguage(member) : getServerLanguage()
 
   message = s.getNestedProperty(messages, [`${key}`, `${userLanguage}`])
   return message ? s.interpolate(message, params) : `_null_ ${emojis.fix}`

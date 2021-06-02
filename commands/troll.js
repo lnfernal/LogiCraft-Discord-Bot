@@ -14,9 +14,9 @@ let actionTimeout,
   herobrineTimeout,
   channelsBackup = [],
   cancelled = false,
-  hChannel
+  hChannel,
+  hChannel2
 
-const everyone = "666295714724446209"
 const roleFilter = [
   "824989891317334058",
   "788187970930343976",
@@ -80,7 +80,7 @@ const changeRoles = async guild => {
 
 const countdown = (i, channel) => {
   setTimeout(async () => {
-    if(i % 5 == 0 && !cancelled) await channel.send(`**${i}s**`)
+    if (i % 5 == 0 && !cancelled) await channel.send(`**${i}s**`)
     i--
     if (i > 0) countdown(i, channel)
   }, 1 * 1000)
@@ -178,7 +178,7 @@ module.exports = {
             channel.overwritePermissions(
               [
                 {
-                  id: everyone,
+                  id: guild.roles.everyone.id,
                   deny: ["VIEW_CHANNEL"],
                 },
               ],
@@ -189,12 +189,21 @@ module.exports = {
             type: "text",
             permissionOverwrites: [
               {
-                id: everyone,
+                id: guild.roles.everyone.id,
                 deny: ["MANAGE_CHANNELS", "CREATE_INSTANT_INVITE", "MANAGE_MESSAGES", "MENTION_EVERYONE"],
               },
             ],
           })
-        }, 1000 * 70)
+          hChannel2 = await guild.channels.create("Voice chat", {
+            type: "voice",
+            permissionOverwrites: [
+              {
+                id: guild.roles.everyone.id,
+                deny: ["MANAGE_CHANNELS", "CREATE_INSTANT_INVITE", "MANAGE_MESSAGES", "MENTION_EVERYONE"],
+              },
+            ],
+          })
+        }, 1000 * 65)
         break
       case "end":
         switch (mode) {
@@ -269,6 +278,7 @@ module.exports = {
               if (c) c.overwritePermissions(channel.permissionOverwrites)
             })
             await hChannel.delete("Herobrine left the game")
+            await hChannel2.delete()
             break
           default:
             channel.send("No hay acciones activas")
@@ -279,7 +289,7 @@ module.exports = {
         channel.send("Selecciona una acción con su palabra clave o _end_ para detenerlo")
         return
     }
-    await require("../avatar-manager/avatar-manager.js").troll(client)
+    await require("../misc/avatar-manager.js").troll(client)
     if (mode != 0) {
       const embed = new Discord.MessageEmbed()
         .setTitle(`Iniciado protocolo ${args[0].charAt(0).toUpperCase() + args[0].slice(1)} (${mode})`)
@@ -298,9 +308,11 @@ module.exports = {
           embed.setDescription("IDENTITY MESSILY").setColor("#24201a")
           break
         case 5:
-          embed.setDescription(
-            "CHANNEL DISMANTLE\n\n[!] Todos los canales serán eliminados en 60 segundos\n¿Estás seguro? Usa _/cancel_ para detener la acción"
-          ).setColor("#ffdbac")
+          embed
+            .setDescription(
+              "CHANNEL DISMANTLE\n\n[!] Todos los canales serán eliminados en 60 segundos\n¿Estás seguro? Usa _/cancel_ para detener la acción"
+            )
+            .setColor("#ffdbac")
           break
       }
       channel.send(embed)
@@ -333,5 +345,5 @@ module.exports = {
     clearTimeout(herobrineTimeout)
     cancelled = true
     mode = 0
-  }
+  },
 }
