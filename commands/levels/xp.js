@@ -36,14 +36,14 @@ const xpEmbed = async (message, target, profile, needed) => {
       })
     )
     .setThumbnail(userUtils.getUserAvatar(target))
-    .setFooter(progressMade()+` ${Math.round(((xp / needed) * 1000) / 10)}%`)
+    .setFooter(progressMade() + ` ${Math.round(((xp / needed) * 1000) / 10)}%`)
   message.channel.send(embed)
 }
 
 module.exports = {
   commands: "xp",
   maxArgs: 1,
-  expectedArgs: "<user>",
+  expectedArgs: "[user]",
   callback: async (message, args, text, client) => {
     const target =
       message.mentions.users.first() ||

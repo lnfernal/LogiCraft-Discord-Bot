@@ -7,7 +7,7 @@ const s = require("@string")
 module.exports = {
   commands: "balance",
   maxArgs: 1,
-  expectedArgs: "<user>",
+  expectedArgs: "[user]",
   callback: async (message, args, text, client) => {
     const { member } = message
     const target =

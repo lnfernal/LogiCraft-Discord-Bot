@@ -43,8 +43,6 @@ module.exports = {
       return
     }
 
-    if (await userUtils.checkImmunity(message, target)) return
-
     const targetMember = await message.guild.members.cache.get(target.id),
       emojis = await require("@emojis").logibotEmojis(client)
 
