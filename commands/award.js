@@ -12,7 +12,7 @@ module.exports = {
     const { guild, channel, member } = message
     if (!message.reference) {
       channel.send(
-        s.interpolate(await messageHandler("award", member), {
+        await messageHandler("award", member, {
           username: member.user.username,
         })
       )
@@ -24,7 +24,7 @@ module.exports = {
       awardEmojis[`award${args[0].toLowerCase().charAt(0).toUpperCase() + args[0].toLowerCase().slice(1)}`]
     if (!reaction) {
       channel.send(
-        s.interpolate(await messageHandler("reactionWrong", member), {
+        await messageHandler("reactionWrong", member, {
           username: member.user.username,
         })
       )

@@ -2,7 +2,6 @@ require("module-alias/register")
 const userUtils = require("@user")
 const s = require("@string")
 const Discord = require("discord.js")
-const pages = require("@pages")
 
 module.exports = {
   commands: "xptop",
@@ -46,6 +45,6 @@ module.exports = {
         level = ``
       }
     }
-    pages.createPages(message, xpTopPages, "xptop")
+    require("@pages").createPages(message, xpTopPages, "xptop")
   },
 }

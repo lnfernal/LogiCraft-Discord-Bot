@@ -59,12 +59,12 @@ module.exports = async (key, member = null, params = {}) => {
         english: "Nice try",
       },
       horny: {
-        spanish: "**${username}** ha sido encerrado en la Horny Jail ${hjEmoji}",
-        english: "**${username}** has been jailed in the Horny Jail ${hjEmoji}",
+        spanish: "${hjEmoji} **${username}** ha sido encerrado en la Horny Jail ${hjEmoji}",
+        english: "${hjEmoji} **${username}** has been jailed in the Horny Jail ${hjEmoji}",
       },
       hornier: {
-        spanish: "${hjEmoji} **${username}** ha sido encerrado en la HORNIER JAIL ${hjEmoji}",
-        english: "${hjEmoji} **${username}** has been jailed in the HORNIER JAIL ${hjEmoji}",
+        spanish: "${hjEmoji}${hjEmoji} **${username}** ha sido encerrado en la HORNIER JAIL ${hjEmoji}${hjEmoji}",
+        english: "${hjEmoji}${hjEmoji} **${username}** has been jailed in the HORNIER JAIL ${hjEmoji}${hjEmoji}",
       },
       missingUser: {
         spanish: "**${username}**, no se ha encontrado al usuario",
@@ -75,8 +75,8 @@ module.exports = async (key, member = null, params = {}) => {
         english: "**${username}**, couldn't find role",
       },
       ipDescription: {
-        spanish: "**Versión**: ${version}\n**Modpack**: [iLogiCraft v1.0](${requirements})\n**IP**: ${ip}",
-        english: "**Version**: ${version}\n**Modpack**: [iLogiCraft v1.0](${requirements})\n**IP**: ${ip}",
+        spanish: "**Versión**: ${version}\n**Modpack**: [iLogiCraft Modpack](${requirements})\n**IP**: ${ip}",
+        english: "**Version**: ${version}\n**Modpack**: [iLogiCraft Modpack](${requirements})\n**IP**: ${ip}",
       },
       balance: {
         spanish: "**${username}**, tienes ${logiCoin}${coins}",
@@ -91,10 +91,8 @@ module.exports = async (key, member = null, params = {}) => {
         english: "**${username}**, enter a valid coins amount",
       },
       xp: {
-        spanish:
-          "**Nivel**: ${level}\n**XP**: ${totalXp}\n\n**Progreso para nivel ${level + 1}**: ${xp} / ${needed} XP\n${progressMade} ${Math.round((xpRaw / neededRaw == 0 ? 1 : neededRaw) * 1000) / 10}%",
-        english:
-          "**Level**: ${level}\n**XP**: ${totalXp}\n\n**Progress to level ${level + 1}**: ${xp} / ${needed} XP\n${progressMade} ${Math.round((xpRaw / neededRaw) * 1000) / 10}%",
+        spanish: "**Nivel**: ${level}\n**XP**: ${totalXp}\n**Progreso para nivel ${level + 1}**: ${xp} / ${needed} XP",
+        english: "**Level**: ${level}\n**XP**: ${totalXp}\n**Progress to level ${level + 1}**: ${xp} / ${needed} XP",
       },
       xpTitle: {
         spanish: "XP de **${username}**",

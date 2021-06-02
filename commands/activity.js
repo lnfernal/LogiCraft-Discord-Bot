@@ -23,7 +23,7 @@ module.exports = {
       type = 4
     } else {
       message.channel.send(
-        s.interpolate(await messageHandler("activityDefault", member), {
+        await messageHandler("activityDefault", member, {
           username: member.user.username,
         })
       )

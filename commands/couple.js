@@ -31,7 +31,6 @@ const loveEmojis = ["💌", "💕", "🥰", "🌷", "💖", "😍", "💘", "�
 checkDaily = async coupleData => {
   const lastCouple = new Date(coupleData.updatedAt).toDateString()
   const now = new Date().toDateString()
-
   if (lastCouple !== now) return true
   return false
 }
@@ -50,11 +49,12 @@ module.exports = {
         _id: guildId,
       }).save()
     result = await coupleSchema.findOne({ _id: guildId })
+    await coupleSchema.updateOne({ _id: guildId }, { _id: guildId })
 
-    if (!checkDaily(result)) {
+    if (!(await checkDaily(result))) {
       message.channel.send(
         await messageHandler("coupleDailySpent", member, {
-          username: member.user.name,
+          username: member.user.username,
         })
       )
       return

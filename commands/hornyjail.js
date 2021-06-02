@@ -2,6 +2,7 @@ require("module-alias/register")
 const Discord = require("discord.js")
 const avatarManager = require("../misc/avatar-manager.js")
 const messageHandler = require("@messages")
+const userUtils = require("@user")
 const s = require("@string")
 
 const hjMsg = ["BONK", "Happy Cheems noises :)", "Go to Horny Jail!", "No Horny", "Horny bad", "Licencia de Horny"]
@@ -41,12 +42,15 @@ module.exports = {
       )
       return
     }
+
+    if (await userUtils.checkImmunity(message, target)) return
+
     const targetMember = await message.guild.members.cache.get(target.id),
       emojis = await require("@emojis").logibotEmojis(client)
 
     if (await targetMember.roles.cache.has(horny.id)) {
-      targetMember.roles.remove(horny)
-      targetMember.roles.add(hornier)
+      await targetMember.roles.remove(horny)
+      await targetMember.roles.add(hornier)
       embed = new Discord.MessageEmbed()
         .setColor("#220000")
         .setTitle(
@@ -64,7 +68,7 @@ module.exports = {
         `${emojis.GOTOHORNYJAIL}${emojis.GOTOHORNYJAIL}${emojis.GOTOHORNYJAIL}`
       )
     } else {
-      targetMember.roles.add(horny)
+      await targetMember.roles.add(horny)
       embed = new Discord.MessageEmbed()
         .setColor("#ff4646")
         .setTitle(

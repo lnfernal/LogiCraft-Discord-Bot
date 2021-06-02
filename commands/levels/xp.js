@@ -8,17 +8,13 @@ const math = require("@math")
 const progressBarPrecision = 25
 
 const xpEmbed = async (message, target, profile, needed) => {
-  const targetMember = message.guild.members.cache.get(target.id)
   const { xp, totalXp, level } = profile
   const progressMade = () => {
     var i = 0
     var progressBar = `[`
     for (i; i < progressBarPrecision; i++) {
-      if (i / progressBarPrecision < xp / math.clamp(needed, 1, needed)) {
-        progressBar += "□"
-      } else {
-        break
-      }
+      if (i / progressBarPrecision < xp / math.clamp(needed, 1, needed)) progressBar += "□"
+      else break
     }
     for (i; i < progressBarPrecision; i++) progressBar += "–"
     progressBar += "]"
@@ -35,14 +31,12 @@ const xpEmbed = async (message, target, profile, needed) => {
       await messageHandler("xp", message.member, {
         level,
         xp: s.formatNumber(xp),
-        xpRaw: xp,
         needed: s.formatNumber(needed),
-        neededRaw: needed,
         totalXp: s.formatNumber(totalXp),
-        progressMade: progressMade(),
       })
     )
     .setThumbnail(userUtils.getUserAvatar(target))
+    .setFooter(progressMade()+` ${Math.round(((xp / needed) * 1000) / 10)}%`)
   message.channel.send(embed)
 }
 
@@ -57,6 +51,6 @@ module.exports = {
       message.author
 
     const profile = await userUtils.getUserProfile(message.guild, target)
-    xpEmbed(message, target, profile, Math.floor(Math.pow(profile.level, 2.5) * 10))
+    xpEmbed(message, target, profile, Math.floor(Math.pow(profile.level, 2.5) * 10) + 1)
   },
 }

@@ -150,7 +150,7 @@ module.exports = {
             break
           default:
             channel.send(
-              s.interpolate(await messageHandler("dataType", member), {
+              await messageHandler("dataType", member, {
                 username: member.user.username,
               })
             )
@@ -178,7 +178,7 @@ module.exports = {
                           })
                         } else {
                           channel.send(
-                            s.interpolate(await messageHandler("missingDataNameProperty", member), {
+                            await messageHandler("missingDataNameProperty", member, {
                               username: member.user.username,
                             })
                           )
@@ -193,7 +193,7 @@ module.exports = {
           }
         } else {
           channel.send(
-            s.interpolate(await messageHandler("adminNeeded", member), {
+            await messageHandler("adminNeeded", member, {
               username: member.user.username,
             })
           )
@@ -201,7 +201,7 @@ module.exports = {
         break
       default:
         channel.send(
-          s.interpolate(await messageHandler("dataActions", member), {
+          await messageHandler("dataActions", member, {
             username: member.user.username,
           })
         )

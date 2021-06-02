@@ -1,80 +1,45 @@
+require("module-alias/register")
 const Discord = require("discord.js")
-const profileSchema = require("../schemas/profile-schema.js")
-const mongo = require("../utils/mongo.js")
-
-const getUserData = async (guildId, member) => {
-  const userId = member.id
-  const result = await profileSchema.findOne({
-    guildId,
-    userId,
-  })
-  if (result) {
-    const { name, lover } = result
-    let user = {
-      name,
-      lover,
-    }
-    return user
-  } else if (!member.user.bot) {
-    let user = {
-      name: member.displayName.replace("_", "-"),
-      lover: 0,
-    }
-    return user
-  }
-}
-
-var getNames = users => {
-  var names = ``
-
-  for (i = 0; i < users.length; i++) names += `${i + 1}. ${users[i].name}\n`
-  return names
-}
-
-var getCouples = users => {
-  var couples = ``
-
-  for (i = 0; i < users.length; i++) couples += `${users[i].lover}\n`
-  return couples
-}
+const userUtils = require("@user")
 
 module.exports = {
   commands: "coupletop",
   maxArgs: 0,
   callback: async (message, args, text, client) => {
-    const { guild } = message
-    const promises = []
-    guildId = guild.id
+    const { guild } = message,
+      emojis = await require("@emojis").logibotEmojis(client),
+      usersPerPage = 20
+    let users,
+      usersCurrentPage = 0,
+      currentPage = {},
+      names = ``,
+      couples = ``,
+      coupleTopPages = []
 
     await guild.members.fetch().then(async members => {
       const promises = []
       members.forEach(member => {
-        promises.push(getUserData(guildId, member))
+        promises.push(userUtils.getUserProfile(guild, member.user))
       })
-      usersBad = await Promise.all(promises)
+      users = await Promise.all(promises)
     })
-    let users = usersBad.filter(user => user !== undefined)
     users.sort(function (a, b) {
       return b.lover - a.lover
     })
-    const embed = new Discord.MessageEmbed()
-      .setColor("#ba0001")
-      .setTitle(`🥰 Ranking de parejas 💕`)
-      .addFields(
-        {
-          name: "Nombre",
-          value: getNames(users),
-          inline: true,
-        },
-        {
-          name: "Amores <3",
-          value: getCouples(users),
-          inline: true,
-        }
-      )
-      .setTimestamp()
-      .setFooter(`Ranking de parejas de ${guild.name}`)
-      .setThumbnail(guild.iconURL())
-    message.channel.send(embed)
+    for (let i = 0; i < users.length; i++) {
+      names += `${i === 0 ? emojis.one : i === 1 ? emojis.two : i === 2 ? emojis.three : i + 1 + "."} ${users[
+        i
+      ].name.replace("_", "\\_")}\n`
+      couples += `${users[i].lover}${emojis.heart}\n`
+      usersCurrentPage++
+      if (usersCurrentPage == usersPerPage || i == users.length - 1) {
+        usersCurrentPage = 0
+        currentPage = { names, couples }
+        coupleTopPages.push(currentPage)
+        names = ``
+        couples = ``
+      }
+    }
+    require("@pages").createPages(message, coupleTopPages, "coupletop")
   },
 }

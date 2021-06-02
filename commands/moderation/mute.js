@@ -3,7 +3,6 @@ const messageHandler = require("@messages")
 const s = require("@string")
 const userUtils = require("@user")
 const muteSchema = require("../../schemas/mute-schema.js")
-const mutedRoleId = "788187970930343976"
 const Discord = require("discord.js")
 const unmute = require("./unmute.js")
 let rolesBackup = []
@@ -173,6 +172,6 @@ module.exports.rolesBackup = () => {
 }
 module.exports.mutedRole = async () => {
   await guild.roles.cache.find(role => {
-    return role.id == mutedRoleId
+    return role.name.toLowerCase().includes("mute")
   })
 }

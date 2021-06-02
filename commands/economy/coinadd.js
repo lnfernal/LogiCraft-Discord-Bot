@@ -20,13 +20,13 @@ module.exports = {
 
     if (!target)
       message.channel.send(
-        s.interpolate(await messageHandler("missingUser", member), {
+        await messageHandler("missingUser", member, {
           username: message.member.user.username,
         })
       )
     if (isNaN(coins) || coins <= 0) {
       message.channel.send(
-        s.interpolate(await messageHandler("coinsWrong", member), {
+        await messageHandler("coinsWrong", member, {
           username: target.username,
         })
       )
@@ -34,7 +34,7 @@ module.exports = {
     }
     await economy.addCoins(guildId, userId, coins)
     message.channel.send(
-      s.interpolate(await messageHandler("coinsAdded", member), {
+      await messageHandler("coinsAdded", member, {
         username: message.member.user.username,
         targetUsername: target.username,
         coins,

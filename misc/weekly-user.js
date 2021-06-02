@@ -14,7 +14,7 @@ module.exports.inc = async message => {
 module.exports.init = async guild => {
   setInterval(async () => {
     await checkWeekly(guild)
-  }, moment().endOf("week").valueOf() - moment().valueOf() - (120 * 1000))
+  }, moment().endOf("week").valueOf() - moment().valueOf() - 120 * 1000)
 }
 
 async function checkWeekly(guild) {
@@ -43,7 +43,7 @@ async function checkWeekly(guild) {
     member = await guild.members.cache.get(weeklyUser.userId)
   await spamChannel.send(
     new MessageEmbed()
-      .setTitle(`${weeklyUser.name} es el usuario de la semana! ${emojis.hero}`)
+      .setTitle(`${emojis.hero} ${weeklyUser.name} es el usuario de la semana! ${emojis.hero}`)
       .setColor("#ff5d8f")
       .setDescription(
         `**Mensajes enviados**: ${weeklyUser.weeklyUser.messages}\n**Imágenes adjuntadas**: ${weeklyUser.weeklyUser.images}\n**Palabras escritas**: ${weeklyUser.weeklyUser.words}`

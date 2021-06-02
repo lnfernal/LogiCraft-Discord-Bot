@@ -3,21 +3,22 @@ const Discord = require("discord.js")
 let msg
 
 const getPage = async (pages, page, preset = "") => {
-    const logiEmojis = await require("@emojis").logibotEmojis(require("@client").getClient())
+    const emojis = await require("@emojis").logibotEmojis(require("@client").getClient()),
+      currentPage = pages[page - 1]
     let embed = new Discord.MessageEmbed()
 
     switch (preset) {
       case "shop":
         var itemList = "",
           prices = ""
-        const itemsInPage = pages[page - 1].items
-        embed.setTitle(pages[page - 1].title)
+        const itemsInPage = currentPage.items
+        embed.setTitle(currentPage.title)
 
         for (let item in itemsInPage)
           itemList += `**${itemsInPage[item].name}** ${itemsInPage[item].sprite ? itemsInPage[item].sprite : ""}\n${
             itemsInPage[item].description ? `${itemsInPage[item].description}` : ""
           }\n`
-        for (let item in itemsInPage) prices += `**${itemsInPage[item].price}** ${logiEmojis.logiCoin}\n\n`
+        for (let item in itemsInPage) prices += `**${itemsInPage[item].price}** ${emojis.logiCoin}\n\n`
         embed.addFields(
           {
             name: "Item",
@@ -28,7 +29,6 @@ const getPage = async (pages, page, preset = "") => {
         )
         break
       case "xptop":
-        const currentPage = pages[page - 1]
         embed
           .setColor("#ff5d8f")
           .setTitle(`Ranking de ${msg.guild.name}`)
@@ -46,6 +46,24 @@ const getPage = async (pages, page, preset = "") => {
             {
               name: "Nivel",
               value: currentPage.level,
+              inline: true,
+            }
+          )
+          .setThumbnail(msg.guild.iconURL())
+        break
+      case "coupletop":
+        embed
+          .setColor("#ba0001")
+          .setTitle(`${emojis.heart} Parejas de ${msg.guild.name} ${emojis.heart}`)
+          .addFields(
+            {
+              name: "Nombre",
+              value: currentPage.names,
+              inline: true,
+            },
+            {
+              name: "Parejas",
+              value: currentPage.couples,
               inline: true,
             }
           )
