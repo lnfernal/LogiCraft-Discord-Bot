@@ -1,25 +1,26 @@
 require("module-alias/register")
 const userUtils = require("@user")
 const moment = require("moment")
-const {MessageEmbed} = require("discord.js")
+const { MessageEmbed } = require("discord.js")
 
 module.exports.inc = async message => {
   const { guild, author } = message
 
   await userUtils.incUserSchema(guild, author, "weeklyUser.messages", 1)
   await userUtils.incUserSchema(guild, author, "weeklyUser.words", message.content.split(" ").length)
-  if (message.attachments) await userUtils.incUserSchema(guild, author, "weeklyUser.images", 1)
+  if (message.attachments.length) await userUtils.incUserSchema(guild, author, "weeklyUser.images", 1)
 }
 
 module.exports.init = async guild => {
   setInterval(async () => {
     await checkWeekly(guild)
-  }, 3000) //moment().endOf("week").valueOf() - moment().valueOf())
+  }, moment().endOf("week").valueOf() - moment().valueOf() - (120 * 1000))
 }
 
 async function checkWeekly(guild) {
   let users = []
-  const spamChannel = await guild.channels.cache.find(c => c.name.toLowerCase().includes("spam"))
+  const spamChannel = await guild.channels.cache.find(c => c.name.toLowerCase().includes("spam")),
+    emojis = await require("@emojis").logibotEmojis(require("@client").getClient())
 
   await guild.members.fetch().then(async members => {
     const promises = []
@@ -37,9 +38,19 @@ async function checkWeekly(guild) {
   })
 
   // send to channel
+  moment.locale("es")
   const weeklyUser = users[0],
-    user=await j
-  await spamChannel.send(new MessageEmbed().setTitle(`${weeklyUser.name} es el usuario de la semana!`).setColor("#ff5d8f").setDescription(`**Mensajes enviados**: ${weeklyUser.weeklyUser.messages}\n**Imágenes adjuntadas**: ${weeklyUser.weeklyUser.images}\n**Palabras escritas**: ${weeklyUser.weeklyUser.words}`).setThumbnail(user.avatarURL())
+    member = await guild.members.cache.get(weeklyUser.userId)
+  await spamChannel.send(
+    new MessageEmbed()
+      .setTitle(`${weeklyUser.name} es el usuario de la semana! ${emojis.hero}`)
+      .setColor("#ff5d8f")
+      .setDescription(
+        `**Mensajes enviados**: ${weeklyUser.weeklyUser.messages}\n**Imágenes adjuntadas**: ${weeklyUser.weeklyUser.images}\n**Palabras escritas**: ${weeklyUser.weeklyUser.words}`
+      )
+      .setThumbnail(member.user.avatarURL())
+      .setAuthor(`${moment().startOf("week").format("ll")} - ${moment().endOf("week").format("ll")}`)
+  )
 
   await guild.members.fetch().then(async members => {
     const promises = []

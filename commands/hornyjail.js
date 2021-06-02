@@ -23,7 +23,7 @@ module.exports = {
         "https://i.redd.it/9ejnyj8tnzi61.png",
         "https://i.redd.it/4s9s1gdt1v351.jpg",
       ]
-    let embed, targetMember
+    let embed
 
     if (!target) {
       message.channel.send(
@@ -41,8 +41,8 @@ module.exports = {
       )
       return
     }
-    ;(targetMember = await message.guild.members.cache.get(target.id)),
-      (emojis = await require("@emojis").logibotEmojis(client))
+    const targetMember = await message.guild.members.cache.get(target.id),
+      emojis = await require("@emojis").logibotEmojis(client)
 
     if (await targetMember.roles.cache.has(horny.id)) {
       targetMember.roles.remove(horny)
