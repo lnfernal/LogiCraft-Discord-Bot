@@ -17,11 +17,10 @@ async function checkPresence(guild) {
       if (presence == 0) {
         if (points > 20) presence++
       } else if (presence == 1) {
-        if (points > 50) presence++
+        if (points > 60) presence++
         else presence--
       } else if (presence == 2) {
-        if (points > 100) presence++
-        else presence--
+        if (points < 250) presence--
       }
       await member.roles.remove(lowRole)
       await member.roles.remove(mediumRole)

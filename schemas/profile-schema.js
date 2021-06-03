@@ -40,6 +40,22 @@ const profileSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  weekly: {
+    type: Number,
+    default: 0,
+  },
+  messages: {
+    type: Number,
+    default: 0,
+  },
+  words: {
+    type: Number,
+    default: 0,
+  },
+  images: {
+    type: Number,
+    default: 0,
+  },
   presence: {
     type: Number,
     default: 0,

@@ -1,3 +1,5 @@
+import moment from "moment"
+
 require("module-alias/register")
 const fs = require("fs")
 const profileSchema = require("../schemas/profile-schema.js")
@@ -160,4 +162,9 @@ module.exports.getCreatedAt = async (guild, target) => {
   const date = new Date(result.createdAt)
 
   return date
+}
+
+module.exports.getJoinedAt = (date) => {
+  moment.locale("es")
+  return moment(date).format("LLLL")
 }

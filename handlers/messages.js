@@ -111,7 +111,7 @@ module.exports = async (key, member = null, params = {}) => {
         english: "**${username}**, you have given ${targetUsername} **${xpAdd} XP**",
       },
       xpGivenMsg: {
-        spanish: "**${username}**, has dado a ${targetUsername} la XP equivalente a **${msg}** men",
+        spanish: "**${username}**, has dado a ${targetUsername} la XP equivalente a **${msg}** mensajes",
         english: "**${username}**, you've given ${targetUsername} the equivalent XP to **${msg}** messages",
       },
       xpGivenLvl: {
@@ -189,6 +189,10 @@ module.exports = async (key, member = null, params = {}) => {
       requiredRole: {
         spanish: "**${username}**, necesitas el rol ${rolename} para usar este comando",
         english: "**${username}**, you need the ${rolename} role to execute this command",
+      },
+      statsGiven: {
+        spanish: "**${username}**, has dado a ${targetUsername} **${amount}** de ${key}",
+        english: "**${username}**, you've given ${targetUsername} **${amount}** of ${key}",
       },
     },
     userLanguage = member ? await getLanguage(member) : getServerLanguage()

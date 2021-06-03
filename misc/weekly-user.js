@@ -51,6 +51,7 @@ async function checkWeekly(guild) {
       .setThumbnail(member.user.avatarURL())
       .setAuthor(`${moment().startOf("week").format("ll")} - ${moment().endOf("week").format("ll")}`)
   )
+  await userUtils.incUserSchema(guild, member.user, "weekly", 1)
 
   await guild.members.fetch().then(async members => {
     const promises = []

@@ -18,7 +18,7 @@ module.exports = {
           name: "main",
           content: new MessageEmbed({
             title: `Menú de ayuda ${emojis.lens}`,
-            description: `Puedes consultar cualquier función, comando, sistema, etc... del bot usando \`/help\` Haz click en cada una de las reacciones para ver la información correspondiente con ese apartado`,
+            description: `Puedes consultar cualquier función, comando, sistema, etc... del bot usando \`/help\` Haz click en cada una de las reacciones para ver la información correspondiente con ese apartado.`,
             fields: [
               {
                 name: `${button1} Cuenta`,
@@ -53,7 +53,7 @@ module.exports = {
           name: "comandos",
           content: new MessageEmbed({
             title: "Comandos",
-            description: `Puedes ver la información de más de 40 comandos que implementa el bot. Cada comando tiene una sintaxis y debe respetarse para que se pueda ejecutar. Ésta está compuesta por el comando en sí \`/ejemplo\`, y a veces seguido de una serie de argumentos. Los argumentos, si los hay, pueden ser obligatorios \`<...>\` u opcionales \`[...]\`. No podrás ejecutar un comando si todos los argumentos obligatiros no están incluídos`,
+            description: `Puedes ver la información de más de 40 comandos que implementa el bot. Cada comando tiene una sintaxis y debe respetarse para que se pueda ejecutar. Ésta está compuesta por el comando en sí \`/ejemplo\`, y a veces seguido de una serie de argumentos. Los argumentos, si los hay, pueden ser obligatorios \`<...>\` u opcionales \`[...]\`. No podrás ejecutar un comando si todos los argumentos obligatiros no están incluídos.\n\nEn los argumentos \`<user>\` puedes dirigirte a un miembro mencionándolo \`@ejemplo\` o escribiendo su nombre \`ejem\`, en cuyo caso el bot buscará el nombre más cercano a tu consulta. En algunos comandos podrás utilizar el ID.`,
             fields: [
               {
                 name: `${button1} Comandos diversos`,
@@ -90,7 +90,7 @@ module.exports = {
           name: "comandosdiversos",
           content: new MessageEmbed({
             title: "Comandos diversos",
-            description: "Comandos variados con muchas funcionalidades distintas",
+            description: "Comandos variados con muchas funcionalidades distintas.",
             fields: [
               {
                 name: "`/activity <watching|listening|playing|streaming> <content>`",
@@ -131,7 +131,7 @@ module.exports = {
           name: "comandoseconomia",
           content: new MessageEmbed({
             title: "Comandos de economía",
-            description: "Comandos relacionados con la economía del servidor",
+            description: "Comandos relacionados con la economía del servidor.",
             fields: [
               {
                 name: "`/balance [user]`",
@@ -155,7 +155,7 @@ module.exports = {
           name: "comandosniveles",
           content: new MessageEmbed({
             title: "Comandos de niveles",
-            description: "Comandos relacionados con el sistema de niveles del servidor",
+            description: "Comandos relacionados con el sistema de niveles del servidor.",
             fields: [
               {
                 name: "`/xp [user]`",
@@ -179,15 +179,16 @@ module.exports = {
           name: "comandosmoderacion",
           content: new MessageEmbed({
             title: "Comandos de moderación",
-            description: "Comandos para moderar el servidor, necesitas el rol de Staff o Mod para utilizarlos",
+            description: "Comandos para moderar el servidor, necesitas el rol de Staff o Mod para utilizarlos.",
             fields: [
               {
-                name: "`/ban <user> [user]`",
+                name: "`/ban <user|id> [user]`",
                 value: "Banea a un miembro",
               },
               {
                 name: "`/pardon <userID>`",
-                value: "Desbanea a un miembro. Deberás poner su ID de usuario ya que no puedes mencionar a un miembro que no esté en el servidor",
+                value:
+                  "Desbanea a un miembro. Deberás poner su ID de usuario ya que no puedes mencionar a un miembro que no esté en el servidor",
               },
               {
                 name: "`/op <user>`",
@@ -203,11 +204,16 @@ module.exports = {
               },
               {
                 name: "`/mute <user> [time] [reason]`",
-                value: "Mutea a un miembro para que no pueda mandar mensajes por ningún chat. Puedes hacerlo indefinidamente o por tiempo limitado con un máximo de 24 días",
+                value:
+                  "Mutea a un miembro para que no pueda mandar mensajes por ningún chat. Puedes hacerlo indefinidamente o por tiempo limitado con un máximo de 24 días",
               },
               {
                 name: "`/unmute <user>`",
                 value: "Desmutea a un miembro",
+              },
+              {
+                name: "`/statsadd <user> <key> <amount>`",
+                value: "Modifica las stats de un miembro",
               },
             ],
           }).setColor("#ff5d8f"),
@@ -219,11 +225,46 @@ module.exports = {
           name: "comandosmusica",
           content: new MessageEmbed({
             title: "Comandos de música",
-            description: "Comandos para utilizar el bot en los canales de audio. Permite reproducir el audio de vídeos de Youtube y canciones de Spotify",
+            description:
+              "Comandos para utilizar el bot en los canales de audio. Permite reproducir el audio de vídeos de Youtube y canciones de Spotify. Necesitas estar en un canal de voz para poder usarlos.",
             fields: [
               {
                 name: "`/play <song>`",
-                value: "Banea a un miembro",
+                value:
+                  "Reproduce un vídeo de Youtube o una cación de Spotify. Puedes pegar el link o escribir el nombre del vídeo",
+              },
+              {
+                name: "`/stop`",
+                value: "Detiene el reproductor y echa al bot del canal de audio",
+              },
+              {
+                name: "`/queue <song>`",
+                value:
+                  "Pon en cola un vídeo de Youtube o una cación de Spotify. Puedes pegar el link o escribir el nombre del vídeo",
+              },
+              {
+                name: "`/getqueue`",
+                value: "Consulta la cola de canciones",
+              },
+              {
+                name: "`/clearqueue`",
+                value: "Vacía la cola de reproducción",
+              },
+              {
+                name: "`/pause`",
+                value: "Pausa la reproducción de audio",
+              },
+              {
+                name: "`/resume`",
+                value: "Reanuda la reproducción de audio",
+              },
+              {
+                name: "`/shuffle`",
+                value: "Aleatoriza entre canciones de la cola de reproducción",
+              },
+              {
+                name: "`/nowplaying`",
+                value: "Informa sobre el audio que se está reproducciendo en el momento",
               },
             ],
           }).setColor("#ff5d8f"),
@@ -235,18 +276,26 @@ module.exports = {
           name: "credits",
           content: new MessageEmbed({
             title: "Créditos",
-            description: `Algunos extras`,
+            description: `Algunos extras.`,
             fields: [
               {
                 name: "Enlaces",
-                value: "[Código fuente](https://github.com/mariod8/LogiCraft-Discord-Bot)"
+                value: "[Código fuente](https://github.com/mariod8/LogiCraft-Discord-Bot)",
+                inline: true,
               },
               {
                 name: "Desarrollador",
-                value: `${message.guild.owner.user.tag}`
-              }
-            ]
-          }).setColor("#ff5d8f").setFooter("© LogicraftSMP"),
+                value: `${await client.users.fetch("323378898794446850")}`,
+                inline: true,
+              },
+              {
+                name: "‏‏‎ ‎",
+                value: "‏‏‎ ‎",
+              },
+            ],
+          })
+            .setColor("#ff5d8f")
+            .setFooter("© LogicraftSMP"),
           reactions: {
             [`${back.id}`]: "main",
           },

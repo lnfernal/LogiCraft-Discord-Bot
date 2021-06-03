@@ -7,7 +7,7 @@ const protectedRoles = ["mod", "staff"]
 
 module.exports = {
   commands: "ban",
-  expectedArgs: "<user> [reason]",
+  expectedArgs: "<user|id> [reason]",
   minArgs: 1,
   maxArgs: 19,
   permissions: ["BAN_MEMBERS"],

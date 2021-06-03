@@ -14,6 +14,7 @@ const responses = require("./misc/responses.js")
 const randomActivity = require("./misc/random-activity.js")
 const trollCommand = require("./commands/troll.js")
 const mute = require("./handlers/mute.js")
+const stats = require("./misc/stats.js")
 const userActivity = require("./misc/user-activity.js")
 const avatarManager = require("./misc/avatar-manager.js")
 const snapshotVote = require("./misc/snapshot-react.js")
@@ -55,7 +56,7 @@ client.on("ready", async () => {
 
   // init
   await mongo().then(console.log("Conectado a MongoDB!"))
-  client.setMaxListeners(40)
+  client.setMaxListeners(60)
   clientUtils.setClient(client)
   await userUtils.checkSchemaOnStart(client, guildId)
   //rpc.init()
@@ -79,6 +80,7 @@ client.on("ready", async () => {
     levels.onMessage(client, message)
     presence.addPoints(message)
     weeklyUser.inc(message)
+    stats.inc(message)
     //antiAd.onMessage(client, message)
   })
 
