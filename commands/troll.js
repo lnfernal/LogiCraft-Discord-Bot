@@ -89,6 +89,7 @@ const countdown = (i, channel) => {
 module.exports = {
   commands: "troll",
   minArgs: 1,
+  maxArgs: 1,
   expectedArgs: "<mode|end>",
   permissions: ["ADMINISTRATOR"],
   callback: async (message, args, text, client) => {

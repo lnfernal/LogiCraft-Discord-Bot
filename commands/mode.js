@@ -7,6 +7,7 @@ module.exports = {
   minArgs: 1,
   permissions: "ADMINISTRATOR",
   callback: async (message, args, text, client) => {
+    return
     const { channel, member } = message,
       chatMode = require("@chatMode"),
       mode = args[0]

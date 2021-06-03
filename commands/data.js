@@ -65,6 +65,8 @@ module.exports = {
   maxArgs: 50,
   cooldown: 1,
   callback: async (message, args, text, client) => {
+    await message.channel.send("`/data` no está operativo por el momento")
+    return
     var { guild, guildId = guild.id, channel, member } = message
     const emojis = await require("../utils/emojis").guildEmojis(client, guildId)
     const logiEmojis = await require("../utils/emojis").logibotEmojis(client)

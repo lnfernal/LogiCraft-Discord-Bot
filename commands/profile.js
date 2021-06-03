@@ -2,7 +2,7 @@ require("module-alias/register")
 const messageHandler = require("@messages")
 const userUtils = require("@user")
 const s = require("@string")
-const moment = require('moment');
+const moment = require("moment")
 const { MessageEmbed } = require("discord.js")
 
 module.exports = {
@@ -31,7 +31,7 @@ module.exports = {
           },
           {
             name: "Nivel",
-            value: `${profile.level}`,
+            value: `${s.formatNumber(profile.level)}`,
             inline: true,
           },
           {
@@ -56,7 +56,7 @@ module.exports = {
           },
           {
             name: "Monedas",
-            value: `${profile.coins}`,
+            value: `${s.formatNumber(profile.coins)}${emojis.logiCoin}`,
             inline: true,
           },
           {
@@ -66,12 +66,12 @@ module.exports = {
           },
           {
             name: "Mensajes enviados",
-            value: `${profile.messages}`,
+            value: `${s.formatNumber(profile.messages)}`,
             inline: true,
           },
           {
             name: "Palabras escritas",
-            value: `${profile.words}`,
+            value: `${s.formatNumber(profile.words)}`,
             inline: true,
           },
           {
@@ -81,7 +81,9 @@ module.exports = {
           },
           {
             name: "Último mensaje",
-            value: `\"${targetMember.lastMessage}\" _(${moment(targetMember.lastMessage.createdAt).fromNow()})_`,
+            value: targetMember.lastMessage
+              ? `\"${targetMember.lastMessage}\" _(${moment(targetMember.lastMessage.createdAt).fromNow()})_`
+              : "_Ninguno_",
             inline: true,
           },
           {
@@ -90,7 +92,7 @@ module.exports = {
             inline: true,
           }
         )
-        .setThumbnail(target.avatarURL())
+        .setThumbnail(userUtils.getUserAvatar(target))
     )
   },
 }

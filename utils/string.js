@@ -55,15 +55,15 @@ module.exports.getNestedProperty = (object, path) => {
 
 module.exports.fixNumber = x => {
   return Math.abs(Number(x)) >= 1.0e15
-    ? Math.floor(Math.abs((((Number(x)) / 1.0e15) * 1000) / 10)) + "Q"
+    ? Math.floor(Math.abs(((Number(x) / 1.0e15) * 1000) / 10)) + "Q"
     : Math.abs(Number(x)) >= 1.0e12
-    ? Math.round(Math.abs((((Number(x)) / 1.0e12) * 1000) / 10)) + "T"
+    ? Math.round(Math.abs(((Number(x) / 1.0e12) * 1000) / 10)) + "T"
     : Math.abs(Number(x)) >= 1.0e9
-    ? Math.floor(Math.abs((((Number(x)) / 1.0e9) * 1000) / 10)) + "B"
+    ? Math.floor(Math.abs(((Number(x) / 1.0e9) * 1000) / 10)) + "B"
     : Math.abs(Number(x)) >= 1.0e6
-    ? Math.floor(Math.abs((((Number(x)) / 1.0e6) * 1000) / 10)) + "M"
+    ? Math.floor(Math.abs(((Number(x) / 1.0e6) * 1000) / 10)) + "M"
     : Math.abs(Number(x)) >= 1.0e3
-    ? Math.floor(Math.abs((((Number(x)) / 1.0e3) * 1000) / 10)) + "K"
+    ? Math.floor(Math.abs(((Number(x) / 1.0e3) * 1000) / 10)) + "K"
     : Math.abs(Number(x))
 }
 

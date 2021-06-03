@@ -7,7 +7,6 @@ module.exports = {
   minArgs: 2,
   maxArgs: 499,
   cooldown: 2,
-  requiredRoles: ["666297857929642014"],
   callback: async (message, args, text, client) => {
     const desiredChannelName = args[0],
       math = require("../utils/math.js")

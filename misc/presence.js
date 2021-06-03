@@ -3,7 +3,7 @@ const userUtils = require("@user")
 
 async function checkPresence(guild) {
   const lowRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("low")),
-    mediumRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("medium")),
+    mediumRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("moderate")),
     highRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("high"))
 
   if (!lowRole || !mediumRole || !highRole) return

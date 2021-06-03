@@ -91,8 +91,8 @@ module.exports = async (key, member = null, params = {}) => {
         english: "**${username}**, enter a valid coins amount",
       },
       xp: {
-        spanish: "**Nivel**: ${level}\n**XP**: ${totalXp}\n**Progreso para nivel ${level + 1}**: ${xp} / ${needed} XP",
-        english: "**Level**: ${level}\n**XP**: ${totalXp}\n**Progress to level ${level + 1}**: ${xp} / ${needed} XP",
+        spanish: "**Nivel**: ${level}\n**XP**: ${totalXp}\n**Progreso para nivel ${level + 1}**:\n${xp} / ${needed} XP",
+        english: "**Level**: ${level}\n**XP**: ${totalXp}\n**Progress to level ${level + 1}**:\n${xp} / ${needed} XP",
       },
       xpTitle: {
         spanish: "XP de **${username}**",

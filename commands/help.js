@@ -21,7 +21,7 @@ module.exports = {
             description: `Puedes consultar cualquier función, comando, sistema, etc... del bot usando \`/help\` Haz click en cada una de las reacciones para ver la información correspondiente con ese apartado.`,
             fields: [
               {
-                name: `${button1} Cuenta`,
+                name: `${button1} Perfil`,
                 value: "Todo lo relacionado con los usuarios del servidor",
                 inline: false,
               },
@@ -42,11 +42,128 @@ module.exports = {
             ],
           }).setColor("#ff5d8f"),
           reactions: {
-            [`${button1.id}`]: "cuenta",
+            [`${button1.id}`]: "perfil",
             [`${button2.id}`]: "comandos",
             [`${button3.id}`]: "sistemas",
             [`${emojis.slimeballRainbow.id}`]: "credits",
             [`${exit.id}`]: "delete",
+          },
+        },
+        {
+          name: "perfil",
+          content: new MessageEmbed({
+            title: "Perfil",
+            description:
+              "Tu cuenta almacena varias estadísticas. Guardas XP y Monedas. Puedes consultar tu perfil entero con `/profile`, tu XP solo con `/xp` y tus monedas con `/balance`",
+          }).setColor("#ff5d8f"),
+          reactions: {
+            [`${back.id}`]: "main",
+          },
+        },
+        {
+          name: "sistemas",
+          content: new MessageEmbed({
+            title: "Sistemas",
+            description: "Funcionalides que trae el bot",
+            fields: [
+              {
+                name: `${button1} Diversos`,
+                value: `Otras funcionalidades`,
+              },
+              {
+                name: `${button2} Economía`,
+                value: `Economía del servidor`,
+              },
+              {
+                name: `${button3} Niveles`,
+                value: `Experiencia y niveles`,
+              },
+            ],
+          }).setColor("#ff5d8f"),
+          reactions: {
+            [`${back.id}`]: "main",
+            [`${button1.id}`]: "sistemasdiversos",
+            [`${button2.id}`]: "sistemaseconomia",
+            [`${button3.id}`]: "sistemasniveles",
+          },
+        },
+        {
+          name: "sistemasdiversos",
+          content: new MessageEmbed({
+            title: "Sistemas diversos",
+            description: "Otros sistemas",
+            fields: [
+              {
+                name: `Anti-Ad`,
+                value: `Evita que los miembros manden mensajes con links a otros servidores de Discord _(Desactivado)_`,
+              },
+              {
+                name: `Avatar Manager`,
+                value: `Cambia el avatar del bot dependiendo lo que ocurra en el server. Si no se chatea durante un tiempo, entristecerá. Si no estará feliz. Si alguien entra en la Horny Jail o la HORNIER JAIL se enfadará. Si se usa el \'/troll\' se convierte en un meme de 2011`,
+              },
+              {
+                name: `Chat mode`,
+                value: `_En desarrollo_`,
+              },
+              {
+                name: `Presencia`,
+                value: `Determina el estado de presencia de un miembro. Ésta evalúa como de activo en el servidor es un miembro y le asignará un rol dependiendo de si actividad. Un miembro puede tener **baja**, **moderada** o **alta** presencia en el server`,
+              },
+              {
+                name: `Random Activity`,
+                value: `Cambia el estado del bot periódicamente a uno de los muchos que hay guardados. Si se usa \`/activity\`, se pausará el cambio automático para reactivarlo al cabo de 4 horas`,
+              },
+              {
+                name: `Responses`,
+                value: `El bot responderá a mensajes específicos del chat`,
+              },
+              {
+                name: `Snapshot`,
+                value: `Crear reacciones en el canal de Snapshot para que los miembros juzguen las nuevas actualizaciones`,
+              },
+              {
+                name: `Stats`,
+                value: `Maneja las estadísticas globales del miembro`,
+              },
+              {
+                name: `User Activity`,
+                value: `Manda un mensaje por el Chat General cada vez que entra o sale un miembro del servidor`,
+              },
+              {
+                name: `Weekly User`,
+                value: `Se elige el miembro más activo de esa semana para ser el **Usuario de la semana**`,
+              },
+            ],
+          }).setColor("#ff5d8f"),
+          reactions: {
+            [`${back.id}`]: "sistemas",
+          },
+        },
+        {
+          name: "sistemaseconomia",
+          content: new MessageEmbed({
+            title: "Perfil",
+            description: "//TODO",
+          }).setColor("#ff5d8f"),
+          reactions: {
+            [`${back.id}`]: "sistemas",
+          },
+        },
+        {
+          name: "sistemasniveles",
+          content: new MessageEmbed({
+            title: "Sistemas de niveles",
+            description:
+              "Los niveles y la experiencia se ganan enviando mensajes por el chat. La cantidad de mensajes que necesitas mandar para subir de nivel irá aumentando exponecialmente de forma leve.\n\nLa fórmula que determina la cantidad de XP para subir a un nivel viene dada por:\n`Math.floor(Math.pow(level, 2.5) * 10) + 1`\n\nLa cantidad de XP ganada por mensajes aumenta dependiendo del nivel en el que te encuentres. Viene dada por:\n`Math.floor(Math.pow(level, 1.05) * 20 + 3 * ((Math.pow(level, 2) * 2000) / maxLevel)) + 2`\n\nEl nivel máximo actual es 2000",
+            fields: [
+              {
+                name: "Comandos de niveles",
+                value: "`/xp` `/xpadd` `/xptop`. Más información en _Inicio > Comandos > Comandos de niveles_",
+              },
+            ],
+          }).setColor("#ff5d8f"),
+          reactions: {
+            [`${back.id}`]: "sistemas",
           },
         },
         {
@@ -119,7 +236,58 @@ module.exports = {
               },
               {
                 name: "`/data <action> <targetType> [target] [attribute]`",
-                value: "//TODO",
+                value: "Accede a la información de cualquier cosa del servidor (Inutilizable)",
+              },
+              {
+                name: "`/help`",
+                value: "Consulta todo sobre el bot",
+              },
+              {
+                name: "`/bonk <user>`",
+                value:
+                  "Manda a alguien a la Horny Jail. Si ese miembro ya se encuentra dentro, un segundo bonk le mandará a la HORNIER JAIL. Solo Moderadores pueden quitar manualmente los roles",
+              },
+              {
+                name: "`/mode <mode>`",
+                value: "_En desarrollo_",
+              },
+              {
+                name: "`/ip`",
+                value: "Obtén la IP del servidor de Minecraft. Quizás necesites tener algún rol especial",
+              },
+              {
+                name: "`/ping`",
+                value: "Latencia del bot",
+              },
+              {
+                name: "`/poll <title#emoji=option1;emoji=option2...>`",
+                value:
+                  "Envía una encuesta al servidor. Cada emoji es una reacción que se añadirá automáticamente al mensaje para que los miembros puedan decidir",
+              },
+              {
+                name: "`/profile`",
+                value: "Consulta tu perfil del servidor",
+              },
+              {
+                name: "`/say <content>`",
+                value: "Haz un _echo_ de un mensaje que dirá el bot por el mismo canal",
+              },
+              {
+                name: "`/tell <channel> <content>`",
+                value:
+                  "Haz un _echo_ de un mensaje que dirá el bot por el canal que determines. Debes escribir el nombre del canal `canal` para que el bot lo reconozca. Seguidamente el mensaje, que se enviará por dicho canal tardando más o menos tiempo según su longitud",
+              },
+              {
+                name: "`/troll <mode|end>`",
+                value: "( ͡°( ͡° ͜ʖ( ͡° ͜ʖ ͡°)ʖ ͡°) ͡°)",
+              },
+              {
+                name: "`/uwu`",
+                value: "Banea a la persona que lo usa",
+              },
+              {
+                name: "`/welcome`",
+                value: "Envía un mensaje que simulará una persona saludando durante unos segundos o/",
               },
             ],
           }).setColor("#ff5d8f"),

@@ -71,7 +71,11 @@ client.on("ready", async () => {
   // listen for messages
   client.on("message", async message => {
     //CHANGE
-    if (/*message.author.bot || message.guild.id != guildId*/ message.channel.type == "dm") return
+    if (
+      /*message.author.bot || message.guild.id != guildId*/ message.channel.type == "dm" &&
+      message.type != "CHANNEL_FOLLOW_ADD"
+    )
+      return
     avatarManager.onMessage(client, message)
     chatMode.onMessage(client, message)
     trollCommand.onMessage(client, message)
