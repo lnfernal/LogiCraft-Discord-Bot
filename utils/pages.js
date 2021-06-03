@@ -34,17 +34,17 @@ const getPage = async (pages, page, preset = "") => {
           .setTitle(`Ranking de ${msg.guild.name}`)
           .addFields(
             {
-              name: "Nombre",
+              name: "`Nombre`",
               value: currentPage.names,
               inline: true,
             },
             {
-              name: "XP",
+              name: "`XP`",
               value: currentPage.xp,
               inline: true,
             },
             {
-              name: "Nivel",
+              name: "`Nivel`",
               value: currentPage.level,
               inline: true,
             }
@@ -57,12 +57,12 @@ const getPage = async (pages, page, preset = "") => {
           .setTitle(`${emojis.heart} Parejas de ${msg.guild.name} ${emojis.heart}`)
           .addFields(
             {
-              name: "Nombre",
+              name: "`Nombre`",
               value: currentPage.names,
               inline: true,
             },
             {
-              name: "Parejas",
+              name: "`Parejas`",
               value: currentPage.couples,
               inline: true,
             }

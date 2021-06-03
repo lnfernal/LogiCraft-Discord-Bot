@@ -5,44 +5,31 @@ module.exports = {
   expectedArgs: "<title#emoji=option1;emoji=option2...>",
   minArgs: 1,
   maxArgs: 199,
-  callback: (message, args, text, client) => {
-    const { channel, content } = message
+  callback: async (message, args, text, client) => {
+    const { channel, author } = message
 
     const eachLine = text.split("#")
-    const embed = new Discord.MessageEmbed()
-      .setFooter(`${message.author.username}`, `${message.author.avatarURL()}`)
-      .setTitle(`__${eachLine[0]}__`)
-      .setAuthor(`Encuesta`)
     const eachOption = eachLine[1].split(";")
-    var optionsEmoji = "",
-      optionsText = "",
-      emojis = []
+    const emojis = await require("@emojis").logibotEmojis(client)
+    const embed = new Discord.MessageEmbed()
+      .setTitle(`__${eachLine[0]}__`)
+      .setAuthor(`Encuesta por ${author.username}`)
+      .setColor("#ff5d8f")
+    var reactions = [],
+      options = ""
+
     for (const line of eachOption) {
       if (line.includes("=")) {
         const split = line.split("=")
         const emoji = split[0].trim()
-        optionsEmoji += `\n${emoji}`
-        optionsText += `\n${split[1]}`
-        emojis.push(emoji)
+        options += `${emoji} **=** ${split[1]}`
+        reactions.push(emoji)
       }
     }
-    optionsEmoji += "\n\u200b"
-    optionsText += "\n\u200b"
-    embed.addFields(
-      {
-        name: "\u200b",
-        value: optionsEmoji,
-        inline: true,
-      },
-      {
-        name: "\u200b",
-        value: optionsText,
-        inline: true,
-      }
-    )
+    embed.setDescription(options)
     message.delete()
     channel.send(embed).then(msg => {
-      emojis.forEach(emoji => {
+      reactions.forEach(emoji => {
         msg.react(emoji)
       })
     })

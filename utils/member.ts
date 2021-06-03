@@ -166,5 +166,5 @@ module.exports.getCreatedAt = async (guild, target) => {
 
 module.exports.getJoinedAt = (date) => {
   moment.locale("es")
-  return moment(date).format("LLLL")
+  return moment(date).format("llll")
 }

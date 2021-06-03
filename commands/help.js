@@ -107,7 +107,7 @@ module.exports = {
               },
               {
                 name: `Presencia`,
-                value: `Determina el estado de presencia de un miembro. Ésta evalúa como de activo en el servidor es un miembro y le asignará un rol dependiendo de si actividad. Un miembro puede tener **baja**, **moderada** o **alta** presencia en el server`,
+                value: `Determina el estado de presencia de un miembro. Ésta evalúa como de activo en el servidor es un miembro y le asignará un rol dependiendo de su actividad. Un miembro puede tener **baja**, **moderada** o **alta** presencia en el server`,
               },
               {
                 name: `Random Activity`,
@@ -118,7 +118,7 @@ module.exports = {
                 value: `El bot responderá a mensajes específicos del chat`,
               },
               {
-                name: `Snapshot`,
+                name: `Snapshot React`,
                 value: `Crear reacciones en el canal de Snapshot para que los miembros juzguen las nuevas actualizaciones`,
               },
               {
@@ -218,6 +218,11 @@ module.exports = {
                 value: "Dale un award en forma de reacción a un mensaje. Dar un award tiene un precio en monedas",
               },
               {
+                name: "`/bonk <user>`",
+                value:
+                  "Manda a alguien a la Horny Jail. Si ese miembro ya se encuentra dentro, un segundo bonk le mandará a la HORNIER JAIL. Solo Moderadores pueden quitar manualmente los roles",
+              },
+              {
                 name: "`/cancel`",
                 value: "Cancela el reset del server",
               },
@@ -243,11 +248,6 @@ module.exports = {
                 value: "Consulta todo sobre el bot",
               },
               {
-                name: "`/bonk <user>`",
-                value:
-                  "Manda a alguien a la Horny Jail. Si ese miembro ya se encuentra dentro, un segundo bonk le mandará a la HORNIER JAIL. Solo Moderadores pueden quitar manualmente los roles",
-              },
-              {
                 name: "`/mode <mode>`",
                 value: "_En desarrollo_",
               },
@@ -266,7 +266,7 @@ module.exports = {
               },
               {
                 name: "`/profile`",
-                value: "Consulta tu perfil del servidor",
+                value: "Consulta tu perfil",
               },
               {
                 name: "`/say <content>`",
@@ -283,7 +283,7 @@ module.exports = {
               },
               {
                 name: "`/uwu`",
-                value: "Banea a la persona que lo usa",
+                value: "Banea a la persona que lo usa. Se escuchan sugerencias para otro funcionamiento",
               },
               {
                 name: "`/welcome`",

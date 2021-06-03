@@ -326,5 +326,5 @@ module.exports.getCreatedAt = function (guild, target) { return __awaiter(void 0
 }); };
 module.exports.getJoinedAt = function (date) {
     moment_1.default.locale("es");
-    return moment_1.default(date).format("LLLL");
+    return moment_1.default(date).format("llll");
 };
