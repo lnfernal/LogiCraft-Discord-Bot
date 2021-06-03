@@ -12,38 +12,4 @@
 
 # LogiCraft Discord Bot
 
-## Commands
-
-### Economy commands
-
-- **/balance**
-- **/shop**
-
-### XP commands
-
-- **/xp**
-- **/xptop**
-
-### Music commands
-
-- **/play**
-- **/stop**
-- **/pause**
-- **/queue**
-- **/getqueue**
-- **/clearqueue**
-- **/shuffle**
-
-### Other commands
-- **/couple**
-- **/coupletop**
-- **/bonk**
-- **/troll**
-- **/say**
-- **/tell**
-- **/data**
-- **/ip**
-- **/ping**
-- **/poll**
-- **/award**
-- **/activity**
+LogiCraft's Discord Custom Minecraft-Themed Bot featuring +40 commands, audio player, economy and more :)
