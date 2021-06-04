@@ -7,8 +7,9 @@ module.exports = {
   requiredRoles: ["ilogicraft sectary"],
   callback: async (message, args, text, client) => {
     const { guild, member, author } = message,
-      version = "1.16.5"
-    ;(requirements = "https://minecraft.net"), (ip = "`000.000.000`")
+      version = "1.16.5",
+      requirements = "https://minecraft.net",
+      ip = "`000.000.000`"
 
     author
       .send(
