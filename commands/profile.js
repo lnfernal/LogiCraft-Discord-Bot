@@ -57,12 +57,12 @@ module.exports = {
     if (roles == "**Todos**: ") roles.concat("_Ninguno_")
 
     const embed = new MessageEmbed()
-      .setTitle(`Perfil de ${target.username} _(${targetMember.displayName})_`)
+      .setTitle(`Perfil de ${target.username.replace("_", "\\_")} _(${targetMember.displayName})_`)
       .setColor(await userUtils.getAvatarColor(target))
       .addFields(
         {
           name: "`General`",
-          value: `**Miembro**: ${target}\n**Tag**: ${target.tag}\n**Fecha de unión**: ${userUtils.getJoinedAt(
+          value: `**Miembro**: ${target}\n**Tag**: ${target.tag.replace("_", "\\_")}\n**Fecha de unión**: ${userUtils.getJoinedAt(
             targetMember.joinedAt
           )} _(${moment(targetMember.joinedAt).fromNow()})_\n**Mensajes enviados**: ${s.formatNumber(
             profile.messages
