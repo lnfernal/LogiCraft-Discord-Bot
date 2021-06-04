@@ -32,7 +32,7 @@ module.exports = {
 
       switch (targetMember.presence.activities[0].type) {
         case "PLAYING":
-          activity += "}Jugando a"
+          activity += "Jugando a"
           break
         case "WATCHING":
           activity += "Viendo "
