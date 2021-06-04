@@ -51,7 +51,7 @@ module.exports = {
           .setColor("#ff4646")
           .setTitle(`${target.username} ha sido baneado`)
           .setDescription(`Motivo: ${reason}\nId: ${target.id}`)
-          .setFooter(`Muteado por ${message.author.username}`, `${message.author.avatarURL()}`)
+          .setFooter(`Baneado por ${message.author.username}`, `${message.author.avatarURL()}`)
         message.channel.send(embed)
       })
     } catch (e) {
