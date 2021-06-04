@@ -87,7 +87,7 @@ module.exports = {
                 : "Alta"
             )
             .concat(
-              `\n**Parejas**: ${profile.lover}${emojis.heart}\n**Veces usuario de la semana**: ${profile.weekly}${emojis.hero}\n**Veces muteado**: ${profile.mutes}${emojis.muted}`
+              `\n**Parejas**: ${profile.lover} ${emojis.heart}\n**Veces usuario de la semana**: ${profile.weekly} ${emojis.hero}\n**Veces muteado**: ${profile.mutes} ${emojis.muted}`
             ),
           inline: false,
         },
