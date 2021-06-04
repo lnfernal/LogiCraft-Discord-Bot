@@ -10,6 +10,8 @@ async function checkPresence(guild) {
 
   await guild.members.fetch().then(members => {
     members.forEach(async member => {
+      if(member.user.bot) return
+      
       let userData = await userUtils.getUserProfile(guild, member.user),
         { presence, points } = userData
       
