@@ -47,7 +47,7 @@ module.exports.init = async guild => {
   setInterval(async () => {
     await checkPresence(guild)
     console.log("[!] Actualizando presencia del usuario...")
-  }, 1 * 24 */* 3600 **/ 1000)
+  }, 1 * 24 * 3600 * 1000)
 }
 
 module.exports.addPoints = async (message = null, reaction = null, user = null) => {
