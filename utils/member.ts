@@ -103,7 +103,7 @@ module.exports.getAvatarColor = async target => {
 }
 
 async function immuneUser(message, target) {
-  if (/*target.bot || */ target.id == message.guild.ownerID) {
+  if (target.bot ||  target.id == message.guild.ownerID) {
     message.channel.send(
       await messageHandler("immuneUser", message.member, {
         username: message.author.username,
@@ -149,7 +149,7 @@ module.exports.checkImmunity = async (message, target, protectedRoles = null) =>
   let immune = false
 
   immune = await immuneUser(message, target)
-  if (protectedRoles) immune = await immuneRole(message, target, protectedRoles)
+  if (protectedRoles && !immune) immune = await immuneRole(message, target, protectedRoles)
   return immune
 }
 
