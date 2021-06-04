@@ -132,8 +132,8 @@ async function immuneRole(message, target, protectedRoles) {
       continue
     }
 
-    if (targetMember.roles.cache.has(role.id)) {
-      message.channel.send(
+    if (await targetMember.roles.cache.has(role.id)) {
+      await message.channel.send(
         await messageHandler("immuneRole", message.member, {
           username: message.author.username,
           roleName: role.name,

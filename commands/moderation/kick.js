@@ -40,7 +40,7 @@ module.exports = {
       .setColor("#ff4646")
       .setFooter(`Muteado por ${message.author.username}`, `${message.author.avatarURL()}`)
       .setTitle(`${target.username} was slained by ${message.author.username}`)
-    message.channel.send(embed)
-    member.kick()
+    await message.channel.send(embed)
+    await member.kick()
   },
 }
