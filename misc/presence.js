@@ -17,7 +17,7 @@ async function checkPresence(guild) {
       await member.roles.remove(lowRole)
       else if(presence == 1)
       await member.roles.remove(mediumRole)
-      else if(presence == 2
+      else if(presence == 2)
       await member.roles.remove(highRole)
 
       if (!presence) presence = -1
