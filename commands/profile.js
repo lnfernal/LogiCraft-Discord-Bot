@@ -57,7 +57,7 @@ module.exports = {
     if (roles == "**Todos**: ") roles.concat("_Ninguno_")
 
     const embed = new MessageEmbed()
-      .setTitle(`Perfil de ${target.username.replace("_", "\\_")} _(${targetMember.displayName})_`)
+      .setTitle(`Perfil de ${target.username.replace("_", "\\_")} _(${targetMember.displayName.replace("_", "\\_")})_`)
       .setColor(await userUtils.getAvatarColor(target))
       .addFields(
         {
