@@ -13,8 +13,8 @@ async function checkPresence(guild) {
       let userData = await userUtils.getUserProfile(guild, member.user),
         { presence, points } = userData
 
-      if (!presence) presence = 0
-      if (presence == 0) {
+      if (!presence) presence = -1
+      if (presence == 0 || presence == -1) {
         if (points > 20) presence++
       } else if (presence == 1) {
         if (points > 60) presence++

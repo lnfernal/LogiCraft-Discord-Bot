@@ -1,15 +1,29 @@
 module.exports = {
   commands: ["getqueue", "gq"],
   callback: async (message, args, text, client) => {
-    let queue = client.player.getQueue(message)
-    if (queue)
-      message.channel.send(
-        "Cola:\n" +
-          queue.songs
-            .map((song, i) => {
-              return `${i === 0 ? "Reproduciendo:" : `#${i + 1}`} - ${song.name} (${song.author})`
-            })
-            .join("\n")
-      )
+    const MAXNAME = 27,
+      MAXAUTHOR = 20
+
+    let queue = client.player.getQueue(message),
+      songsPerPage = 20,
+      songsCurrentPage = 0,
+      currentPage = {},
+      names = ``,
+      authors = ``,
+      queuePages = []
+
+    for (let i = 1; i < queue.songs.length; i++) {
+      names += `${i}. **${queue.songs[i].name.substring(0, MAXNAME)}**${queue.songs[i].name.length > 27 ? "..." : ""}\n`
+      authors += `${queue.songs[i].author ? queue.songs[i].author.substring(0, MAXAUTHOR) : "-"}\n`
+      songsCurrentPage++
+      if (songsCurrentPage == songsPerPage || i == queue.songs.length - 1) {
+        songsCurrentPage = 0
+        currentPage = { names, authors }
+        queuePages.push(currentPage)
+        names = ``
+        authors = ``
+      }
+    }
+    require("@pages").createPages(message, queuePages, "queue")
   },
 }

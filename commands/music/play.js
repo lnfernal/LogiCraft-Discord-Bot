@@ -7,15 +7,26 @@ module.exports = {
     const { channel } = message.member.voice
     const emojis = await require("../../utils/emojis.js").discEmojis(client)
     var keys = Object.keys(emojis)
-    if (!channel) return message.channel.send(`**${message.member.displayName}**, necesitas estar en un canal de voz`)
-    let audio = await client.player.play(message, text)
-    if (audio)
+    if (!channel) return message.channel.send(`**${message.author.username}**, necesitas estar en un canal de voz`)
+
+    if (message.content.includes("www.youtube.com/playlist")) {
+      await client.player.playlist(message, {
+        search: args[0],
+        maxSongs: -1,
+      })
       await message.channel.send(
-        `${
-          audio.name.includes("Pigstep")
-            ? emojis.musicDiscPigstep
-            : emojis[keys[Math.floor(Math.random() * keys.length)]]
-        } Reproduciendo **${audio.name}**`
+        `${emojis[keys[Math.floor(Math.random() * keys.length)]]} La playlist se ha puesto a la cola`
       )
+    } else {
+      let audio = await client.player.play(message, text)
+      if (audio)
+        await message.channel.send(
+          `${
+            audio.name.includes("Pigstep")
+              ? emojis.musicDiscPigstep
+              : emojis[keys[Math.floor(Math.random() * keys.length)]]
+          } Reproduciendo **${audio.name}**`
+        )
+    }
   },
 }

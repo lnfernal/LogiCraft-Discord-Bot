@@ -20,19 +20,19 @@ module.exports = {
     const emojis = await require("@emojis").logibotEmojis(client)
     var roles = "**Todos**: ",
       status =
-        targetMember.presence.status === "online"
-          ? "**Online**"
-          : targetMember.presence.status === "idle"
-          ? "**Ausente**"
-          : targetMember.presence.status === "offline"
-          ? "**Desconectado**"
-          : "**No molestar**"
+        targetMember.presence.status === `online`
+          ? `${emojis.online} **Online**`
+          : targetMember.presence.status === `idle`
+          ? `${emojis.idle} **Ausente**`
+          : targetMember.presence.status === `offline`
+          ? `${emojis.offline} **Desconectado**`
+          : `${emojis.dnd} **No molestar**`
     const getActivity = () => {
-      var activity = " - "
+      var activity = ` - `
 
       switch (targetMember.presence.activities[0].type) {
         case "PLAYING":
-          activity += "Jugando a"
+          activity += "}Jugando a"
           break
         case "WATCHING":
           activity += "Viendo "
@@ -47,14 +47,14 @@ module.exports = {
           activity = ""
           break
       }
-      return activity += targetMember.presence.activities[0].name
+      return (activity += targetMember.presence.activities[0].name)
     }
 
     await targetMember.roles.cache.each(role => {
       if (role != guild.roles.everyone) roles += `<@&${role.id}>`
     })
 
-    if(roles == "**Todos**: ") roles.concat("_Ninguno_")
+    if (roles == "**Todos**: ") roles.concat("_Ninguno_")
 
     const embed = new MessageEmbed()
       .setTitle(`Perfil de ${target.username} _(${targetMember.displayName})_`)
@@ -67,7 +67,7 @@ module.exports = {
           )} _(${moment(targetMember.joinedAt).fromNow()})_\n**Mensajes enviados**: ${s.formatNumber(
             profile.messages
           )}\n**Palabras escritas**: ${s.formatNumber(profile.words)}\n**Ratio palabras/mensaje**: ${
-            Math.round((profile.words / profile.messages === 0 ? 1 : profile.messages) * 100) / 100
+            Math.round((profile.words / (profile.messages === 0 ? 1 : profile.messages)) * 100) / 100
           }\n**Imágenes enviadas**: ${profile.images}\n**Último mensaje**: `
             .concat(
               targetMember.lastMessage
@@ -77,7 +77,15 @@ module.exports = {
             .concat("\n**Última vez boosteado**: ")
             .concat(targetMember.premiumSince ? `${moment(targetMember.premiumSince).format("llll")}` : "_Nunca_")
             .concat("\n**Presencia**: ")
-            .concat(profile.presence == 0 ? "Baja" : profile.presence == 1 ? "Moderada" : "Alta")
+            .concat(
+              profile.presence == -1
+                ? "Ninguna"
+                : profile.presence == 0
+                ? "Baja"
+                : profile.presence == 1
+                ? "Moderada"
+                : "Alta"
+            )
             .concat(
               `\n**Parejas**: ${profile.lover}${emojis.heart}\n**Veces usuario de la semana**: ${profile.weekly}${emojis.hero}\n**Veces muteado**: ${profile.mutes}${emojis.muted}`
             ),
@@ -100,9 +108,7 @@ module.exports = {
         }
       )
       .setThumbnail(userUtils.getUserAvatar(target))
-      .setDescription(
-        status.concat(targetMember.presence.activities.length ? getActivity() : "")
-      )
+      .setDescription(status.concat(targetMember.presence.activities.length ? getActivity() : ""))
 
     if (target.id === client.user.id)
       embed.addField(

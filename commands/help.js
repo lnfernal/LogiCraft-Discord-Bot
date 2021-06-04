@@ -170,7 +170,7 @@ module.exports = {
           name: "comandos",
           content: new MessageEmbed({
             title: "Comandos",
-            description: `Puedes ver la información de más de 40 comandos que implementa el bot. Cada comando tiene una sintaxis y debe respetarse para que se pueda ejecutar. Ésta está compuesta por el comando en sí \`/ejemplo\`, y a veces seguido de una serie de argumentos. Los argumentos, si los hay, pueden ser obligatorios \`<...>\` u opcionales \`[...]\`. No podrás ejecutar un comando si todos los argumentos obligatiros no están incluídos.\n\nEn los argumentos \`<user>\` puedes dirigirte a un miembro mencionándolo \`@ejemplo\` o escribiendo su nombre \`ejem\`, en cuyo caso el bot buscará el nombre más cercano a tu consulta. En algunos comandos podrás utilizar el ID.`,
+            description: `Puedes ver la información de más de 40 comandos que implementa el bot. Cada comando tiene una sintaxis y debe respetarse para que se pueda ejecutar. Ésta está compuesta por el comando en sí \`/ejemplo\`, y a veces seguido de una serie de argumentos. Los argumentos, si los hay, pueden ser obligatorios \`<...>\` u opcionales \`[...]\`. No podrás ejecutar un comando si todos los argumentos obligatorios no están incluídos.\n\nEn los argumentos \`<user>\` puedes dirigirte a un miembro mencionándolo \`@ejemplo\` o escribiendo su nombre \`ejem\`, en cuyo caso el bot buscará el nombre más cercano a tu consulta. En algunos comandos podrás utilizar el ID.`,
             fields: [
               {
                 name: `${button1} Comandos diversos`,
@@ -283,7 +283,7 @@ module.exports = {
               },
               {
                 name: "`/uwu`",
-                value: "Banea a la persona que lo usa. Se escuchan sugerencias para otro funcionamiento",
+                value: "Mutea al miembro que lo usa",
               },
               {
                 name: "`/welcome`",
@@ -397,9 +397,9 @@ module.exports = {
               "Comandos para utilizar el bot en los canales de audio. Permite reproducir el audio de vídeos de Youtube y canciones de Spotify. Necesitas estar en un canal de voz para poder usarlos.",
             fields: [
               {
-                name: "`/play <song>`",
+                name: "`/play <song|link|playist>`",
                 value:
-                  "Reproduce un vídeo de Youtube o una cación de Spotify. Puedes pegar el link o escribir el nombre del vídeo",
+                  "Reproduce un vídeo o playlist de Youtube o una cación de Spotify. Puedes pegar el link o escribir el nombre del vídeo",
               },
               {
                 name: "`/stop`",
@@ -429,6 +429,10 @@ module.exports = {
               {
                 name: "`/shuffle`",
                 value: "Aleatoriza entre canciones de la cola de reproducción",
+              },
+              {
+                name: "`/skip`",
+                value: "Salta a la siguiente canción de la cola",
               },
               {
                 name: "`/nowplaying`",

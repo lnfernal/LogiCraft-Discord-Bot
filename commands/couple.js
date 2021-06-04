@@ -40,7 +40,7 @@ module.exports = {
   callback: async (message, args, text, client) => {
     const guildId = message.guild.id,
       { member, guild } = message,
-      roleID = "835087933476044810", //CHANGE
+      roleID = "835561996450791484",
       emojis = await require("@emojis").logibotEmojis(client)
 
     let result = await coupleSchema.findOne({ _id: guildId })
@@ -61,7 +61,7 @@ module.exports = {
     }
     await guild.members.fetch().then(async members => {
       let arr = []
-      //members = members.filter(m => !m.user.bot)
+      members = members.filter(m => !m.user.bot)
       members = members.array()
       if (members.length < 2) {
         message.channel.send(

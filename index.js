@@ -4,7 +4,7 @@ const fs = require("fs")
 const Discord = require("discord.js")
 const client = new Discord.Client({ ws: new Discord.Intents(Discord.Intents.ALL) })
 const { Player } = require("discord-music-player")
-const player = new Player(client, { leaveOnEmpty: false })
+const player = new Player(client, { leaveOnEmpty: false, quality: "high" })
 const mongo = require("./utils/mongo.js")
 const rpc = require("@rpc")
 const config = require("./config.json")
@@ -23,7 +23,7 @@ const userUtils = require("@user")
 const presence = require("./misc/presence.js")
 const weeklyUser = require("./misc/weekly-user.js")
 const chatMode = require("@chatMode")
-const guildId = "829448956417015828" //CHANGE
+const guildId = "666295714724446209"
 
 var commandCount = 0
 
@@ -61,7 +61,7 @@ client.on("ready", async () => {
   await userUtils.checkSchemaOnStart(client, guildId)
   //rpc.init()
   avatarManager.init(client)
-  //userActivity.init(guild)
+  userActivity.init(guild)
   await presence.init(guild)
   weeklyUser.init(guild)
   randomActivity.setActivity(client)
@@ -70,16 +70,11 @@ client.on("ready", async () => {
 
   // listen for messages
   client.on("message", async message => {
-    //CHANGE
-    if (
-      /*message.author.bot || message.guild.id != guildId*/ message.channel.type == "dm" &&
-      message.type != "CHANNEL_FOLLOW_ADD"
-    )
-      return
+    if (message.channel.id == "302094807046684672") return snapshotVote.onMessage(client, message)
+    if (message.author.bot || (message.guild.id != guildId && message.channel.type == "dm")) return
     avatarManager.onMessage(client, message)
     chatMode.onMessage(client, message)
     trollCommand.onMessage(client, message)
-    snapshotVote.onMessage(client, message)
     responses.onMessage(client, message)
     levels.onMessage(client, message)
     presence.addPoints(message)

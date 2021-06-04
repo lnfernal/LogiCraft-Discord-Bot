@@ -4,7 +4,8 @@ let msg
 
 const getPage = async (pages, page, preset = "") => {
     const emojis = await require("@emojis").logibotEmojis(require("@client").getClient()),
-      currentPage = pages[page - 1]
+      currentPage = pages[page - 1],
+      discEmojis = await require("@emojis").discEmojis(require("@client").getClient())
     let embed = new Discord.MessageEmbed()
 
     switch (preset) {
@@ -68,6 +69,32 @@ const getPage = async (pages, page, preset = "") => {
             }
           )
           .setThumbnail(msg.guild.iconURL())
+        break
+      case "queue":
+        embed
+          .setColor("#ba0001")
+          .setTitle(
+            `${
+              discEmojis[Object.keys(discEmojis)[Math.floor(Math.random() * Object.keys(discEmojis).length)]]
+            } Cola de reproducción ${
+              discEmojis[Object.keys(discEmojis)[Math.floor(Math.random() * Object.keys(discEmojis).length)]]
+            }`
+          )
+          .addFields(
+            {
+              name: "`Nombre`",
+              value: currentPage.names,
+              inline: true,
+            },
+            {
+              name: "`Autor`",
+              value: currentPage.authors,
+              inline: true,
+            }
+          )
+          .setDescription(
+            "Puedes randomizar la cola de reproducción con `/shuffle`, saltar la canción actual con `/skip` o ver que se está reproducciendo ahora con `/np`. Más comandos en _/help > Comandos > Comandos de música_"
+          )
         break
       default:
         break
