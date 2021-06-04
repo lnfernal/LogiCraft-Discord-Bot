@@ -38,7 +38,7 @@ const setActivity = (client, activity, skipCooldown) => {
         name: "/help", //activity.text,
         type: 3, //activity.type,
       },
-      status: "offline",
+      status: "online",
     })
   }
 }
