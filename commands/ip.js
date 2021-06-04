@@ -4,7 +4,7 @@ const messageHandler = require("@messages")
 
 module.exports = {
   commands: ["ip", "server"],
-  requiredRoles: ["ilogi"],
+  requiredRoles: ["ilogicraft sectary"],
   callback: async (message, args, text, client) => {
     const { guild, member, author } = message,
       version = "1.16.5"
