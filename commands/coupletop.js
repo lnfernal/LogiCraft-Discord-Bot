@@ -30,7 +30,7 @@ module.exports = {
       names += `${i === 0 ? emojis.one : i === 1 ? emojis.two : i === 2 ? emojis.three : i + 1 + "."} ${users[
         i
       ].name.replace("_", "\\_")}\n`
-      couples += `${users[i].lover}${emojis.heart}\n`
+      couples += `${users[i].lover} ${emojis.heart}\n`
       usersCurrentPage++
       if (usersCurrentPage == usersPerPage || i == users.length - 1) {
         usersCurrentPage = 0
