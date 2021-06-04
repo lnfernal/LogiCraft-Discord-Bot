@@ -2,7 +2,7 @@ require("module-alias/register")
 const userUtils = require("@user")
 
 async function checkPresence(guild) {
-  const lowRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("low")),
+  const lowRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("little")),
     mediumRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("moderate")),
     highRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("high"))
 
@@ -17,13 +17,13 @@ async function checkPresence(guild) {
       if(presence == -1){
         if (points > 0) presence++
       } else if (presence == 0 ) {
-        if (points > 20) presence++
+        if (points > 5) presence++
         else presence--
       } else if (presence == 1) {
-        if (points > 60) presence++
+        if (points > 15) presence++
         else presence--
       } else if (presence == 2) {
-        if (points < 250) presence--
+        if (points < 50) presence--
       }
       await member.roles.remove(lowRole)
       await member.roles.remove(mediumRole)
@@ -53,7 +53,7 @@ module.exports.addPoints = async (message = null, reaction = null, user = null) 
       message.guild,
       message.author,
       "points",
-      Math.floor(Math.pow(message.content.length, 1.1))
+      message.content.split(" ").length
     )
   }
 }
