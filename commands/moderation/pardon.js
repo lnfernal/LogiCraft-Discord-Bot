@@ -25,7 +25,7 @@ module.exports = {
             const embed = new Discord.MessageEmbed()
               .setColor("#4aa96c")
               .setTitle(`${user.username} ha sido desbaneado`)
-              .setFooter(`Muteado por ${message.author.username}`, `${message.author.avatarURL()}`)
+              .setFooter(`Desbaneado por ${message.author.username}`, `${message.author.avatarURL()}`)
             message.channel.send(embed)
           })
         } catch (e) {
