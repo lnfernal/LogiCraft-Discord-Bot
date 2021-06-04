@@ -32,7 +32,7 @@ module.exports = {
 
       switch (targetMember.presence.activities[0].type) {
         case "PLAYING":
-          activity += "Jugando a"
+          activity += "Jugando a "
           break
         case "WATCHING":
           activity += "Viendo "
@@ -47,7 +47,7 @@ module.exports = {
           activity = ""
           break
       }
-      return (activity += targetMember.presence.activities[0].name)
+      return (targetMember.presence.activities[0].type == "CUSTOM_STATUS" ? "" : activity += targetMember.presence.activities[0].name)
     }
 
     await targetMember.roles.cache.each(role => {
