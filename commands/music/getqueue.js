@@ -13,7 +13,7 @@ module.exports = {
       queuePages = []
 
     for (let i = 1; i < queue.songs.length; i++) {
-      names += `${i}. **${queue.songs[i].name.substring(0, MAXNAME)}**${queue.songs[i].name.length > 27 ? "..." : ""}\n`
+      names += `${i}. **${queue.songs[i].name.substring(0, MAXNAME).strim()}**${queue.songs[i].name.length > 27 ? "**...**" : ""}\n`
       authors += `${queue.songs[i].author ? queue.songs[i].author.substring(0, MAXAUTHOR) : "-"}\n`
       songsCurrentPage++
       if (songsCurrentPage == songsPerPage || i == queue.songs.length - 1) {
