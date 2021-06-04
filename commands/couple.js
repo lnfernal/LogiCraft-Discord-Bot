@@ -49,7 +49,6 @@ module.exports = {
         _id: guildId,
       }).save()
     result = await coupleSchema.findOne({ _id: guildId })
-    await coupleSchema.updateOne({ _id: guildId }, { _id: guildId })
 
     if (!(await checkDaily(result))) {
       message.channel.send(
@@ -59,6 +58,7 @@ module.exports = {
       )
       return
     }
+    await coupleSchema.updateOne({ _id: guildId }, { _id: guildId })
     await guild.members.fetch().then(async members => {
       let arr = []
       members = members.filter(m => !m.user.bot)
