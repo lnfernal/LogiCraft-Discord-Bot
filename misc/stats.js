@@ -8,6 +8,6 @@ module.exports.inc = async message => {
   await userUtils.incUserSchema(guild, author, "words", message.content.split(" ").length)
   if (message.attachments.size > 0) await userUtils.incUserSchema(guild, author, "files", 1)
   if (/<a?:.+:\d+>|:.+:/gm.test(content))
-    await userUtils.incUserSchema(guild, author, "emojis", content.findall(/<a?:.+:\d+>|:.+:/gm).length)
+    await userUtils.incUserSchema(guild, author, "emojis", /<a?:.+:\d+>|:.+:/gm.exec(content).length)
   if (message.reference) await userUtils.incUserSchema(guild, author, "replies", 1)
 }
