@@ -112,7 +112,7 @@ module.exports = {
           name: "`Roles`",
           value: roles.concat(`\n**Rol más alto**: <@&${targetMember.roles.highest.id}>`),
           inline: false,
-        }
+        },
         {
           name: "`Niveles`",
           value: `**Nivel**: ${s.formatNumber(profile.level)}\n**XP**: ${s.formatNumber(profile.totalXp)}`,
