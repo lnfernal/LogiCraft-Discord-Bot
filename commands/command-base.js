@@ -77,7 +77,7 @@ module.exports = (client, commandOptions, dirName) => {
   }
 
   client.on("message", async message => {
-    const { member, content, guild } = message
+    const { member, content, guild, author } = message
 
     if (
       message.guild.id != "666295714724446209" ||
