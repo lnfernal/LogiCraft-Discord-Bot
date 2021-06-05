@@ -104,10 +104,15 @@ module.exports = {
                 : "_Ninguno_"
             )
             .concat(
-              `\n**Archivos adjuntados**: ${profile.files}\n**Emojis usados**: ${profile.emojis}\n**Comandos usados**: ${profile.commands}\n**Veces reaccionado**: ${profile.reactions}\n**Respuestas a miembros**: ${profile.replies}`
+              `\n**Archivos adjuntados**: ${profile.files}\n**Emojis usados**: ${profile.emojis}\n**Comandos usados**: ${profile.commands}\n**Veces reaccionado**: ${profile.reactions}\n**Veces respondido**: ${profile.replies}`
             ),
           inline: true,
         },
+        {
+          name: "`Roles`",
+          value: roles.concat(`\n**Rol más alto**: <@&${targetMember.roles.highest.id}>`),
+          inline: false,
+        }
         {
           name: "`Niveles`",
           value: `**Nivel**: ${s.formatNumber(profile.level)}\n**XP**: ${s.formatNumber(profile.totalXp)}`,
@@ -118,11 +123,6 @@ module.exports = {
           value: `**Monedas**: ${s.formatNumber(profile.coins)}${emojis.logiCoin}`,
           inline: true,
         },
-        {
-          name: "`Roles`",
-          value: roles.concat(`\n**Rol más alto**: <@&${targetMember.roles.highest.id}>`),
-          inline: true,
-        }
       )
       .setThumbnail(userUtils.getUserAvatar(target))
       .setDescription(status.concat(targetMember.presence.activities.length ? getActivity() : ""))
