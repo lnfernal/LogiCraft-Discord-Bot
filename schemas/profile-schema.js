@@ -64,6 +64,10 @@ const profileSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  music: {
+    type: Number,
+    default: 0,
+  },
   reactions: {
     type: Number,
     default: 0,

@@ -1,3 +1,6 @@
+require("module-alias/register")
+const userUtils = require("@user")
+
 module.exports = {
   commands: ["play", "playsound", "p"],
   expectedArgs: "<link|video name>",
@@ -28,5 +31,6 @@ module.exports = {
           } Reproduciendo **${audio.name}**`
         )
     }
+    await userUtils.incUserSchema(guild, author, "music", 1)
   },
 }

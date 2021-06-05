@@ -93,7 +93,7 @@ module.exports = {
         },
         {
           name: "`Chat`",
-          value: `**Mensajes enviados**: ${s.formatNumber(profile.messages)}\n**Palabras escritas**: ${s.formatNumber(
+          value: `**Mensajes enviados**: ${s.formatNumber(profile.messages)} ${emojis.unmuted}\n**Palabras escritas**: ${s.formatNumber(
             profile.words
           )}\n**Ratio palabras/mensaje**: ${
             Math.round((profile.words / (profile.messages === 0 ? 1 : profile.messages)) * 100) / 100
@@ -104,14 +104,9 @@ module.exports = {
                 : "_Ninguno_"
             )
             .concat(
-              `\n**Archivos adjuntados**: ${profile.files}\n**Emojis usados**: ${profile.emojis}\n**Comandos usados**: ${profile.commands}\n**Veces reaccionado**: ${profile.reactions}\n**Veces respondido**: ${profile.replies}`
+              `\n**Archivos adjuntados**: ${profile.files}\n**Emojis usados**: ${profile.emojis} ${emojis.slimeballRainbow}\n**Comandos usados**: ${profile.commands}\n**Veces puesto música**: ${profile.music} ${emojis.musicDiscPigstep}\n**Veces reaccionado**: ${profile.reactions}\n**Veces respondido**: ${profile.replies}`
             ),
           inline: true,
-        },
-        {
-          name: "`Roles`",
-          value: roles.concat(`\n**Rol más alto**: <@&${targetMember.roles.highest.id}>`),
-          inline: false,
         },
         {
           name: "`Niveles`",
@@ -122,6 +117,11 @@ module.exports = {
           name: "`Economía`",
           value: `**Monedas**: ${s.formatNumber(profile.coins)}${emojis.logiCoin}`,
           inline: true,
+        },
+        {
+          name: "`Roles`",
+          value: roles.concat(`\n**Rol más alto**: <@&${targetMember.roles.highest.id}>`),
+          inline: false,
         },
       )
       .setThumbnail(userUtils.getUserAvatar(target))
