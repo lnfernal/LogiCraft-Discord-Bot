@@ -106,7 +106,7 @@ module.exports = {
             .concat(
               `\n**Archivos adjuntados**: ${profile.files}\n**Emojis usados**: ${profile.emojis}\n**Comandos usados**: ${profile.commands}\n**Veces reaccionado**: ${profile.reactions}\n**Respuestas a miembros**: ${profile.replies}`
             ),
-          inline: false,
+          inline: true,
         },
         {
           name: "`Niveles`",
