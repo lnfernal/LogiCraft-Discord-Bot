@@ -111,7 +111,7 @@ module.exports = {
         {
           name: "`Niveles`",
           value: `**Nivel**: ${s.formatNumber(profile.level)}\n**XP**: ${s.formatNumber(profile.totalXp)}`,
-          inline: true,
+          inline: false,
         },
         {
           name: "`Economía`",
@@ -120,7 +120,7 @@ module.exports = {
         },
         {
           name: "`Roles`",
-          value: roles.concat(`\n**Rol más alto**: <@&${targetMember.roles.highest.id}>`),
+          value: `**Rol más alto**: <@&${targetMember.roles.highest.id}>\n`.concat(roles),
           inline: false,
         },
       )
