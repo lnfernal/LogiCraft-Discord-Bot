@@ -31,6 +31,6 @@ module.exports = {
           } Reproduciendo **${audio.name}**`
         )
     }
-    await userUtils.incUserSchema(guild, author, "music", 1)
+    await userUtils.incUserSchema(message.guild, message.author, "music", 1)
   },
 }

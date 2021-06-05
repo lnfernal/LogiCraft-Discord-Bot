@@ -93,9 +93,9 @@ module.exports = {
         },
         {
           name: "`Chat`",
-          value: `**Mensajes enviados**: ${s.formatNumber(profile.messages)} ${emojis.unmuted}\n**Palabras escritas**: ${s.formatNumber(
-            profile.words
-          )}\n**Ratio palabras/mensaje**: ${
+          value: `**Mensajes enviados**: ${s.formatNumber(profile.messages)} ${
+            emojis.unmuted
+          }\n**Palabras escritas**: ${s.formatNumber(profile.words)}\n**Ratio palabras/mensaje**: ${
             Math.round((profile.words / (profile.messages === 0 ? 1 : profile.messages)) * 100) / 100
           }\n**Último mensaje**: `
             .concat(
@@ -106,12 +106,12 @@ module.exports = {
             .concat(
               `\n**Archivos adjuntados**: ${profile.files}\n**Emojis usados**: ${profile.emojis} ${emojis.slimeballRainbow}\n**Comandos usados**: ${profile.commands}\n**Veces puesto música**: ${profile.music} ${emojis.musicDiscPigstep}\n**Veces reaccionado**: ${profile.reactions}\n**Veces respondido**: ${profile.replies}`
             ),
-          inline: true,
+          inline: false,
         },
         {
           name: "`Niveles`",
           value: `**Nivel**: ${s.formatNumber(profile.level)}\n**XP**: ${s.formatNumber(profile.totalXp)}`,
-          inline: false,
+          inline: true,
         },
         {
           name: "`Economía`",
@@ -121,8 +121,8 @@ module.exports = {
         {
           name: "`Roles`",
           value: `**Rol más alto**: <@&${targetMember.roles.highest.id}>\n`.concat(roles),
-          inline: true,
-        },
+          inline: false,
+        }
       )
       .setThumbnail(userUtils.getUserAvatar(target))
       .setDescription(status.concat(targetMember.presence.activities.length ? getActivity() : ""))
