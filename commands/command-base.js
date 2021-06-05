@@ -1,4 +1,5 @@
 require("module-alias/register")
+const userUtils = require("@user")
 const { prefix } = require("../config.json")
 const messageHandler = require("@messages")
 
@@ -195,6 +196,7 @@ module.exports = (client, commandOptions, dirName) => {
         // handle the custom command code
         callback(message, args, args.join(" "), client)
 
+        await userUtils.incUserSchema(guild, author, "commands", 1)
         return
       }
     }

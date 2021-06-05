@@ -10,22 +10,19 @@ async function checkPresence(guild) {
 
   await guild.members.fetch().then(members => {
     members.forEach(async member => {
-      if(member.user.bot) return
-      
+      if (member.user.bot) return
+
       let userData = await userUtils.getUserProfile(guild, member.user),
         { presence, points } = userData
-      
-      if(presence == 0)
-      await member.roles.remove(lowRole)
-      else if(presence == 1)
-      await member.roles.remove(mediumRole)
-      else if(presence == 2)
-      await member.roles.remove(highRole)
+
+      if (presence == 0) await member.roles.remove(lowRole)
+      else if (presence == 1) await member.roles.remove(mediumRole)
+      else if (presence == 2) await member.roles.remove(highRole)
 
       if (!presence) presence = -1
-      if(presence == -1){
+      if (presence == -1) {
         if (points > 0) presence++
-      } else if (presence == 0 ) {
+      } else if (presence == 0) {
         if (points > 5) presence++
         else presence--
       } else if (presence == 1) {
@@ -55,11 +52,6 @@ module.exports.addPoints = async (message = null, reaction = null, user = null) 
     await userUtils.incUserSchema(reaction.message.guild, user, "points", 1)
   }
   if (message) {
-    await userUtils.incUserSchema(
-      message.guild,
-      message.author,
-      "points",
-      message.content.split(" ").length
-    )
+    await userUtils.incUserSchema(message.guild, message.author, "points", message.content.split(" ").length)
   }
 }

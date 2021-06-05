@@ -52,7 +52,23 @@ const profileSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  images: {
+  files: {
+    type: Number,
+    default: 0,
+  },
+  emojis: {
+    type: Number,
+    default: 0,
+  },
+  commands: {
+    type: Number,
+    default: 0,
+  },
+  reactions: {
+    type: Number,
+    default: 0,
+  },
+  replies: {
     type: Number,
     default: 0,
   },

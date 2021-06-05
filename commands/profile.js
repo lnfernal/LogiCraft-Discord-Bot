@@ -47,7 +47,9 @@ module.exports = {
           activity = ""
           break
       }
-      return (targetMember.presence.activities[0].type == "CUSTOM_STATUS" ? "" : activity += targetMember.presence.activities[0].name)
+      return targetMember.presence.activities[0].type == "CUSTOM_STATUS"
+        ? ""
+        : (activity += targetMember.presence.activities[0].name)
     }
 
     await targetMember.roles.cache.each(role => {
@@ -57,23 +59,21 @@ module.exports = {
     if (roles == "**Todos**: ") roles.concat("_Ninguno_")
 
     const embed = new MessageEmbed()
-      .setTitle(`Perfil de ${target.username.replace("_", "\\_")} _(${targetMember.displayName ? targetMember.displayName.replace("_", "\\_") : target.username.replace("_", "\\_")})_`)
+      .setTitle(
+        `Perfil de ${target.username.replace("_", "\\_")} _(${
+          targetMember.displayName ? targetMember.displayName.replace("_", "\\_") : target.username.replace("_", "\\_")
+        })_`
+      )
       .setColor(await userUtils.getAvatarColor(target))
       .addFields(
         {
           name: "`General`",
-          value: `**Miembro**: ${target}\n**Tag**: ${target.tag.replace("_", "\\_")}\n**Fecha de unión**: ${userUtils.getJoinedAt(
+          value: `**Miembro**: ${target}\n**Tag**: ${target.tag.replace(
+            "_",
+            "\\_"
+          )}\n**Fecha de unión**: ${userUtils.getJoinedAt(targetMember.joinedAt)} _(${moment(
             targetMember.joinedAt
-          )} _(${moment(targetMember.joinedAt).fromNow()})_\n**Mensajes enviados**: ${s.formatNumber(
-            profile.messages
-          )}\n**Palabras escritas**: ${s.formatNumber(profile.words)}\n**Ratio palabras/mensaje**: ${
-            Math.round((profile.words / (profile.messages === 0 ? 1 : profile.messages)) * 100) / 100
-          }\n**Imágenes enviadas**: ${profile.images}\n**Último mensaje**: `
-            .concat(
-              targetMember.lastMessage
-                ? `\"${targetMember.lastMessage}\" _(${moment(targetMember.lastMessage.createdAt).fromNow()})_`
-                : "_Ninguno_"
-            )
+          ).fromNow()})_`
             .concat("\n**Última vez boosteado**: ")
             .concat(targetMember.premiumSince ? `${moment(targetMember.premiumSince).format("llll")}` : "_Nunca_")
             .concat("\n**Presencia**: ")
@@ -88,6 +88,23 @@ module.exports = {
             )
             .concat(
               `\n**Parejas**: ${profile.lover} ${emojis.heart}\n**Veces usuario de la semana**: ${profile.weekly} ${emojis.hero}\n**Veces muteado**: ${profile.mutes} ${emojis.muted}`
+            ),
+          inline: true,
+        },
+        {
+          name: "`Chat`",
+          value: `**Mensajes enviados**: ${s.formatNumber(profile.messages)}\n**Palabras escritas**: ${s.formatNumber(
+            profile.words
+          )}\n**Ratio palabras/mensaje**: ${
+            Math.round((profile.words / (profile.messages === 0 ? 1 : profile.messages)) * 100) / 100
+          }\n**Último mensaje**: `
+            .concat(
+              targetMember.lastMessage
+                ? `\"${targetMember.lastMessage}\" _(${moment(targetMember.lastMessage.createdAt).fromNow()})_`
+                : "_Ninguno_"
+            )
+            .concat(
+              `\n**Archivos adjuntados**: ${profile.files}\n**Emojis usados**: ${profile.emojis}\n**Comandos usados**: ${profile.commands}\n**Veces reaccionado**: ${profile.reactions}\n**Respuestas a miembros**: ${profile.replies}`
             ),
           inline: false,
         },
