@@ -121,7 +121,7 @@ module.exports = {
         {
           name: "`Roles`",
           value: `**Rol más alto**: <@&${targetMember.roles.highest.id}>\n`.concat(roles),
-          inline: false,
+          inline: true,
         },
       )
       .setThumbnail(userUtils.getUserAvatar(target))
