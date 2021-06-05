@@ -98,7 +98,7 @@ client.on("ready", async () => {
   })
 
   // reaction add
-  client.on("messageReactionAdd", (reaction, user) => {
+  client.on("messageReactionAdd", async (reaction, user) => {
     if (reaction.message.guild.id != guildId || reaction.me) return
     presence.addPoints(null, reaction, user)
     await userUtils.incUserSchema(guild, author, "reactions", 1)
