@@ -10,4 +10,5 @@ module.exports.inc = async message => {
   if (/<a?:.+:\d+>|:.+:/.test(content))
     await userUtils.incUserSchema(guild, author, "emojis", /<a?:.+:\d+>|:.+:/.match(content).length)
   if (message.reference) await userUtils.incUserSchema(guild, author, "replies", 1)
+  console.log(message)
 }
