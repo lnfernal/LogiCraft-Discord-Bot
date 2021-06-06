@@ -89,7 +89,7 @@ const profileSchema = mongoose.Schema({
     type: Object,
     default: {
       messages: 0,
-      images: 0,
+      files: 0,
       words: 0,
     },
   },

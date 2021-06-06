@@ -8,17 +8,20 @@ module.exports.inc = async message => {
 
   await userUtils.incUserSchema(guild, author, "weeklyUser.messages", 1)
   await userUtils.incUserSchema(guild, author, "weeklyUser.words", message.content.split(" ").length)
-  if (message.attachments.length) await userUtils.incUserSchema(guild, author, "weeklyUser.images", 1)
+  if (message.attachments.size > 0) await userUtils.incUserSchema(guild, author, "weeklyUser.files", 1)
 }
 
 module.exports.init = async guild => {
-  setInterval(async () => {
+  setTimeout(async () => {
     await checkWeekly(guild)
-  }, moment().endOf("week").valueOf() - moment().valueOf() - 120 * 1000)
+    setInterval(async ()=>{
+      await checkWeekly(guild)
+    },7*24*3600*1000)
+  }, moment().endOf("isoWeek").valueOf() - moment().valueOf())
 }
 
 async function checkWeekly(guild) {
-  let users = []
+  let users = [], usersFinal = []
   const spamChannel = await guild.channels.cache.find(c => c.name.toLowerCase().includes("spam")),
     emojis = await require("@emojis").logibotEmojis(require("@client").getClient())
 
@@ -31,34 +34,40 @@ async function checkWeekly(guild) {
     users = await Promise.all(promises)
   })
   users.forEach(user => {
-    user["points"] = user.weeklyUser.messages + (user.weeklyUser.images * 10) / user.weeklyUser.words
+    usersFinal.push({
+      id: user.userId,
+      points: ((user.weeklyUser.messages + (user.weeklyUser.images * 10)) / user.weeklyUser.words),
+      messages: user.weeklyUser.messages,
+      words: user.weeklyUser.words,
+      files: user.weeklyUser.files
+    })
   })
-  users.sort(function (a, b) {
+  usersFinal.sort(function (a, b) {
     return b.points - a.points
   })
 
   // send to channel
   moment.locale("es")
-  const weeklyUser = users[0],
-    member = await guild.members.cache.get(weeklyUser.userId)
+  const weeklyUser = usersFinal[0],
+    weeklyMember = await guild.members.cache.get(weeklyUser.id)
   await spamChannel.send(
     new MessageEmbed()
-      .setTitle(`${emojis.hero} ${weeklyUser.name} es el usuario de la semana! ${emojis.hero}`)
+      .setTitle(`${emojis.hero} ${weeklyMember.user.username} es el usuario de la semana! ${emojis.hero}`)
       .setColor("#ff5d8f")
       .setDescription(
-        `**Mensajes enviados**: ${weeklyUser.weeklyUser.messages}\n**Imágenes adjuntadas**: ${weeklyUser.weeklyUser.images}\n**Palabras escritas**: ${weeklyUser.weeklyUser.words}`
+        `**Mensajes enviados**: ${weeklyUser.messages}\n**Archivos adjuntados**: ${weeklyUser.images}\n**Palabras escritas**: ${weeklyUser.words}`
       )
-      .setThumbnail(member.user.avatarURL())
-      .setAuthor(`${moment().startOf("week").format("ll")} - ${moment().endOf("week").format("ll")}`)
+      .setThumbnail(weeklyMember.user.avatarURL())
+      .setAuthor(`${moment().startOf("isoWeek").format("ll")} - ${moment().endOf("isoWeek").format("ll")}`)
   )
-  await userUtils.incUserSchema(guild, member.user, "weekly", 1)
+  await userUtils.incUserSchema(guild, weeklyMember.user, "weekly", 1)
 
   await guild.members.fetch().then(async members => {
     const promises = []
 
     members.forEach(member => {
       promises.push(userUtils.setUserSchema(guild, member.user, "weeklyUser.messages", 0))
-      promises.push(userUtils.setUserSchema(guild, member.user, "weeklyUser.images", 0))
+      promises.push(userUtils.setUserSchema(guild, member.user, "weeklyUser.files", 0))
       promises.push(userUtils.setUserSchema(guild, member.user, "weeklyUser.words", 0))
     })
     users = await Promise.all(promises)

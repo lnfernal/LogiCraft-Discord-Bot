@@ -72,7 +72,7 @@ const getPage = async (pages, page, preset = "") => {
         break
       case "queue":
         embed
-          .setColor("#ba0001")
+          .setColor("#ff5d8f")
           .setTitle(
             `${
               discEmojis[Object.keys(discEmojis)[Math.floor(Math.random() * Object.keys(discEmojis).length)]]
