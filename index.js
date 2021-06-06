@@ -63,14 +63,14 @@ client.on("ready", async () => {
   avatarManager.init(client)
   userActivity.init(guild)
   await presence.init(guild)
-  weeklyUser.init(guild)
+  await weeklyUser.init(guild)
   randomActivity.setActivity(client)
   await mute.scheduledCheck(client)
   await readCommands("commands").then(console.log(`¡${commandCount} comandos registrados!`))
 
   // listen for messages
   client.on("message", async message => {
-    if (message.channel.id == "302094807046684672") return snapshotVote.onMessage(client, message)
+    if (message.guild.id == "302094807046684672") return await snapshotVote.onMessage(client, message)
     if (message.author.bot || (message.guild.id != guildId && message.channel.type == "dm")) return
     avatarManager.onMessage(client, message)
     chatMode.onMessage(client, message)

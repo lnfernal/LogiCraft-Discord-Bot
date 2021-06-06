@@ -14,14 +14,15 @@ module.exports.inc = async message => {
 module.exports.init = async guild => {
   setTimeout(async () => {
     await checkWeekly(guild)
-    setInterval(async ()=>{
+    setInterval(async () => {
       await checkWeekly(guild)
-    },7*24*3600*1000)
+    }, 7 * 24 * 3600 * 1000)
   }, moment().endOf("isoWeek").valueOf() - moment().valueOf())
 }
 
 async function checkWeekly(guild) {
-  let users = [], usersFinal = []
+  let users = [],
+    usersFinal = []
   const spamChannel = await guild.channels.cache.find(c => c.name.toLowerCase().includes("spam")),
     emojis = await require("@emojis").logibotEmojis(require("@client").getClient())
 
@@ -36,10 +37,10 @@ async function checkWeekly(guild) {
   users.forEach(user => {
     usersFinal.push({
       id: user.userId,
-      points: ((user.weeklyUser.messages + (user.weeklyUser.images * 10)) / user.weeklyUser.words),
+      points: (user.weeklyUser.messages + user.weeklyUser.images * 10) / user.weeklyUser.words,
       messages: user.weeklyUser.messages,
       words: user.weeklyUser.words,
-      files: user.weeklyUser.files
+      files: user.weeklyUser.files,
     })
   })
   usersFinal.sort(function (a, b) {
