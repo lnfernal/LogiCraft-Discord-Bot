@@ -70,8 +70,9 @@ client.on("ready", async () => {
 
   // listen for messages
   client.on("message", async message => {
+    if (message.channel.type == "dm") return
     if (message.guild.id == "302094807046684672") return await snapshotVote.onMessage(client, message)
-    if (message.author.bot || (message.guild.id != guildId && message.channel.type == "dm")) return
+    if (message.author.bot || message.guild.id != guildId) return
     avatarManager.onMessage(client, message)
     chatMode.onMessage(client, message)
     trollCommand.onMessage(client, message)
