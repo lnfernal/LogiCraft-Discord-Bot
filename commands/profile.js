@@ -79,12 +79,12 @@ module.exports = {
             .concat("\n**Presencia**: ")
             .concat(
               profile.presence == -1
-                ? "Ninguna"
+                ? `Ninguna ${emojis.none}`
                 : profile.presence == 0
-                ? "Baja"
+                ? `Baja ${emojis.little}`
                 : profile.presence == 1
-                ? "Moderada"
-                : "Alta"
+                ? `Moderada ${emojis.moderate}`
+                : `Alta ${emojis.high}`
             )
             .concat(
               `\n**Parejas**: ${profile.lover} ${emojis.heart}\n**Veces usuario de la semana**: ${profile.weekly} ${emojis.hero}\n**Veces muteado**: ${profile.mutes} ${emojis.muted}`
