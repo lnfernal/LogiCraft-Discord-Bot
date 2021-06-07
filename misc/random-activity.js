@@ -18,7 +18,35 @@ const activities = [
   ],
 ]
 
-const animatedActivity = ["[]", "[i]", "[iL]", "[iLo]", "[iLog]", "[iLogi]", "[iLogiC]", "[iLogiCr]", "[iLogiCra]", "[iLogiCraf]", "[iLogiCraft]", "[iLogiCra]", "[iLogiC]", "[iLog]", "[iL]", "[]", "[/]", "[/i]", "[/ip]", "[ /ip ]", "[> /ip <]", "[>> /ip <<]", "[>>> /ip <<<]", "[>>>> /ip <<<<]", "[>> /ip <<]", "[ /ip ]", "[/i]"]
+const animatedActivity = [
+  "[]",
+  "[i]",
+  "[iL]",
+  "[iLo]",
+  "[iLog]",
+  "[iLogi]",
+  "[iLogiC]",
+  "[iLogiCr]",
+  "[iLogiCra]",
+  "[iLogiCraf]",
+  "[iLogiCraft]",
+  "[iLogiCra]",
+  "[iLogiC]",
+  "[iLog]",
+  "[iL]",
+  "[]",
+  "[/]",
+  "[/i]",
+  "[/ip]",
+  "[ /ip ]",
+  "[> /ip <]",
+  "[>> /ip <<]",
+  "[>>> /ip <<<]",
+  "[>>>> /ip <<<<]",
+  "[>> /ip <<]",
+  "[ /ip ]",
+  "[/i]",
+]
 
 const getRandomActivity = () => {
   let type = Math.floor(Math.random() * (activities.length - 1)) + 1
@@ -31,6 +59,15 @@ const getRandomActivity = () => {
 }
 
 const animated = client => {
+  if (!client.user.presence.activities[0])
+    return client.user.setPresence({
+      activity: {
+        name: animatedActivity[0],
+        type: 1,
+      },
+      status: "online",
+    })
+
   const index = animatedActivity.indexOf(client.user.presence.activities[0].name)
 
   client.user.setPresence({
