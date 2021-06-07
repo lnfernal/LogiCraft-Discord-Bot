@@ -58,7 +58,7 @@ const setActivity = (client, activity, skipCooldown) => {
   if (!activityTriggered || skipCooldown) {
     client.user.setPresence({
       activity: {
-        name: "/help", //activity.text,
+        name: "iLogiCraft >> /ip <<", //activity.text,
         type: 3, //activity.type,
       },
       status: "online",
@@ -68,10 +68,10 @@ const setActivity = (client, activity, skipCooldown) => {
 
 module.exports = {
   setActivity: (client, activity = getRandomActivity(), skipCooldown = false) => {
-    //setActivity(client, activity, skipCooldown)
-    setInterval(() => {
+    setActivity(client, activity, skipCooldown)
+    /*setInterval(() => {
       animated(client)
-    }, 10000)
+    }, 10000)*/
   },
   activityTrigger: () => {
     /*clearTimeout(activityTimeout)
