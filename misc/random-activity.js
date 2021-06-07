@@ -59,7 +59,7 @@ const setActivity = (client, activity, skipCooldown) => {
     client.user.setPresence({
       activity: {
         name: "iLogiCraft >> /ip <<", //activity.text,
-        type: 3, //activity.type,
+        type: 0, //activity.type,
       },
       status: "online",
     })
