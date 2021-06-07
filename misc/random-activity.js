@@ -20,28 +20,19 @@ const activities = [
 
 const animatedActivity = [
   "[]",
-  "[i]",
   "[iL]",
-  "[iLo]",
   "[iLog]",
-  "[iLogi]",
   "[iLogiC]",
-  "[iLogiCr]",
   "[iLogiCra]",
-  "[iLogiCraf]",
   "[iLogiCraft]",
   "[iLogiCra]",
   "[iLogiC]",
   "[iLog]",
   "[iL]",
   "[]",
-  "[/]",
   "[/i]",
-  "[/ip]",
   "[ /ip ]",
-  "[> /ip <]",
   "[>> /ip <<]",
-  "[>>> /ip <<<]",
   "[>>>> /ip <<<<]",
   "[>> /ip <<]",
   "[ /ip ]",
@@ -99,7 +90,7 @@ module.exports = {
     //setActivity(client, activity, skipCooldown)
     setInterval(() => {
       animated(client)
-    }, 1500)
+    }, 4000)
   },
   activityTrigger: () => {
     /*clearTimeout(activityTimeout)
