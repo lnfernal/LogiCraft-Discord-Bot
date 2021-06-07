@@ -1,5 +1,6 @@
 require("module-alias/register")
 const userUtils = require("@user")
+const moment = require("moment")
 
 async function checkPresence(guild) {
   const lowRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("little")),
@@ -41,10 +42,12 @@ async function checkPresence(guild) {
 }
 
 module.exports.init = async guild => {
-  setInterval(async () => {
-    await checkPresence(guild)
-    console.log("[!] Actualizando presencia del usuario...")
-  }, 1 * 24 * 3600 * 1000)
+  setTimeout(() => {
+    setInterval(async () => {
+      await checkPresence(guild)
+      console.log("[!] Actualizando presencia del usuario...")
+    }, 1 * 24 * 3600 * 1000)
+  }, moment().endOf("day").valueOf() - moment().valueOf())
 }
 
 module.exports.addPoints = async (message = null, reaction = null, user = null) => {
