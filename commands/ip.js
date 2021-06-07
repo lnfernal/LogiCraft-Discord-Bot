@@ -9,7 +9,7 @@ module.exports = {
     const { guild, member, author } = message,
       version = "1.16.5",
       requirements = "https://minecraft.net",
-      ip = "`000.000.000`"
+      ip = "`51.195.145.143:25571`"
 
     author
       .send(
@@ -23,6 +23,7 @@ module.exports = {
           )
           .setTitle(guild.name + " IP")
           .setThumbnail(guild.iconURL())
+          .setColor("#ff5d8f")
       )
       .catch(console.error)
   },
