@@ -18,26 +18,7 @@ const activities = [
   ],
 ]
 
-const animatedActivity = [
-  "[]",
-  "[iL]",
-  "[iLog]",
-  "[iLogiC]",
-  "[iLogiCra]",
-  "[iLogiCraft]",
-  "[iLogiCra]",
-  "[iLogiC]",
-  "[iLog]",
-  "[iL]",
-  "[]",
-  "[/i]",
-  "[ /ip ]",
-  "[>> /ip <<]",
-  "[>>>> /ip <<<<]",
-  "[>> /ip <<]",
-  "[ /ip ]",
-  "[/i]",
-]
+const animatedActivity = ["[]", "[iLogi]", "[iLogiCraft]", "[/]", "[/ip]", "[> /ip <]", "[>>> /ip <<<]"]
 
 const getRandomActivity = () => {
   let type = Math.floor(Math.random() * (activities.length - 1)) + 1
@@ -90,7 +71,7 @@ module.exports = {
     //setActivity(client, activity, skipCooldown)
     setInterval(() => {
       animated(client)
-    }, 4000)
+    }, 10000)
   },
   activityTrigger: () => {
     /*clearTimeout(activityTimeout)
