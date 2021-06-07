@@ -42,7 +42,7 @@ async function checkPresence(guild) {
 }
 
 module.exports.init = async guild => {
-  setTimeout(() => {
+  setTimeout(async () => {
     await checkPresence(guild)
     setInterval(async () => {
       await checkPresence(guild)
