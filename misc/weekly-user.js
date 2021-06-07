@@ -1,6 +1,7 @@
 require("module-alias/register")
 const userUtils = require("@user")
 const moment = require("moment")
+const math = require("@math")
 const { MessageEmbed } = require("discord.js")
 
 module.exports.inc = async message => {
@@ -37,7 +38,10 @@ async function checkWeekly(guild) {
   users.forEach(user => {
     usersFinal.push({
       id: user.userId,
-      points: (user.weeklyUser.messages + user.weeklyUser.images * 10) / user.weeklyUser.words,
+      points: Math.floor(
+        (user.weeklyUser.messages + user.weeklyUser.files * 10) /
+          math.clamp(user.weeklyUser.words, 1, user.weeklyUser.words)
+      ),
       messages: user.weeklyUser.messages,
       words: user.weeklyUser.words,
       files: user.weeklyUser.files,
@@ -46,7 +50,6 @@ async function checkWeekly(guild) {
   usersFinal.sort(function (a, b) {
     return b.points - a.points
   })
-
   // send to channel
   moment.locale("es")
   const weeklyUser = usersFinal[0],

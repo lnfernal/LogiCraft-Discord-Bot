@@ -417,7 +417,9 @@ function immuneRole(message, target, protectedRoles) {
                   _d.apply(_c, [_g.sent()])
                   return [2 /*return*/, "continue"]
                 case 6:
-                  if (!targetMember.roles.cache.has(role.id)) return [3 /*break*/, 8]
+                  return [4 /*yield*/, targetMember.roles.cache.has(role.id)]
+                case 7:
+                  if (!_g.sent()) return [3 /*break*/, 10]
                   _f = (_e = message.channel).send
                   return [
                     4 /*yield*/,
@@ -426,10 +428,12 @@ function immuneRole(message, target, protectedRoles) {
                       roleName: role.name,
                     }),
                   ]
-                case 7:
-                  _f.apply(_e, [_g.sent()])
-                  return [2 /*return*/, { value: true }]
                 case 8:
+                  return [4 /*yield*/, _f.apply(_e, [_g.sent()])]
+                case 9:
+                  _g.sent()
+                  return [2 /*return*/, { value: true }]
+                case 10:
                   return [2 /*return*/]
               }
             })

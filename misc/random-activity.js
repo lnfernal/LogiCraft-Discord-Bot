@@ -18,6 +18,8 @@ const activities = [
   ],
 ]
 
+const animatedActivity = ["[]", "[i]", "[iL]", "[iLo]", "[iLog]", "[iLogi]", "[iLogiC]", "[iLogiCr]", "[iLogiCra]", "[iLogiCraf]", "[iLogiCraft]", "[iLogiCra]", "[iLogiC]", "[iLog]", "[iL]", "[]", "[/]", "[/i]", "[/ip]", "[ /ip ]", "[> /ip <]", "[>> /ip <<]", "[>>> /ip <<<]", "[>>>> /ip <<<<]", "[>> /ip <<]", "[ /ip ]", "[/i]"]
+
 const getRandomActivity = () => {
   let type = Math.floor(Math.random() * (activities.length - 1)) + 1
   let activityType = activities[type]
@@ -26,6 +28,18 @@ const getRandomActivity = () => {
     text: activityType[Math.floor(Math.random() * activityType.length)],
   }
   return activity
+}
+
+const animated = client => {
+  const index = animatedActivity.indexOf(client.user.presence.activities[0].name)
+
+  client.user.setPresence({
+    activity: {
+      name: index == animatedActivity.length - 1 ? animatedActivity[0] : animatedActivity[index + 1],
+      type: 1,
+    },
+    status: "online",
+  })
 }
 
 const setActivity = (client, activity, skipCooldown) => {
@@ -45,13 +59,16 @@ const setActivity = (client, activity, skipCooldown) => {
 
 module.exports = {
   setActivity: (client, activity = getRandomActivity(), skipCooldown = false) => {
-    setActivity(client, activity, skipCooldown)
+    //setActivity(client, activity, skipCooldown)
+    setInterval(() => {
+      animated(client)
+    }, 1500)
   },
   activityTrigger: () => {
-    clearTimeout(activityTimeout)
+    /*clearTimeout(activityTimeout)
     activityTriggered = true
     activityTimeout = setTimeout(() => {
       activityTriggered = false
-    }, 4 * 60 * 60 * 1000)
+    }, 4 * 60 * 60 * 1000)*/
   },
 }
