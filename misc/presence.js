@@ -15,12 +15,11 @@ async function checkPresence(guild) {
 
       let userData = await userUtils.getUserProfile(guild, member.user),
         { presence, points } = userData
-  console.log(presence, points)
+  console.log(member.user.username, presence, points)
       if (presence == 0) await member.roles.remove(lowRole)
       else if (presence == 1) await member.roles.remove(mediumRole)
       else if (presence == 2) await member.roles.remove(highRole)
 
-      if (!presence) presence = -1
       if (presence == -1) {
         if (points > 0) presence++
       } else if (presence == 0) {
@@ -49,7 +48,7 @@ module.exports.init = async guild => {
       await checkPresence(guild)
       console.log("[!] Actualizando presencia del usuario...")
     }, 1 * 24 * 3600 * 1000)
-  },2000/* moment().endOf("day").valueOf() - moment().valueOf()*/)
+  },10000/* moment().endOf("day").valueOf() - moment().valueOf()*/)
 }
 
 module.exports.addPoints = async (message = null, reaction = null, user = null) => {
