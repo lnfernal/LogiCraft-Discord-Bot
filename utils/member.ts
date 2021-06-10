@@ -74,7 +74,7 @@ module.exports.setUserSchema = async (guild, target, key: string, value) => {
       userId: target.id,
     },
     {
-      $set: { [key]: value },
+      $set: { [`${key}`]: value },
     }
   )
 }
