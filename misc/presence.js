@@ -15,7 +15,7 @@ async function checkPresence(guild) {
 
       let userData = await userUtils.getUserProfile(guild, member.user),
         { presence, points } = userData
-
+  console.log(presence, points)
       if (presence == 0) await member.roles.remove(lowRole)
       else if (presence == 1) await member.roles.remove(mediumRole)
       else if (presence == 2) await member.roles.remove(highRole)
@@ -34,6 +34,7 @@ async function checkPresence(guild) {
       }
       await userUtils.setUserSchema(guild, member.user, "presence", presence)
       await userUtils.setUserSchema(guild, member.user, "points", 0)
+      console.log(presence, points)
       if (presence == 0) await member.roles.add(lowRole)
       else if (presence == 1) await member.roles.add(mediumRole)
       else if (presence == 2) await member.roles.add(highRole)
