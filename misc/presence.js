@@ -5,7 +5,8 @@ const moment = require("moment")
 async function checkPresence(guild) {
   const lowRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("little")),
     mediumRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("moderate")),
-    highRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("high"))
+    highRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("high")),
+    promises = []
 
   if (!lowRole || !mediumRole || !highRole) return
 
@@ -16,9 +17,9 @@ async function checkPresence(guild) {
       let userData = await userUtils.getUserProfile(guild, member.user),
         { presence, points } = userData
   console.log(member.user.username, presence, points)
-      if (presence == 0) await member.roles.remove(lowRole)
-      else if (presence == 1) await member.roles.remove(mediumRole)
-      else if (presence == 2) await member.roles.remove(highRole)
+      if (presence == 0) promises.push(member.roles.remove(lowRole))
+      else if (presence == 1) promises.push(member.roles.remove(mediumRole))
+      else if (presence == 2) promises.push(member.roles.remove(highRole))
 
       if (presence == -1) {
         if (points > 0) presence++
@@ -31,14 +32,15 @@ async function checkPresence(guild) {
       } else if (presence == 2) {
         if (points < 50) presence--
       }
-      await userUtils.setUserSchema(guild, member.user, "presence", presence)
-      await userUtils.setUserSchema(guild, member.user, "points", 0)
+      promises.push(userUtils.setUserSchema(guild, member.user, "presence", presence))
+      promises.push(userUtils.setUserSchema(guild, member.user, "points", 0))
       console.log(presence, points)
-      if (presence == 0) await member.roles.add(lowRole)
-      else if (presence == 1) await member.roles.add(mediumRole)
-      else if (presence == 2) await member.roles.add(highRole)
+      if (presence == 0) promises.push(member.roles.add(lowRole))
+      else if (presence == 1) promises.push(member.roles.add(mediumRole))
+      else if (presence == 2) promises.push(member.roles.add(highRole))
     })
   })
+  await Promise.all(promises)
 }
 
 module.exports.init = async guild => {
