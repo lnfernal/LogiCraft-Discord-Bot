@@ -31,7 +31,7 @@ async function checkPresence(guild) {
       } else if (presence == 2) {
         if (points < 50) presence--
       }
-      
+
       promises.push(userUtils.setUserSchema(guild, member.user, "presence", presence))
       promises.push(userUtils.setUserSchema(guild, member.user, "points", 0))
       if (presence == 0) promises.push(member.roles.add(lowRole))

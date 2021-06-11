@@ -96,6 +96,24 @@ const getPage = async (pages, page, preset = "") => {
             "Puedes randomizar la cola de reproducción con `/shuffle`, saltar la canción actual con `/skip` o ver que se está reproducciendo ahora con `/np`. Más comandos en _/help > Comandos > Comandos de música_"
           )
         break
+        case "presencetop":
+        embed
+          .setColor("#ff5d8f")
+          .setTitle(`${emojis.moderate} Presencia en ${msg.guild.name} ${emojis.high}`)
+          .addFields(
+            {
+              name: "`Nombre`",
+              value: currentPage.names,
+              inline: true,
+            },
+            {
+              name: "`Presencia`",
+              value: currentPage.presence,
+              inline: true,
+            }
+          )
+          .setThumbnail(msg.guild.iconURL())
+        break
       default:
         break
     }

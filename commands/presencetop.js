@@ -3,7 +3,7 @@ const Discord = require("discord.js")
 const userUtils = require("@user")
 
 module.exports = {
-  commands: "coupletop",
+  commands: "presencetop",
   callback: async (message, args, text, client) => {
     const { guild } = message,
       emojis = await require("@emojis").logibotEmojis(client),
@@ -12,8 +12,8 @@ module.exports = {
       usersCurrentPage = 0,
       currentPage = {},
       names = ``,
-      couples = ``,
-      coupleTopPages = []
+      presence = ``,
+      presenceTopPages = []
 
     await guild.members.fetch().then(async members => {
       const promises = []
@@ -23,22 +23,29 @@ module.exports = {
       users = await Promise.all(promises)
     })
     users.sort(function (a, b) {
-      return b.lover - a.lover
+      return b.presence - a.presence
     })
     for (let i = 0; i < users.length; i++) {
       names += `${i === 0 ? emojis.one : i === 1 ? emojis.two : i === 2 ? emojis.three : i + 1 + "."} ${users[
         i
       ].name.replace("_", "\\_")}\n`
-      couples += `${users[i].lover} ${emojis.heart}\n`
+      presence +=
+        profile.presence == -1
+          ? `Ninguna ${emojis.none}`
+          : profile.presence == 0
+          ? `Baja ${emojis.little}`
+          : profile.presence == 1
+          ? `Moderada ${emojis.moderate}`
+          : `Alta ${emojis.high}`
       usersCurrentPage++
       if (usersCurrentPage == usersPerPage || i == users.length - 1) {
         usersCurrentPage = 0
-        currentPage = { names, couples }
-        coupleTopPages.push(currentPage)
+        currentPage = { names, presence }
+        presenceTopPages.push(currentPage)
         names = ``
-        couples = ``
+        presence = ``
       }
     }
-    require("@pages").createPages(message, coupleTopPages, "coupletop")
+    require("@pages").createPages(message, presenceTopPages, "presencetop")
   },
 }
