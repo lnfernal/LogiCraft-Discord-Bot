@@ -12,7 +12,7 @@ module.exports = {
   maxArgs: 19,
   permissions: ["BAN_MEMBERS"],
   callback: async (message, args, text, client) => {
-    const target = message.mentions.users.first() || (await client.users.fetch(args[0]))
+    const target = message.mentions.users.first()
     var reason = "_No especificado_"
 
     if (!target) {
