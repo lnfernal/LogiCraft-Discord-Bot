@@ -30,11 +30,11 @@ module.exports = {
         i
       ].name.replace("_", "\\_")}\n`
       presence +=
-        profile.presence == -1
+        users[i].presence == -1
           ? `Ninguna ${emojis.none}`
-          : profile.presence == 0
+          : users[i].presence == 0
           ? `Baja ${emojis.little}`
-          : profile.presence == 1
+          : users[i].presence == 1
           ? `Moderada ${emojis.moderate}`
           : `Alta ${emojis.high}`
       usersCurrentPage++
