@@ -36,7 +36,7 @@ module.exports = {
           ? `Baja ${emojis.little}`
           : users[i].presence == 1
           ? `Moderada ${emojis.moderate}`
-          : `Alta ${emojis.high}`
+          : `Alta ${emojis.high}` + "\n"
       usersCurrentPage++
       if (usersCurrentPage == usersPerPage || i == users.length - 1) {
         usersCurrentPage = 0
