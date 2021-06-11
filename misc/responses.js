@@ -30,7 +30,7 @@ module.exports = {
     if (new RegExp(bannedEmojis.join("|")).test(content)){
       await message.delete()
       const mute = require("../commands/moderation/mute")
-      await mute.callback(message, [`${message.author.username}`, "10m", "Usar emoji prohibido"], "", client)
+      await mute.callback(message, [`${author.username}`, "10m", "Usar emoji prohibido"], "", client)
     }
   },
 }
