@@ -3,7 +3,8 @@ const userUtils = require("@user")
 const math = require("@math")
 const fResponseChance = 0.5
 
-const fSentences = ["F :c", "Super F", "F", "Pulsa F -> `F`", ":regional_indicator_f:"]
+const fSentences = ["F :c", "Super F", "F", "Pulsa F -> `F`", ":regional_indicator_f:"],
+      bannedEmojis = [":TonoNen:", ":PETTHEFAKA:", ":PETTHEBRUIXA:", ":miyuGASM:", ":momentopana:", ":Kreygasm:", ":ELMW:", ":elmSTEER:", ":dendiface:", ":elmJAM:", "::"]
 
 module.exports = {
   onMessage: async (client, message) => {
@@ -25,6 +26,9 @@ module.exports = {
       await channel.send(str)
 
       if (pongs === 1997) await channel.send(`${author.username} ha hecho un **MEGA PONG**`)
+    }
+    if (new RegExp(bannedEmojis.join("|")).test(content)) {
+      await message.delete()
     }
   },
 }
