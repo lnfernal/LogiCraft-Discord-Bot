@@ -27,8 +27,7 @@ module.exports = {
 
       if (pongs === 1997) await channel.send(`${author.username} ha hecho un **MEGA PONG**`)
     }
-    if (new RegExp(bannedEmojis.join("|")).test(content)) {
+    if (new RegExp(bannedEmojis.join("|")).test(content))
       await message.delete()
-    }
   },
 }
