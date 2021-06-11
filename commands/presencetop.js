@@ -30,13 +30,13 @@ module.exports = {
         i
       ].name.replace("_", "\\_")}\n`
       presence +=
-        users[i].presence == -1
+        (users[i].presence == -1
           ? `Ninguna ${emojis.none}`
           : users[i].presence == 0
           ? `Baja ${emojis.little}`
           : users[i].presence == 1
           ? `Moderada ${emojis.moderate}`
-          : `Alta ${emojis.high}` + "\n"
+          : `Alta ${emojis.high}`).concat("\n")
       usersCurrentPage++
       if (usersCurrentPage == usersPerPage || i == users.length - 1) {
         usersCurrentPage = 0
