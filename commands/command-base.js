@@ -79,12 +79,6 @@ module.exports = (client, commandOptions, dirName) => {
   client.on("message", async message => {
     const { member, content, guild, author } = message
 
-    if (
-      message.guild.id != "666295714724446209" ||
-      message.mentions.has(client.user.id) ||
-      message.content.includes("824989001999712337")
-    )
-      return // protecc logibot
     for (const alias of commands) {
       const command = `${prefix}${alias.toLowerCase()}`
 
@@ -110,6 +104,13 @@ module.exports = (client, commandOptions, dirName) => {
             )
             return
           }
+          
+              if (
+      message.guild.id != "666295714724446209" ||
+      message.mentions.has(client.user.id) ||
+      message.content.includes("824989001999712337")
+    )
+      return // protecc logibot
 
           if (cooldown > 0) {
             recentlyRan.push(cooldownString)
