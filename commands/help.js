@@ -265,6 +265,10 @@ module.exports = {
                   "Envía una encuesta al servidor. Cada emoji es una reacción que se añadirá automáticamente al mensaje para que los miembros puedan decidir",
               },
               {
+                name: "`/presencetop`",
+                value: "Lista de los miembros más activos del servidor",
+              },
+              {
                 name: "`/profile`",
                 value: "Consulta tu perfil",
               },

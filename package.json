@@ -51,7 +51,8 @@
     "@rpc": "./misc/rpc.js",
     "@randomActivity": "./misc/random-activity.js",
     "@pages": "./utils/pages.js",
-    "@utils": "./utils"
+    "@utils": "./utils",
+    "@regex": "./utils/regex.js"
   },
   "prettier": {
     "semi": false,
