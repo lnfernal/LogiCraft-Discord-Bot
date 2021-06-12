@@ -282,6 +282,10 @@ module.exports = {
                   "Haz un _echo_ de un mensaje que dirá el bot por el canal que determines. Debes escribir el nombre del canal `canal` para que el bot lo reconozca. Seguidamente el mensaje, que se enviará por dicho canal tardando más o menos tiempo según su longitud",
               },
               {
+                name: "`/title <emoji> <text>`",
+                value: "Envía un texto con las letras convertidas a un 3x3 hecho de emojis",
+              },
+              {
                 name: "`/troll <mode|end>`",
                 value: "( ͡°( ͡° ͜ʖ( ͡° ͜ʖ ͡°)ʖ ͡°) ͡°)",
               },
