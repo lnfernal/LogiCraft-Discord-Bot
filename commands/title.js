@@ -201,6 +201,7 @@ module.exports = {
     const title = args.join(" ")
 
     for (let i = 0; i < title.length; i++) {
+      if (!(`${title[i]}` in characters)) await channel.send("wrong letter")
       for (let j = 0; j < 3; j++) {
         result += characters[`${title[i].toLowerCase()}`].top[j] == "X" ? emoji : emptyChar
       }
