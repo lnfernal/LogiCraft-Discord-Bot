@@ -221,7 +221,6 @@ module.exports = {
       result += "   "
     }
 
-
     if (result.length > 2000) return await channel.send("length error")
 
     await channel.send(result)

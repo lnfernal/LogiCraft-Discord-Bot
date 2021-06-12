@@ -23,7 +23,7 @@ const userUtils = require("@user")
 const presence = require("./misc/presence.js")
 const weeklyUser = require("./misc/weekly-user.js")
 const chatMode = require("@chatMode")
-const guildId = "829448956417015828" //change
+const guildId = "666295714724446209"
 
 var commandCount = 0
 
@@ -61,11 +61,11 @@ client.on("ready", async () => {
   await userUtils.checkSchemaOnStart(client, guildId)
   //rpc.init()
   avatarManager.init(client)
-  /*userActivity.init(guild)
+  userActivity.init(guild)
   await presence.init(guild)
   await weeklyUser.init(guild)
   randomActivity.setActivity(client)
-  await mute.scheduledCheck(client)*/
+  await mute.scheduledCheck(client)
   await readCommands("commands").then(console.log(`¡${commandCount} comandos registrados!`))
 
   // listen for messages
@@ -77,10 +77,10 @@ client.on("ready", async () => {
     chatMode.onMessage(client, message)
     trollCommand.onMessage(client, message)
     responses.onMessage(client, message)
-    /*levels.onMessage(client, message)
+    levels.onMessage(client, message)
     presence.addPoints(message)
     weeklyUser.inc(message)
-    stats.inc(message)*/
+    stats.inc(message)
     //antiAd.onMessage(client, message)
   })
 
