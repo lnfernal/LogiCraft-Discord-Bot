@@ -18,9 +18,9 @@ module.exports = {
           .setDescription(
             `${await messageHandler("ipDescription", member, {
               version,
+              forge,
               requirements,
               ip,
-              forge,
             })}`
           )
           .setTitle(guild.name + " IP")
