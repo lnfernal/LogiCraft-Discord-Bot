@@ -8,7 +8,7 @@ module.exports = {
   callback: async (message, args, text, client) => {
     const { guild, member, author } = message,
       version = "1.16.5",
-      requirements = "https://drive.google.com/drive/folders/1c3WYQfHTNzguYunK9aYiFRGMxipm_AUX?usp=sharing",
+      requirements = "https://www.dropbox.com/s/9yzdwxm2k29ny5o/iLogiCraft%20Modpack%20v1.0.zip?dl=0",
       ip = "`51.195.145.143:25571`"
 
     author
