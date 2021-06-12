@@ -104,7 +104,15 @@ module.exports = {
                 : "_Ninguno_"
             )
             .concat(
-              `\n**Archivos adjuntados**: ${profile.files}\n**Emojis usados**: ${profile.emojis} ${emojis.emoji}\n**Comandos usados**: ${profile.commands}\n**Veces reproducido música**: ${profile.music} ${emojis.musicDiscPigstep}\n**Reacciones**: ${profile.reactions}\n**Veces respondido**: ${profile.replies}`
+              `\n**Archivos adjuntados**: ${s.formatNumber(profile.files)}\n**Emojis usados**: ${s.formatNumber(
+                profile.emojis
+              )} ${emojis.emoji}\n**Comandos usados**: ${s.formatNumber(
+                profile.commands
+              )}\n**Veces reproducido música**: ${s.formatNumber(profile.music)} ${
+                emojis.musicDiscPigstep
+              }\n**Reacciones**: ${s.formatNumber(profile.reactions)}\n**Veces respondido**: ${s.formatNumber(
+                profile.replies
+              )}`
             ),
           inline: false,
         },

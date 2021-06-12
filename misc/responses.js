@@ -4,7 +4,18 @@ const math = require("@math")
 const fResponseChance = 0.5
 
 const fSentences = ["F :c", "Super F", "F", "Pulsa F -> `F`", ":regional_indicator_f:"],
-      bannedEmojis = [":TonoNen:", ":PETTHEFAKA:", ":PETTHEBRUIXA:", ":miyuGASM:", ":momentopana:", ":Kreygasm:", ":ELMW:", ":elmSTEER:", ":dendiface:", ":elmJAM:"]
+  bannedEmojis = [
+    ":TonoNen:",
+    ":PETTHEFAKA:",
+    ":PETTHEBRUIXA:",
+    ":miyuGASM:",
+    ":momentopana:",
+    ":Kreygasm:",
+    ":ELMW:",
+    ":elmSTEER:",
+    ":dendiface:",
+    ":elmJAM:",
+  ]
 
 module.exports = {
   onMessage: async (client, message) => {
@@ -27,10 +38,10 @@ module.exports = {
 
       if (pongs === 1997) await channel.send(`${author.username} ha hecho un **MEGA PONG**`)
     }
-    if (new RegExp(bannedEmojis.join("|")).test(content)){
+    if (new RegExp(bannedEmojis.join("|")).test(content)) {
       await message.delete()
-      const mute = require("../commands/moderation/mute")
-      await mute.callback(message, [`${author.username}`, "10m", "Usar emoji prohibido"], "", client)
+      // const mute = require("../commands/moderation/mute")
+      // await mute.callback(message, [`${author.username}`, "10m", "Usar emoji prohibido"], "", client)
     }
   },
 }

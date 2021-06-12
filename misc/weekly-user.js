@@ -2,6 +2,7 @@ require("module-alias/register")
 const userUtils = require("@user")
 const moment = require("moment")
 const math = require("@math")
+const s = require("@string")
 const { MessageEmbed } = require("discord.js")
 
 module.exports.inc = async message => {
@@ -59,9 +60,11 @@ async function checkWeekly(guild) {
       .setTitle(`${emojis.hero} ${weeklyMember.user.username} es el usuario de la semana! ${emojis.hero}`)
       .setColor("#ff5d8f")
       .setDescription(
-        `**Mensajes enviados**: ${weeklyUser.messages}\n**Archivos adjuntados**: ${weeklyUser.images}\n**Palabras escritas**: ${weeklyUser.words}`
+        `**Mensajes enviados**: ${s.formatNumber(weeklyUser.messages)}\n**Archivos adjuntados**: ${s.formatNumber(
+          weeklyUser.images
+        )}\n**Palabras escritas**: ${s.formatNumber(weeklyUser.words)}`
       )
-      .setThumbnail(weeklyMember.user.avatarURL())
+      .setThumbnail(userUtils.getUserAvatar(weeklyMember.user))
       .setAuthor(`${moment().startOf("isoWeek").format("ll")} - ${moment().endOf("isoWeek").format("ll")}`)
   )
   await userUtils.incUserSchema(guild, weeklyMember.user, "weekly", 1)
