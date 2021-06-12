@@ -2,6 +2,7 @@ const Discord = require("discord.js")
 require("module-alias/register")
 const messageHandler = require("@messages")
 const coupleSchema = require("../schemas/couple-schema.js")
+const moment = require('moment');
 const userUtils = require("@user")
 
 const loveSentences = [
