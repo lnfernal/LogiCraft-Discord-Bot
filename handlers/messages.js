@@ -75,8 +75,8 @@ module.exports = async (key, member = null, params = {}) => {
         english: "**${username}**, couldn't find role",
       },
       ipDescription: {
-        spanish: "**Versión**: ${version}\n**Modpack**: [iLogiCraft Modpack v1.0](${requirements})\n**IP**: ${ip}",
-        english: "**Version**: ${version}\n**Modpack**: [iLogiCraft Modpack v1.0](${requirements})\n**IP**: ${ip}",
+        spanish: "**Versión**: ${version}\n**Forge ${version}**: [Web de Forge](${forge})\n**Modpack**: [iLogiCraft Modpack v1.0](${requirements})\n**IP**: ${ip}",
+        english: "**Version**: ${version}\n**Forge ${version}**: [Forge webpage](${forge})\n**Modpack**: [iLogiCraft Modpack v1.0](${requirements})\n**IP**: ${ip}",
       },
       balance: {
         spanish: "**${username}**, tienes ${logiCoin}${coins}",
