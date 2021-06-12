@@ -9,7 +9,8 @@ module.exports = {
     const { guild, member, author } = message,
       version = "1.16.5",
       requirements = "https://www.dropbox.com/s/9yzdwxm2k29ny5o/iLogiCraft%20Modpack%20v1.0.zip?dl=0",
-      ip = "`51.195.145.143:25571`"
+      ip = "`51.195.145.143:25571`",
+      forge = "https://files.minecraftforge.net/net/minecraftforge/forge/"
 
     author
       .send(
@@ -19,6 +20,7 @@ module.exports = {
               version,
               requirements,
               ip,
+              forge,
             })}`
           )
           .setTitle(guild.name + " IP")
