@@ -8,14 +8,13 @@ module.exports = {
       changeDelay = 1700,
       uptime = 10,
       changeMoves = async () => {
-        const currentMoveIndex = moves.indexOf(danceMessage.content)
         const msgExists = await channel.messages.fetch(danceMessage.id).catch(console.error)
 
         if (!ended && msgExists)
           setTimeout(() => {
             changeMoves()
           }, changeDelay)
-        await danceMessage.edit(currentMoveIndex == moves.length - 1 ? moves[0].concat(` **${client.ws.ping}ms**`) : moves[currentMoveIndex + 1].concat(` **${client.ws.ping}ms**`))
+        await danceMessage.edit(moves[Math.floor(Math.random() * moves.length)].concat(` **${client.ws.ping}ms**`))
       }
 
     let ended = false,
