@@ -255,29 +255,31 @@ module.exports = {
     args.shift()
     const title = args.join(" ")
 
+    // TOP ROW
     for (let i = 0; i < title.length; i++) {
-      if (!(`${title[i].toLowerCase()}` in characters)) return await channel.send("wrong letter")
-      for (let j = 0; j < 3; j++) {
+      if (!(`${title[i].toLowerCase()}` in characters)) return await channel.send(`**${author.username}**, el caracter \'${title[i]}\' no se puede imprimir`)
+      for (let j = 0; j < 3; j++)
         result += characters[`${title[i].toLowerCase()}`].top[j] == "X" ? emoji : emptyChar
-      }
       result += "   "
     }
     result += "\n"
+    
+    // MIDDLE ROW
     for (let i = 0; i < title.length; i++) {
-      for (let j = 0; j < 3; j++) {
+      for (let j = 0; j < 3; j++)
         result += characters[`${title[i].toLowerCase()}`].middle[j] == "X" ? emoji : emptyChar
-      }
       result += "   "
     }
     result += "\n"
+    
+    // BOTTOM ROW
     for (let i = 0; i < title.length; i++) {
-      for (let j = 0; j < 3; j++) {
+      for (let j = 0; j < 3; j++)
         result += characters[`${title[i].toLowerCase()}`].bottom[j] == "X" ? emoji : emptyChar
-      }
       result += "   "
     }
 
-    if (result.length > 2000) return await channel.send("length error")
+    if (result.length > 2000) return await channel.send("`**${author.username}**, el mensaje tiene más de 2000 caracteres`")
 
     await channel.send(result)
   },
