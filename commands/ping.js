@@ -1,7 +1,7 @@
 module.exports = {
   commands: ["ping", "latency"],
   expectedArgs: "<content>",
-  callback: (message, args, text, client) => {
+  callback: async (message, args, text, client) => {
     const emojis = require("@emojis").logibotEmojis(client)
     const moves = [`${emojis.little}`, `${emojis.moderate}`,`${emojis.high}`],
       { channel, member } = message,
