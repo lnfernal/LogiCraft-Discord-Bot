@@ -193,6 +193,56 @@ module.exports = {
         middle: "OXO",
         bottom: "XOO",
       },
+      ' ': {
+        top: "OOO",
+        middle: "OOO",
+        bottom: "OOO",
+      },
+      '+': {
+        top: "OXO",
+        middle: "XXX",
+        bottom: "OXO",
+      },
+      '-': {
+        top: "OOO",
+        middle: "XXX",
+        bottom: "OOO",
+      },
+      '.': {
+        top: "OOO",
+        middle: "OOO",
+        bottom: "OXO",
+      },
+      ',': {
+        top: "OOO",
+        middle: "OXO",
+        bottom: "OXO",
+      },
+      ':': {
+        top: "OXO",
+        middle: "OOO",
+        bottom: "OXO",
+      },
+      '[': {
+        top: "XXO",
+        middle: "XOO",
+        bottom: "XXO",
+      },
+      ']': {
+        top: "OXX",
+        middle: "OOX",
+        bottom: "OXX",
+      },
+      '\'': {
+        top: "OXO",
+        middle: "OXO",
+        bottom: "OOO",
+      },
+      '?': {
+        top: "XXX",
+        middle: "OXX",
+        bottom: "OXO",
+      },
     }
     const emoji = args[0],
       emojiRegex = regex.emojis,
