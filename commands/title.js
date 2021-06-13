@@ -279,7 +279,7 @@ module.exports = {
       result += "   "
     }
 
-    if (result.length > 2000) return await channel.send("`**${author.username}**, el mensaje tiene más de 2000 caracteres`")
+    if (result.length > 2000) return await channel.send(`**${author.username}**, el mensaje tiene más de 2000 caracteres`)
 
     await channel.send(result)
   },
