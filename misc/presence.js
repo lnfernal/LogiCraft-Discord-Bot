@@ -24,7 +24,7 @@ async function checkPresence(guild) {
         if (points > 0) presence++
       } else if (presence == 0) {
         if (points > 5) presence++
-        else presence--
+        else if (points == 0) presence--
       } else if (presence == 1) {
         if (points > 15) presence++
         else presence--
