@@ -21,7 +21,7 @@ const xpEmbed = async (message, target, profile, needed) => {
     return progressBar
   }
   const embed = new Discord.MessageEmbed()
-    .setColor(await userUtils.getAvatarColor(target))
+    .setColor(target.avatarURL({ dynamic: true, size: 128 })/*await userUtils.getAvatarColor(target)*/)
     .setTitle(
       await messageHandler("xpTitle", message.member, {
         username: target.username.replace("_", "\\_"),
