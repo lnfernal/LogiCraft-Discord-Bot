@@ -35,7 +35,7 @@ const xpEmbed = async (message, target, profile, needed) => {
         totalXp: s.formatNumber(totalXp),
       })
     )
-    .setThumbnail(userUtils.getUserAvatar(target))
+    .setThumbnail(await userUtils.getUserAvatar(target))
     .setFooter(progressMade() + ` ${Math.round(((xp / needed) * 1000) / 10)}%`)
   message.channel.send(embed)
 }
@@ -51,7 +51,6 @@ module.exports = {
       message.author
 
     const profile = await userUtils.getUserProfile(message.guild, target)
-    await message.channel.send(target.displayAvatarURL({ dynamic: true }))
     xpEmbed(message, target, profile, Math.floor(Math.pow(profile.level, 2.5) * 10) + 1)
   },
 }
