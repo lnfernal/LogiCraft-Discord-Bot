@@ -46,7 +46,6 @@ function rgbToHex(r, g, b) {
 }
 
 module.exports.getUserAvatar = target => {
-  console.log(target.avatarURL({ dynamic: true, size: 128 }))
   return target.avatarURL() ? target.avatarURL({ dynamic: true, size: 128 }) : defaultAvatarURL
 }
 
