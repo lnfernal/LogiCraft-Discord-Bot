@@ -35,7 +35,7 @@ const xpEmbed = async (message, target, profile, needed) => {
         totalXp: s.formatNumber(totalXp),
       })
     )
-    .setThumbnail(await userUtils.getUserAvatar(target))
+    .setThumbnail(target.displayAvatarURL({ dynamic: true, size: 128 }))
     .setFooter(progressMade() + ` ${Math.round(((xp / needed) * 1000) / 10)}%`)
   message.channel.send(embed)
 }
