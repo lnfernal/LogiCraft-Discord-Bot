@@ -21,7 +21,7 @@ const xpEmbed = async (message, target, profile, needed) => {
     return progressBar
   }
   const embed = new Discord.MessageEmbed()
-    .setColor(target.avatarURL({ dynamic: true, size: 128 })/*await userUtils.getAvatarColor(target)*/)
+    .setColor(await userUtils.getAvatarColor(target))
     .setTitle(
       await messageHandler("xpTitle", message.member, {
         username: target.username.replace("_", "\\_"),
@@ -35,7 +35,7 @@ const xpEmbed = async (message, target, profile, needed) => {
         totalXp: s.formatNumber(totalXp),
       })
     )
-    .setThumbnail(await userUtils.getUserAvatar(target))
+    .setThumbnail(target.avatarURL({ dynamic: true, size: 128 })/*await userUtils.getUserAvatar(target)*/)
     .setFooter(progressMade() + ` ${Math.round(((xp / needed) * 1000) / 10)}%`)
   message.channel.send(embed)
 }
