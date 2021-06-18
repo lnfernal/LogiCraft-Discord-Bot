@@ -51,6 +51,7 @@ module.exports = {
       message.author
 
     const profile = await userUtils.getUserProfile(message.guild, target)
+    await message.channel.send(message.author.displayAvatarURL({ dynamic: true }))
     xpEmbed(message, target, profile, Math.floor(Math.pow(profile.level, 2.5) * 10) + 1)
   },
 }
