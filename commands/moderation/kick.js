@@ -12,7 +12,7 @@ module.exports = {
   maxArgs: 1,
   permissions: ["KICK_MEMBERS"],
   callback: async (message, args, text, client) => {
-    const target = message.mentions.users.first() || (await client.users.fetch(args[0]))
+    const target = message.mentions.users.first()
 
     if (!target) {
       message.channel.send(
