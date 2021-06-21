@@ -1,3 +1,5 @@
+require("module-alias/register")
+const regex = require("@regex")
 const Discord = require("discord.js")
 let actionTimeout,
   mode = 0,
@@ -334,7 +336,7 @@ module.exports = {
         await guild.channels.cache.each(channel => {
           if (channel.type == "text") {
             channel
-              .send(message.content.replace(/<@!?(\d+)>|^\/+(\s*\/*)*/gm, ""))
+              .send(regex.spam(message.content))
               .then(msg => sentMessages.push(msg))
               .catch(console.error)
           }

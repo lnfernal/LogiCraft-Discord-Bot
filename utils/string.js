@@ -87,3 +87,9 @@ module.exports.formatDate = date => {
   date = new Date(date.getTime() + 3600 * 1000 * timezone)
   return `${date.toLocaleString("es-ES")} GTM+2`
 }
+
+module.exports.clean = text => {
+  text = text.replace("_", "_")
+  text = text.replace("*", "*")
+  return text
+}

@@ -1,4 +1,6 @@
+require("module-alias/register")
 const ss = require("string-similarity")
+const regex = require("@regex")
 
 module.exports = {
   commands: "tell",
@@ -38,7 +40,7 @@ module.exports = {
     desiredChannel.startTyping()
     setTimeout(() => {
       desiredChannel.stopTyping()
-      desiredChannel.send(msg.replace(/<@!?(\d+)>|^\/+(\s*\/*)*/gm, ""))
+      desiredChannel.send(regex.spam(msg))
     }, (msg.length / 200) * 60000 * math.clamp(Math.random() * 1 + 0.2, 0.2, 0.5))
   },
 }

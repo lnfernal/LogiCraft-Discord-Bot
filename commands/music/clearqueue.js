@@ -7,7 +7,8 @@ module.exports = {
     let cleared
     const { member, author } = message
     try {
-      cleared = await client.player.clearQueue(message)
+      await client.player.clearQueue(message)
+      await message.channel.send(await messageHandler("msc_q_empty", member))
     } catch (e) {
       await message.channel.send(
         await messageHandler("msc_non_q", member, {
@@ -15,6 +16,5 @@ module.exports = {
         })
       )
     }
-    if (cleared) await message.channel.send(await messageHandler("msc_q_empty", member))
   },
 }
