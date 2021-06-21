@@ -284,6 +284,22 @@ module.exports = async (key, member = null, params = {}) => {
         spanish: "Cola de reproducción vaciada",
         english: "Queue cleared",
       },
+      msc_loop_s: {
+        spanish: "La canción actual se ha puesto en bucle. Utiliza `/loop stop` para detenerlo",
+        english: "Current song has been looped. Use `/loop stop` to stop it",
+      },
+      msc_loop_q: {
+        spanish: "La cola actual se ha puesto en bucle. Utiliza `/loop stop` para detenerlo",
+        english: "Current queue has been looped. Use `/loop stop` to stop it",
+      },
+      msc_loop_stop: {
+        spanish: "Loop detenido",
+        english: "Loop stopped",
+      },
+      msc_wrng_loop: {
+        spanish: "**${username}**, decide si quieres loopear la canción actual (s) o toda la cola de reproducción (q)",
+        english: "**${username}**, decide whether you want to loop current song (s) or the entire queue (q)",
+      },
     },
     userLanguage = member ? await getLanguage(member) : getServerLanguage()
 

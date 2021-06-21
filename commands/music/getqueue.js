@@ -25,6 +25,7 @@ module.exports = {
           : emojis[keys[Math.floor(Math.random() * keys.length)]]
       } **${queue.songs[0].name.toString().substring(0, MAXNAME)}${queue.songs[0].name.length > 27 ? "...**" : "**"}\n`
       authors += `${queue.songs[0].author ? queue.songs[0].author.toString().substring(0, MAXAUTHOR) : "-"}\n`
+      songsCurrentPage++
       for (let i = 1; i < queue.songs.length; i++) {
         names += `${i}. **${queue.songs[i].name.toString().substring(0, MAXNAME)}${
           queue.songs[i].name.length > 27 ? "...**" : "**"
