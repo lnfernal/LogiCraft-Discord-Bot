@@ -53,6 +53,17 @@ module.exports.getUserProfile = async (guild, target) => {
   return await checkSchema(guild, target)
 }
 
+module.exports.getAllUsersProfile = async (guild) => {
+  const promises : Promise<any>[] = []
+
+  await guild.members.fetch().then(async members => {
+    members.forEach(member => {
+      promises.push(checkSchema(guild, member.user))
+    })
+  })
+  return await Promise.all(promises)
+}
+
 module.exports.incUserSchema = async (guild, target, key, amount) => {
   await checkSchema(guild, target)
   await profileSchema.updateOne(

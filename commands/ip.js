@@ -3,7 +3,7 @@ require("module-alias/register")
 const messageHandler = require("@messages")
 
 module.exports = {
-  commands: ["ip", "server"],
+  commands: "ip",
   requiredRoles: ["ilogicraft sectary"],
   callback: async (message, args, text, client) => {
     const { guild, member, author } = message,
@@ -13,21 +13,22 @@ module.exports = {
       forge = "https://files.minecraftforge.net/net/minecraftforge/forge/",
       dmchannel = await author.createDM(),
       embed = new Discord.MessageEmbed()
-          .setDescription(
-            `${await messageHandler("ipDescription", member, {
-              version,
-              forge,
-              requirements,
-              ip,
-            })}`
-          )
-          .setTitle(guild.name + " IP")
-          .setThumbnail(guild.iconURL())
-          .setColor("#ff5d8f")
-    
-    if(dmchannel)    
-      author.send(embed).catch(console.error)
+        .setDescription(
+          `${await messageHandler("ipDescription", member, {
+            version,
+            forge,
+            requirements,
+            ip,
+          })}`
+        )
+        .setTitle(guild.name + " IP")
+        .setThumbnail(guild.iconURL())
+        .setColor("#ff5d8f")
+
+    if (dmchannel) author.send(embed).catch(console.error)
     else
-      await guild.channels.cache.get("836133440574849044").then(async c => {await c.send(embed)})
+      await guild.channels.cache.get("836133440574849044").then(async c => {
+        await c.send(embed)
+      })
   },
 }

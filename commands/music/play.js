@@ -1,5 +1,6 @@
 require("module-alias/register")
 const userUtils = require("@user")
+const messageHandler = require("@messages")
 
 module.exports = {
   commands: ["play", "playsound", "p"],
@@ -8,28 +9,46 @@ module.exports = {
   maxArgs: 10,
   callback: async (message, args, text, client) => {
     const { channel } = message.member.voice
+    const { member } = message
     const emojis = await require("../../utils/emojis.js").discEmojis(client)
     var keys = Object.keys(emojis)
-    if (!channel) return message.channel.send(`**${message.author.username}**, necesitas estar en un canal de voz`)
+    if (!channel)
+      return message.channel.send(
+        await messageHandler("msc_mssng_vc", member, {
+          username: member.user.username,
+        })
+      )
 
     if (message.content.includes("www.youtube.com/playlist")) {
-      await client.player.playlist(message, {
-        search: args[0],
-        maxSongs: -1,
-      })
-      await message.channel.send(
-        `${emojis[keys[Math.floor(Math.random() * keys.length)]]} La playlist se ha puesto a la cola`
-      )
-    } else {
-      let audio = await client.player.play(message, text)
-      if (audio)
+      try {
+        await client.player.playlist(message, {
+          search: args[0],
+          maxSongs: -1,
+        })
         await message.channel.send(
-          `${
-            audio.name.includes("Pigstep")
-              ? emojis.musicDiscPigstep
-              : emojis[keys[Math.floor(Math.random() * keys.length)]]
-          } Reproduciendo **${audio.name}**`
+          await messageHandler("msc_q_pylst", member, {
+            disc: emojis[keys[Math.floor(Math.random() * keys.length)]],
+          })
         )
+      } catch (e) {
+        console.log(e)
+      }
+    } else {
+      try {
+        await client.player.nowPlaying(message)
+        await require("./queue.js").callback(message, args, text, client)
+      } catch (e) {
+        let audio = await client.player.play(message, text).catch(console.error)
+        if (audio)
+          await message.channel.send(
+            await messageHandler("msc_pyng_sng", member, {
+              disc: audio.name.includes("Pigstep")
+                ? emojis.musicDiscPigstep
+                : emojis[keys[Math.floor(Math.random() * keys.length)]],
+              audioname: audio.name,
+            })
+          )
+      }
     }
     await userUtils.incUserSchema(message.guild, message.author, "music", 1)
   },

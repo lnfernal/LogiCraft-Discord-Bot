@@ -46,6 +46,7 @@
     "@messages": "./handlers/messages.js",
     "@client": "./utils/client.js",
     "@user": "./utils/member.js",
+    "@general": "./utils/general.js",
     "@chatMode": "./misc/chat-mode.js",
     "@math": "./utils/math.js",
     "@rpc": "./misc/rpc.js",

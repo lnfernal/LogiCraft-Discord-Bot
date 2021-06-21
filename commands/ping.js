@@ -3,7 +3,7 @@ module.exports = {
   expectedArgs: "<content>",
   callback: async (message, args, text, client) => {
     const emojis = await require("@emojis").logibotEmojis(client)
-    const moves = [`${emojis.little}`, `${emojis.moderate}`,`${emojis.high}`],
+    const moves = [`${emojis.little}`, `${emojis.moderate}`, `${emojis.high}`],
       { channel, member } = message,
       changeDelay = 1700,
       uptime = 10,

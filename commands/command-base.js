@@ -87,10 +87,8 @@ module.exports = (client, commandOptions, dirName) => {
 
         // check if is dm
         if (message.channel.type == "dm") {
-          if (!dm) {
-            await message.author.send(await messageHandler("dmCommand"))
-            return
-          }
+          if (!dm) return await message.author.send(await messageHandler("dmCommand"))
+
           // split on any number of spaces
           const args = content.split(/[ ]+/)
 
@@ -104,13 +102,6 @@ module.exports = (client, commandOptions, dirName) => {
             )
             return
           }
-          
-              if (
-      message.guild.id != "666295714724446209" ||
-      message.mentions.has(client.user.id) ||
-      message.content.includes("824989001999712337")
-    )
-      return // protecc logibot
 
           if (cooldown > 0) {
             recentlyRan.push(cooldownString)
@@ -126,6 +117,13 @@ module.exports = (client, commandOptions, dirName) => {
 
           return
         }
+
+        /*if (
+            message.guild.id != "666295714724446209" ||
+            message.mentions.has(client.user.id) ||
+            message.content.includes("824989001999712337")
+          )
+            return // protecc logibot*/
 
         // ensure Siber is not exploiting
         if (message.author.bot) {

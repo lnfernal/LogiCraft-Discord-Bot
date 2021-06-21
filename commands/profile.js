@@ -26,7 +26,7 @@ module.exports = {
           ? `${emojis.idle} **Ausente**`
           : targetMember.presence.status === `offline`
           ? `${emojis.offline} **Desconectado**`
-          : `${emojis.dnd} **No molestar**`
+          : `${emojis.dnd} **No Molestar**`
     const getActivity = () => {
       var activity = ` - `
 

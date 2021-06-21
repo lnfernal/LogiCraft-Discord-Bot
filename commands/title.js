@@ -188,57 +188,57 @@ module.exports = {
         middle: "XXX",
         bottom: "OOX",
       },
-      '/': {
+      "/": {
         top: "OOX",
         middle: "OXO",
         bottom: "XOO",
       },
-      ' ': {
+      " ": {
         top: "OOO",
         middle: "OOO",
         bottom: "OOO",
       },
-      '+': {
+      "+": {
         top: "OXO",
         middle: "XXX",
         bottom: "OXO",
       },
-      '-': {
+      "-": {
         top: "OOO",
         middle: "XXX",
         bottom: "OOO",
       },
-      '.': {
+      ".": {
         top: "OOO",
         middle: "OOO",
         bottom: "OXO",
       },
-      ',': {
+      ",": {
         top: "OOO",
         middle: "OXO",
         bottom: "OXO",
       },
-      ':': {
+      ":": {
         top: "OXO",
         middle: "OOO",
         bottom: "OXO",
       },
-      '[': {
+      "[": {
         top: "XXO",
         middle: "XOO",
         bottom: "XXO",
       },
-      ']': {
+      "]": {
         top: "OXX",
         middle: "OOX",
         bottom: "OXX",
       },
-      '\'': {
+      "'": {
         top: "OXO",
         middle: "OXO",
         bottom: "OOO",
       },
-      '?': {
+      "?": {
         top: "XXX",
         middle: "OXX",
         bottom: "OXO",
@@ -257,29 +257,28 @@ module.exports = {
 
     // TOP ROW
     for (let i = 0; i < title.length; i++) {
-      if (!(`${title[i].toLowerCase()}` in characters)) return await channel.send(`**${author.username}**, el caracter \'${title[i]}\' no se puede imprimir`)
-      for (let j = 0; j < 3; j++)
-        result += characters[`${title[i].toLowerCase()}`].top[j] == "X" ? emoji : emptyChar
+      if (!(`${title[i].toLowerCase()}` in characters))
+        return await channel.send(`**${author.username}**, el caracter \'${title[i]}\' no se puede imprimir`)
+      for (let j = 0; j < 3; j++) result += characters[`${title[i].toLowerCase()}`].top[j] == "X" ? emoji : emptyChar
       result += "   "
     }
     result += "\n"
-    
+
     // MIDDLE ROW
     for (let i = 0; i < title.length; i++) {
-      for (let j = 0; j < 3; j++)
-        result += characters[`${title[i].toLowerCase()}`].middle[j] == "X" ? emoji : emptyChar
+      for (let j = 0; j < 3; j++) result += characters[`${title[i].toLowerCase()}`].middle[j] == "X" ? emoji : emptyChar
       result += "   "
     }
     result += "\n"
-    
+
     // BOTTOM ROW
     for (let i = 0; i < title.length; i++) {
-      for (let j = 0; j < 3; j++)
-        result += characters[`${title[i].toLowerCase()}`].bottom[j] == "X" ? emoji : emptyChar
+      for (let j = 0; j < 3; j++) result += characters[`${title[i].toLowerCase()}`].bottom[j] == "X" ? emoji : emptyChar
       result += "   "
     }
 
-    if (result.length > 2000) return await channel.send(`**${author.username}**, el mensaje tiene más de 2000 caracteres`)
+    if (result.length > 2000)
+      return await channel.send(`**${author.username}**, el mensaje tiene más de 2000 caracteres`)
 
     await channel.send(result)
   },

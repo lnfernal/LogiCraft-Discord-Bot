@@ -277,6 +277,10 @@ module.exports = {
                 value: "Haz un _echo_ de un mensaje que dirá el bot por el mismo canal",
               },
               {
+                name: "`/server`",
+                value: "Estadísticas del servidor",
+              },
+              {
                 name: "`/tell <channel> <content>`",
                 value:
                   "Haz un _echo_ de un mensaje que dirá el bot por el canal que determines. Debes escribir el nombre del canal `canal` para que el bot lo reconozca. Seguidamente el mensaje, que se enviará por dicho canal tardando más o menos tiempo según su longitud",
