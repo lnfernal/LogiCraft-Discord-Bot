@@ -89,7 +89,7 @@ module.exports.formatDate = date => {
 }
 
 module.exports.clean = text => {
-  text = text.replace("_", "_")
-  text = text.replace("*", "*")
+  text = text.replace("_", "\\_")
+  text = text.replace("*", "\\*")
   return text
 }

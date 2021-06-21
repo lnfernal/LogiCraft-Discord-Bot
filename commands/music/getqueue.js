@@ -1,5 +1,6 @@
 require("module-alias/register")
 const messageHandler = require("@messages")
+const s = require("@string")
 
 module.exports = {
   commands: ["getqueue", "gq"],
@@ -23,7 +24,7 @@ module.exports = {
         queue.songs[0].name.includes("Pigstep")
           ? emojis.musicDiscPigstep
           : emojis[keys[Math.floor(Math.random() * keys.length)]]
-      } **${queue.songs[0].name.toString().substring(0, MAXNAME)}${queue.songs[0].name.length > 27 ? "...**" : "**"}\n`
+      } **${s.clean(queue.songs[0].name.toString().substring(0, MAXNAME))}${queue.songs[0].name.length > 27 ? "...**" : "**"}\n`
       authors += `${queue.songs[0].author ? queue.songs[0].author.toString().substring(0, MAXAUTHOR) : "-"}\n`
       songsCurrentPage++
       for (let i = 1; i < queue.songs.length; i++) {
