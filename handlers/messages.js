@@ -269,8 +269,8 @@ module.exports = async (key, member = null, params = {}) => {
         english: "${disc} Playing **${audioname}**",
       },
       msc_np: {
-        spanish: "${disc} Se está reproduciendo **${audioname}**",
-        english: "${disc} Playing **${audioname}**",
+        spanish: "${disc} Se está reproduciendo **${audioname}** por ${audioauthor}",
+        english: "${disc} Playing **${audioname}** by ${audioauthor}",
       },
       msc_non_pyng: {
         spanish: "**${username}**, no se está reproduciendo nada",
@@ -299,6 +299,12 @@ module.exports = async (key, member = null, params = {}) => {
       msc_wrng_loop: {
         spanish: "**${username}**, decide si quieres loopear la canción actual (s) o toda la cola de reproducción (q)",
         english: "**${username}**, decide whether you want to loop current song (s) or the entire queue (q)",
+      },
+      msc_q_err: {
+        spanish:
+          "No se ha podido reproducir la playlist. Puede deberse a que algunos de los vídeos que contiene ya no son accesibles (eliminados, privados...",
+        english:
+          "Playlist failed to queue. This might be due to some videos of it aren't accessible any more (deleted, private...)",
       },
     },
     userLanguage = member ? await getLanguage(member) : getServerLanguage()

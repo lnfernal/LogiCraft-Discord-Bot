@@ -31,7 +31,7 @@ module.exports = {
           })
         )
       } catch (e) {
-        console.log(e)
+        await message.channel.send(await messageHandler("msc_q_err", member))
       }
     } else {
       try {
