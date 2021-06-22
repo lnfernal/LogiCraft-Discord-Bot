@@ -93,3 +93,26 @@ module.exports.clean = text => {
   text = text.replace("*", "\\*")
   return text
 }
+
+module.exports.substr = (text, max, params = {}) => {
+  const { ellipsis = false, character = null } = params
+  let result = "",
+    deletedChars = 0
+
+  if (ellipsis) max -= 3
+  if (text.length < max) return text
+  if (character) {
+    for (let i = 0; i < text.length; i++) {
+      const substr = text.substring(0, text.indexOf(character) + 1)
+      if (deletedChars + substr.length > max) break
+      deletedChars += substr.length
+      result += substr
+      text = text.substring(text.indexOf(character) + 1, text.length - 1)
+    }
+    result = result.substring(0, result.length - 1)
+  } else {
+    result = text.substring(0, max)
+  }
+  if (ellipsis) result += "..."
+  return result
+}

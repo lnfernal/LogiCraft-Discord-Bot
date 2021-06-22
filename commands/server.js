@@ -84,7 +84,7 @@ module.exports = {
         },
         {
           name: "`Emojis`",
-          value: `${guildEmojisString.substring(0, 1025)}`,
+          value: `${s.substr(guildEmojisString, 1024, { ellipsis: true, character: "<" })}`,
           inline: false,
         }
       )
