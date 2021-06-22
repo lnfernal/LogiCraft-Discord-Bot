@@ -24,7 +24,7 @@ module.exports = {
         queue.songs[0].name.includes("Pigstep")
           ? emojis.musicDiscPigstep
           : emojis[keys[Math.floor(Math.random() * keys.length)]]
-      } **${s.clean(queue.songs[0].name.toString().substring(0, MAXNAME)).strim()}${
+      } **${s.clean(queue.songs[0].name.toString().substring(0, MAXNAME)).trim()}${
         queue.songs[0].name.length > MAXNAME ? "...**" : "**"
       }\n`
       authors += `${queue.songs[0].author ? queue.songs[0].author.toString().substring(0, MAXAUTHOR) : "-"}${

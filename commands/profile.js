@@ -106,7 +106,7 @@ module.exports = {
             .concat(
               `\n**Archivos adjuntados**: ${s.formatNumber(profile.files)}\n**Emojis usados**: ${s.formatNumber(
                 profile.emojis
-              )} ${emojis.emoji}\n**Comandos usados**: ${s.formatNumber(
+              )} ${emojis.emoji}\n**Comandos ejecutados**: ${s.formatNumber(
                 profile.commands
               )}\n**Veces reproducido música**: ${s.formatNumber(profile.music)} ${
                 emojis.musicDiscPigstep

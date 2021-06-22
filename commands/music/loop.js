@@ -3,7 +3,7 @@ const messageHandler = require("@messages")
 
 module.exports = {
   commands: "loop",
-  expectedArgs: '<s|q|stop>',
+  expectedArgs: "<s|q|stop>",
   minArgs: 1,
   maxArgs: 1,
   callback: async (message, args, text, client) => {

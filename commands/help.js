@@ -429,7 +429,8 @@ module.exports = {
               },
               {
                 name: "`/loop <s|q|stop>`",
-                value: "Loopea una canción (s), la cola de reproducción (q) o detén el loop (stop). Loopear la cola de reproducción tiene preferencia sobre loopear una canción",
+                value:
+                  "Loopea una canción (s), la cola de reproducción (q) o detén el loop (stop). Loopear la cola de reproducción tiene preferencia sobre loopear una canción",
               },
               {
                 name: "`/clearqueue`",

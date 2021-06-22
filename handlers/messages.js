@@ -265,8 +265,8 @@ module.exports = async (key, member = null, params = {}) => {
         english: "${disc} Playlist queued",
       },
       msc_pyng_sng: {
-        spanish: "${disc} Reproduciendo **${audioname}**",
-        english: "${disc} Playing **${audioname}**",
+        spanish: "${disc} Reproduciendo **${audioname}** por ${audioauthor}",
+        english: "${disc} Playing **${audioname}** by ${audioauthor}",
       },
       msc_np: {
         spanish: "${disc} Se está reproduciendo **${audioname}** por ${audioauthor}",

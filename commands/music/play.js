@@ -46,6 +46,7 @@ module.exports = {
                 ? emojis.musicDiscPigstep
                 : emojis[keys[Math.floor(Math.random() * keys.length)]],
               audioname: audio.name,
+              audioauthor: audio.author,
             })
           )
       }

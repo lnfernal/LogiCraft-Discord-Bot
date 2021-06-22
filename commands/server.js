@@ -10,8 +10,12 @@ module.exports = {
     const { guild, channel } = message
     const profiles = await userUtils.getAllUsersProfile(guild)
     const emojis = await require("@emojis").logibotEmojis(client)
+    const guildEmojis = await require("@emojis").guildEmojis(client, guild.id)
+    let guildEmojisString = ``
     let totalMessages = 0,
       totalWords = 0,
+      totalEmojis = 0,
+      totalCommands = 0,
       online = 0,
       idle = 0,
       offline = 0,
@@ -23,6 +27,10 @@ module.exports = {
       totalMessages += profile.messages
       totalWords += profile.words
     })
+
+    for (emoji in guildEmojis) {
+      guildEmojisString += `${guildEmojis[emoji]}`
+    }
 
     await guild.members.fetch().then(async members => {
       bots = members.filter(m => m.user.bot).size
@@ -47,11 +55,10 @@ module.exports = {
         }
       })
     })
-
     const embed = new MessageEmbed()
       .setTitle(`Servidor ${guild.name}`)
       .setThumbnail(await general.getServerIcon(guild, { dynamic: true, size: 128 }))
-      .setColor(await general.getImageColor(guild.iconURL()))
+      .setColor("#ff5d8f")
       .addFields(
         {
           name: "`General`",
@@ -65,16 +72,22 @@ module.exports = {
           name: "`Chat`",
           value: `**Mensajes enviados**: ${s.formatNumber(totalMessages)}\n**Palabras escritas**: ${s.formatNumber(
             totalWords
+          )}\n**Emojis usados**: ${s.formatNumber(totalEmojis)}\n**Comandos ejecutados**: ${s.formatNumber(
+            totalCommands
           )}`,
           inline: true,
         },
         {
           name: "`Miembros`",
-          value: `**Cantidad**: ${membersRaw.size}\n${emojis.online} **Online**: ${online}\n${emojis.dnd} **No Molestar**: ${dnd}\n${emojis.idle} **Ausente**: ${idle}\n${emojis.offline} **Desconectado**: ${offline}`,
+          value: `**Cantidad**: ${membersRaw.size}\n**Más activo**: \n${emojis.online} **Online**: ${online}\n${emojis.dnd} **No Molestar**: ${dnd}\n${emojis.idle} **Ausente**: ${idle}\n${emojis.offline} **Desconectado**: ${offline}`,
           inline: true,
+        },
+        {
+          name: "`Emojis`",
+          value: `${guildEmojisString.substring(0, 1025)}`,
+          inline: false,
         }
       )
-
     await channel.send(embed)
   },
 }
