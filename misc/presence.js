@@ -31,7 +31,6 @@ async function checkPresence(guild) {
       } else if (presence == 2) {
         if (points < 50) presence--
       }
-
       promises.push(userUtils.setUserSchema(guild, member.user, "presence", presence))
       promises.push(userUtils.setUserSchema(guild, member.user, "points", 0))
       if (presence == 0) promises.push(member.roles.add(lowRole))
@@ -42,12 +41,13 @@ async function checkPresence(guild) {
   await Promise.all(promises)
 }
 
-module.exports.init = async guild => {
+module.exports.init = async (guild, client) => {
   setTimeout(async () => {
+    await require("../commands/server").updateActivity(client)
     await checkPresence(guild)
     setInterval(async () => {
+      await require("../commands/server").updateActivity(client)
       await checkPresence(guild)
-      console.log("[!] Actualizando presencia del usuario...")
     }, 1 * 24 * 3600 * 1000)
   }, moment().endOf("day").valueOf() - moment().valueOf())
 }

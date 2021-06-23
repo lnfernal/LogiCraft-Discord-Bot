@@ -19,38 +19,27 @@ module.exports.init = async guild => {
     setInterval(async () => {
       await checkWeekly(guild)
     }, 7 * 24 * 3600 * 1000)
-  }, moment().endOf("isoWeek").valueOf() - moment().valueOf())
+  }, 2000/*moment().endOf("isoWeek").valueOf() - moment().valueOf()*/)
 }
 
 async function checkWeekly(guild) {
-  let users = [],
-    usersFinal = []
+  const profiles = await userUtils.getAllUsersProfile(guild)
+  var usersFinal = []
   const spamChannel = await guild.channels.cache.find(c => c.name.toLowerCase().includes("spam")),
     emojis = await require("@emojis").logibotEmojis(require("@client").getClient())
 
-  await guild.members.fetch().then(async members => {
-    const promises = []
-
-    members.forEach(member => {
-      promises.push(userUtils.getUserProfile(guild, member.user))
-    })
-    users = await Promise.all(promises)
-  })
-  users.forEach(user => {
+  profiles.forEach(user => {
     usersFinal.push({
       id: user.userId,
-      points: Math.floor(
-        (user.weeklyUser.messages + user.weeklyUser.files * 10) /
-          math.clamp(user.weeklyUser.words, 1, user.weeklyUser.words)
-      ),
-      messages: user.weeklyUser.messages,
-      words: user.weeklyUser.words,
-      files: user.weeklyUser.files,
+      messages: user.weeklyUser.messages ? user.weeklyUser.messages : 0,
+      words: user.weeklyUser.words ? user.weeklyUser.words : 0,
+      files: user.weeklyUser.files ? user.weeklyUser.files : 0,
     })
   })
   usersFinal.sort(function (a, b) {
-    return b.points - a.points
+    return b.words - a.words
   })
+
   // send to channel
   moment.locale("es")
   const weeklyUser = usersFinal[0],
@@ -60,9 +49,9 @@ async function checkWeekly(guild) {
       .setTitle(`${emojis.hero} ${weeklyMember.user.username} es el usuario de la semana! ${emojis.hero}`)
       .setColor("#ff5d8f")
       .setDescription(
-        `**Mensajes enviados**: ${s.formatNumber(weeklyUser.messages)}\n**Archivos adjuntados**: ${s.formatNumber(
-          weeklyUser.images
-        )}\n**Palabras escritas**: ${s.formatNumber(weeklyUser.words)}`
+        `**Mensajes enviados**: ${s.formatNumber(weeklyUser.messages)}\n**Palabras escritas**: ${s.formatNumber(
+          weeklyUser.words
+        )}\n**Archivos adjuntados**: ${s.formatNumber(weeklyUser.files)}`
       )
       .setThumbnail(userUtils.getUserAvatar(weeklyMember.user))
       .setAuthor(`${moment().startOf("isoWeek").format("ll")} - ${moment().endOf("isoWeek").format("ll")}`)
@@ -77,6 +66,6 @@ async function checkWeekly(guild) {
       promises.push(userUtils.setUserSchema(guild, member.user, "weeklyUser.files", 0))
       promises.push(userUtils.setUserSchema(guild, member.user, "weeklyUser.words", 0))
     })
-    users = await Promise.all(promises)
+    await Promise.all(promises)
   })
 }

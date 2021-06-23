@@ -7,10 +7,10 @@ const reqString = {
 
 const serverSchema = mongoose.Schema({
   guildId: reqString,
-  name: {
-    type: String,
-    default: "",
+  users: {
+    type: Array,
+    default: [],
   },
 })
 
-module.exports = mongoose.model("servers", profileSchema)
+module.exports = mongoose.model("servers", serverSchema)

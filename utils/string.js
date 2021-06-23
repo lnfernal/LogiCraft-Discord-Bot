@@ -112,6 +112,6 @@ module.exports.substr = (text, max, params = {}) => {
   } else {
     result = text.substring(0, max)
   }
-  if (ellipsis) result += "..."
+  if (ellipsis && result.length != text.length) result += "..."
   return result
 }

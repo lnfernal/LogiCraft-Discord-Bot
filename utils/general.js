@@ -1,5 +1,6 @@
 const defaultAvatarURL = "https://media.minecraftforum.net/attachments/300/619/636977108000120237.png"
 const moment = require("moment")
+const serverSchema = require("../schemas/server-schema.js")
 
 function componentToHex(c) {
   var hex = c.toString(16)
@@ -33,4 +34,47 @@ module.exports.formatDate = (date, params = {}) => {
 module.exports.timeSince = date => {
   moment.locale("es")
   return moment(date).fromNow()
+}
+
+async function checkSchema(guild) {
+  let result = await serverSchema.findOne({
+    guildId: guild.id,
+  })
+  if (!result) {
+    await new serverSchema({
+      guildId: guild.id,
+    }).save()
+    result = await serverSchema.findOne({
+      guildId: guild.id,
+    })
+  }
+  return result
+}
+
+module.exports.getSchema = async guild => {
+  return await checkSchema(guild)
+}
+
+module.exports.incSchema = async (guild, key, amount) => {
+  await checkSchema(guild)
+  await serverSchema.updateOne(
+    {
+      guildId: guild.id,
+    },
+    {
+      $inc: { [`${key}`]: amount },
+    }
+  )
+}
+
+module.exports.setSchema = async (guild, key, value) => {
+  await checkSchema(guild)
+  await serverSchema.updateOne(
+    {
+      guildId: guild.id,
+    },
+    {
+      $set: { [`${key}`]: value },
+    }
+  )
 }

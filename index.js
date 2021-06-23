@@ -62,9 +62,9 @@ client.on("ready", async () => {
   //rpc.init()
   avatarManager.init(client)
   userActivity.init(guild)
-  /*await presence.init(guild)
+  await presence.init(guild, client)
   await weeklyUser.init(guild)
-  randomActivity.setActivity(client)
+  /*randomActivity.setActivity(client)
   await mute.scheduledCheck(client)*/
   await readCommands("commands").then(console.log(`¡${commandCount} comandos registrados!`))
 

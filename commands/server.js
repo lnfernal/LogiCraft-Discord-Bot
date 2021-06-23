@@ -1,6 +1,7 @@
 require("module-alias/register")
 const general = require("@general")
 const userUtils = require("@user")
+const moment = require("moment")
 const s = require("@string")
 const { MessageEmbed } = require("discord.js")
 
@@ -10,6 +11,7 @@ module.exports = {
     const { guild, channel } = message
     const profiles = await userUtils.getAllUsersProfile(guild)
     const emojis = await require("@emojis").logibotEmojis(client)
+    const serverSchema = await general.getSchema(guild)
     const guildEmojis = await require("@emojis").guildEmojis(client, guild.id)
     let guildEmojisString = ``
     let totalMessages = 0,
@@ -21,12 +23,42 @@ module.exports = {
       offline = 0,
       dnd = 0,
       bots = 0,
-      membersRaw
+      membersRaw,
+      mostActiveUser = undefined
 
     profiles.forEach(profile => {
       totalMessages += profile.messages
       totalWords += profile.words
+      totalEmojis += profile.emojis
+      totalCommands += profile.commands
     })
+
+    const usersActivity = []
+
+    profiles.forEach(user => {
+      const userId = user.userId
+      let activity = 0
+      for (var i = 0; i < serverSchema.users.length; i++) {
+        try {
+          activity += serverSchema.users[i][`${userId}`].activity
+        } catch (e) {
+          console.log(e)
+        }
+      }
+      usersActivity.push({
+        userId,
+        activity,
+      })
+    })
+
+    try {
+      usersActivity.sort(function (a, b) {
+        return b.activity - a.activity
+      })
+      mostActiveUser = await guild.members.cache.get(usersActivity[0].userId)
+    } catch (e) {
+      console.error(e)
+    }
 
     for (emoji in guildEmojis) {
       guildEmojisString += `${guildEmojis[emoji]}`
@@ -79,8 +111,15 @@ module.exports = {
         },
         {
           name: "`Miembros`",
-          value: `**Cantidad**: ${membersRaw.size}\n**Más activo**: \n${emojis.online} **Online**: ${online}\n${emojis.dnd} **No Molestar**: ${dnd}\n${emojis.idle} **Ausente**: ${idle}\n${emojis.offline} **Desconectado**: ${offline}`,
+          value: `**Cantidad**: ${membersRaw.size}\n${emojis.online} **Online**: ${online}\n${emojis.dnd} **No Molestar**: ${dnd}\n${emojis.idle} **Ausente**: ${idle}\n${emojis.offline} **Desconectado**: ${offline}`,
           inline: true,
+        },
+        {
+          name: "`Actividad de los últimos 7 días`",
+          value: `**Miembro más activo**: ${
+            usersActivity[0].activity === 0 ? "_No hay suficientes datos todavía_" : mostActiveUser.user
+          }`,
+          inline: false,
         },
         {
           name: "`Emojis`",
@@ -89,5 +128,27 @@ module.exports = {
         }
       )
     await channel.send(embed)
+  },
+  updateActivity: async client => {
+    await client.guilds.cache.forEach(async guild => {
+      const serverSchema = await general.getSchema(guild)
+      const usersSchema = await guild.members.fetch().then(async members => {
+        const promises = []
+        members.forEach(member => {
+          promises.push(userUtils.getUserProfile(guild, member.user))
+        })
+        return await Promise.all(promises)
+      })
+      const users = serverSchema.users
+      const usersPush = {}
+
+      if (users.length === 7) users.shift()
+      usersSchema.forEach(user => {
+        usersPush[`${user.userId}`] = { ["activity"]: user.points }
+        usersPush["date"] = new Date()
+      })
+      users.push(usersPush)
+      general.setSchema(guild, "users", users)
+    })
   },
 }
