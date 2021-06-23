@@ -95,12 +95,12 @@ module.exports.clean = text => {
 }
 
 module.exports.substr = (text, max, params = {}) => {
-  const { ellipsis = false, character = null } = params
+  const { ellipsis = true, character = null } = params
   let result = "",
     deletedChars = 0
 
-  if (ellipsis) max -= 3
   if (text.length < max) return text
+  if (ellipsis) max -= 3
   if (character) {
     for (let i = 0; i < text.length; i++) {
       const substr = text.substring(0, text.indexOf(character) + 1)
@@ -109,7 +109,6 @@ module.exports.substr = (text, max, params = {}) => {
       result += substr
       text = text.substring(text.indexOf(character) + 1, text.length - 1)
     }
-    result = result.substring(0, result.length - 1)
   } else {
     result = text.substring(0, max)
   }

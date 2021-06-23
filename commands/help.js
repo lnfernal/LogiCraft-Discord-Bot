@@ -410,9 +410,9 @@ module.exports = {
               "Comandos para utilizar el bot en los canales de audio. Permite reproducir el audio de vídeos de Youtube y canciones de Spotify. Necesitas estar en un canal de voz para poder usarlos.",
             fields: [
               {
-                name: "`/play <song|link|playist>`",
+                name: "`/play <song|link|playlist>`",
                 value:
-                  "Reproduce un vídeo o playlist de Youtube o una cación de Spotify. Puedes pegar el link o escribir el nombre del vídeo",
+                  "Reproduce un vídeo o playlist de Youtube o una canción de Spotify. Puedes pegar el link o escribir el nombre del vídeo. Si ya hay algo en reproducción, se pondrá en cola",
               },
               {
                 name: "`/stop`",
