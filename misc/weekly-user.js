@@ -19,7 +19,7 @@ module.exports.init = async guild => {
     setInterval(async () => {
       await checkWeekly(guild)
     }, 7 * 24 * 3600 * 1000)
-  }, 2000/*moment().endOf("isoWeek").valueOf() - moment().valueOf()*/)
+  }, moment().endOf("isoWeek").valueOf() - moment().valueOf())
 }
 
 async function checkWeekly(guild) {
@@ -27,6 +27,8 @@ async function checkWeekly(guild) {
   var usersFinal = []
   const spamChannel = await guild.channels.cache.find(c => c.name.toLowerCase().includes("spam")),
     emojis = await require("@emojis").logibotEmojis(require("@client").getClient())
+
+  if (!spamChannel) return
 
   profiles.forEach(user => {
     usersFinal.push({

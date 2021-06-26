@@ -118,12 +118,12 @@ module.exports = (client, commandOptions, dirName) => {
           return
         }
 
-        /*if (
+        if (
             message.guild.id != "666295714724446209" ||
             message.mentions.has(client.user.id) ||
             message.content.includes("824989001999712337")
           )
-            return // protecc logibot*/
+            return // protecc logibot
 
         // ensure Siber is not exploiting
         if (message.author.bot) {
