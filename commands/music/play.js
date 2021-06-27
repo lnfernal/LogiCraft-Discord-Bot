@@ -35,7 +35,7 @@ module.exports = {
       }
     } else {
       try {
-        await client.player.nowPlaying(message)
+        //await client.player.nowPlaying(message)
         await require("./queue.js").callback(message, args, text, client)
       } catch (e) {
         let audio = await client.player.play(message, text).catch(console.error)
