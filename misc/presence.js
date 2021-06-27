@@ -4,7 +4,7 @@ const moment = require("moment")
 
 async function checkPresence(guild) {
   const lowRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("little")),
-    mediumRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("moderate")),
+    mediumRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("medium")),
     highRole = await guild.roles.cache.find(r => r.name.toLowerCase().includes("high")),
     promises = []
 
