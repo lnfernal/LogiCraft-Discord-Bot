@@ -34,10 +34,10 @@ module.exports = {
         await message.channel.send(await messageHandler("msc_q_err", member))
       }
     } else {
-      try {
-        //await client.player.nowPlaying(message)
+      /*try {
+        await client.player.nowPlaying(message)
         await require("./queue.js").callback(message, args, text, client)
-      } catch (e) {
+      } catch (e) {*/
         let audio = await client.player.play(message, text).catch(console.error)
         if (audio)
           await message.channel.send(
@@ -49,7 +49,7 @@ module.exports = {
               audioauthor: audio.author,
             })
           )
-      }
+      //}
     }
     await userUtils.incUserSchema(message.guild, message.author, "music", 1)
   },
