@@ -38,7 +38,7 @@ module.exports = {
 
     const embed = new Discord.MessageEmbed()
       .setColor("#ff4646")
-      .setFooter(`Muteado por ${message.author.username}`, `${message.author.avatarURL()}`)
+      .setFooter(`Kickeado por ${message.author.username}`, `${message.author.avatarURL()}`)
       .setTitle(`${target.username} was slained by ${message.author.username}`)
     await message.channel.send(embed)
     await member.kick()
