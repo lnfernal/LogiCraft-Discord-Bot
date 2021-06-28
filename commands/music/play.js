@@ -38,7 +38,9 @@ module.exports = {
         await client.player.nowPlaying(message)
         await require("./queue.js").callback(message, args, text, client)
       } catch (e) {
-        let audio = await client.player.play(message, text).catch(console.error)
+        let audio = await client.player.play(message, {
+          search: text
+        }).catch(console.error)
         if (audio)
           await message.channel.send(
             await messageHandler("msc_pyng_sng", member, {
