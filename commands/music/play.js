@@ -35,22 +35,25 @@ module.exports = {
       }
     } else {
       try {
-        await client.player.nowPlaying(message)
-        await require("./queue.js").callback(message, args, text, client)
+        if(client.player.isPlaying(message)){
+          await require("./queue.js").callback(message, args, text, client)
+        } else {
+          let audio = await client.player.play(message, {
+            search: text
+          }).catch(console.error)
+          if (audio)
+            await message.channel.send(
+              await messageHandler("msc_pyng_sng", member, {
+                disc: audio.name.includes("Pigstep")
+                  ? emojis.musicDiscPigstep
+                  : emojis[keys[Math.floor(Math.random() * keys.length)]],
+                audioname: audio.name,
+                audioauthor: audio.author,
+              })
+            )
+        }
       } catch (e) {
-        let audio = await client.player.play(message, {
-          search: text
-        }).catch(console.error)
-        if (audio)
-          await message.channel.send(
-            await messageHandler("msc_pyng_sng", member, {
-              disc: audio.name.includes("Pigstep")
-                ? emojis.musicDiscPigstep
-                : emojis[keys[Math.floor(Math.random() * keys.length)]],
-              audioname: audio.name,
-              audioauthor: audio.author,
-            })
-          )
+        console.log(e)
       }
     }
     await userUtils.incUserSchema(message.guild, message.author, "music", 1)
