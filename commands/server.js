@@ -142,7 +142,7 @@ module.exports = {
       const users = serverSchema.users
       const usersPush = {}
 
-      if (users.length === 7) users.shift()
+      if (users.length === 7) users.pop()
       usersSchema.forEach(user => {
         usersPush[`${user.userId}`] = { ["activity"]: user.points }
         usersPush["date"] = new Date()
