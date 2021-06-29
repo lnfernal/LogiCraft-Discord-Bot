@@ -288,7 +288,7 @@ module.exports = {
               {
                 name: "`/title <emoji> <text>`",
                 value:
-                  "Envía un texto con las letras convertidas a un 3x3 hecho de emojis. El bot debe estar en el servidor del emoji para poder usarlo. Los carácteres admitidos son: __abcdefghijklmnopqrstuvwxyz0123456789' ',.:?-+/[]'__",
+                  "Envía un texto con las letras convertidas a un 3x3 hecho de emojis. El bot debe estar en el servidor del emoji para poder usarlo. Los carácteres admitidos son: __abcdefghijklmnopqrstuvwxyz0123456789' ',.:?-+/[]'ª__",
               },
               {
                 name: "`/troll <mode|end>`",
