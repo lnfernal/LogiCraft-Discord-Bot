@@ -19,7 +19,7 @@ module.exports.init = async guild => {
     setInterval(async () => {
       await checkWeekly(guild)
     }, 7 * 24 * 3600 * 1000)
-  }, moment().endOf("isoWeek").valueOf() - moment().valueOf())
+  }, moment().endOf("isoWeek").valueOf() - moment().valueOf() - 10000)
 }
 
 async function checkWeekly(guild) {
