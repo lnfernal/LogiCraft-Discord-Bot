@@ -9,6 +9,6 @@ module.exports.spam = text => {
 }
 
 module.exports.sus = new RegExp(
-  "ඞ|^sus$|among us",
+  "ඞ|\bsus\b|among us",
   "gm"
 )
