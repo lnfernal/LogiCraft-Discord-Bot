@@ -29,9 +29,9 @@ module.exports = {
 
     if (content.toLowerCase() === "f" && Math.random() * 1 < fResponseChance)
       channel.send(fSentences[Math.floor(Math.random() * fSentences.length)])
-    else if (content.toLowerCase().includes("monke")) channel.send("reject humanity, return to monke 🐒")
-    else if (content.toLowerCase() === "/xd") channel.send("seas o no Dark, es /xp no /xd")
-    else if (regex.sus.test(content.toLowerCase())) channel.send("ඞ")
+    else if (content.toLowerCase().includes("monke")) await channel.send("reject humanity, return to monke 🐒")
+    else if (content.toLowerCase() === "/xd") await channel.send("seas o no Dark, es /xp no /xd")
+    else if (regex.sus.test(content.toLowerCase())) await channel.send("ඞ")
     if (content.toLowerCase() === "ping") {
       await userUtils.incUserSchema(guild, author, "pongs", 1)
       const result = await userUtils.getUserProfile(guild, author)
