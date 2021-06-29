@@ -7,3 +7,8 @@ module.exports.spam = text => {
   const regex = new RegExp("<@!?(\\d+)>|^\\/+(s*\\/*)*", "gm")
   return text.replace(regex, "")
 }
+
+module.exports.sus = new RexExp => {
+  "ඞ|^sus$|among us",
+  "gm"
+}
