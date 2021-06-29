@@ -243,6 +243,11 @@ module.exports = {
         middle: "OXX",
         bottom: "OXO",
       },
+      "ª": {
+        top: "XOO",
+        middle: "OOO",
+        bottom: "OOO",
+      },
     }
     const emoji = args[0],
       emojiRegex = regex.emojis,
