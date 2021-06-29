@@ -8,7 +8,7 @@ module.exports.spam = text => {
   return text.replace(regex, "")
 }
 
-module.exports.sus = new RexExp => {
+module.exports.sus = new RexExp(
   "ඞ|^sus$|among us",
   "gm"
-}
+)
