@@ -15,6 +15,11 @@ const fSentences = ["F :c", "Super F", "F", "Pulsa F -> `F`", ":regional_indicat
     ":elmSTEER:",
     ":dendiface:",
     ":elmJAM:",
+  ],
+  sus = [
+    "ඞ",
+    "among us",
+    "sus"
   ]
 
 module.exports = {
@@ -25,6 +30,7 @@ module.exports = {
       channel.send(fSentences[Math.floor(Math.random() * fSentences.length)])
     else if (content.toLowerCase().includes("monke")) channel.send("reject humanity, return to monke 🐒")
     else if (content.toLowerCase() === "/xd") channel.send("seas o no Dark, es /xp no /xd")
+    else if (sus.indexOf(content.toLowerCase()) >= 0) channel.send("ඞ")
     if (content.toLowerCase() === "ping") {
       await userUtils.incUserSchema(guild, author, "pongs", 1)
       const result = await userUtils.getUserProfile(guild, author)
