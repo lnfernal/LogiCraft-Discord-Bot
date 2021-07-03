@@ -30,6 +30,12 @@ module.exports = {
       authors += `${queue.songs[0].author ? queue.songs[0].author.toString().substring(0, MAXAUTHOR) : "-"}${
         queue.songs[0].author.length > MAXAUTHOR ? "..." : ""
       }\n`
+
+      if (queue.length == 1) {
+        currentPage = { names, authors }
+        queuePages.push(currentPage)
+      }
+
       songsCurrentPage++
       for (let i = 1; i < queue.songs.length; i++) {
         names += `${i}. **${queue.songs[i].name.toString().substring(0, MAXNAME)}${
