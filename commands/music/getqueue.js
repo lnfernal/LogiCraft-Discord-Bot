@@ -51,7 +51,7 @@ module.exports = {
           authors = ``
         }
       }
-      console.log(queuePages)
+      console.log(queuePages, queue)
       require("@pages").createPages(message, queuePages, "queue")
     } catch (e) {
       await message.channel.send(

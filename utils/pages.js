@@ -130,6 +130,7 @@ module.exports.createPages = async (message, pages, preset) => {
 
   msg = message
   await message.channel.send(await getPage(pages, page, preset)).then(msg => {
+    if (pages.length === 1) return
     msg.react(logiEmojis.leftArrow.id).then(r => {
       msg.react(logiEmojis.rightArrow.id)
       const backwardsFilter = (reaction, user) => reaction.emoji.id === leftArrow.id && user.id === message.author.id
