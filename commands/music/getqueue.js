@@ -31,7 +31,7 @@ module.exports = {
         queue.songs[0].author.length > MAXAUTHOR ? "..." : ""
       }\n`
 
-      if (queue.length == 1) {
+      if (queue.songs.length == 1) {
         currentPage = { names, authors }
         queuePages.push(currentPage)
       }
@@ -51,7 +51,6 @@ module.exports = {
           authors = ``
         }
       }
-      console.log(queuePages, queue)
       require("@pages").createPages(message, queuePages, "queue")
     } catch (e) {
       await message.channel.send(
