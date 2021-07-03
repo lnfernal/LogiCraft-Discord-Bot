@@ -8,4 +8,4 @@ module.exports.spam = text => {
   return text.replace(regex, "")
 }
 
-module.exports.sus = new RegExp("(ඞ|\bsus\b|among us)", "gm")
+module.exports.sus = /ඞ|\bs+u+s+\b|among us/gm
