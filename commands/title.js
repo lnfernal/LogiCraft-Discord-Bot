@@ -243,7 +243,7 @@ module.exports = {
         middle: "OXX",
         bottom: "OXO",
       },
-      "ª": {
+      ª: {
         top: "XOO",
         middle: "OOO",
         bottom: "OOO",
@@ -260,7 +260,7 @@ module.exports = {
     args.shift()
     const title = args.join(" ")
 
-    // TOP ROW
+    // top row
     for (let i = 0; i < title.length; i++) {
       if (!(`${title[i].toLowerCase()}` in characters))
         return await channel.send(`**${author.username}**, el caracter \'${title[i]}\' no se puede imprimir`)
@@ -269,14 +269,14 @@ module.exports = {
     }
     result += "\n"
 
-    // MIDDLE ROW
+    // middle row
     for (let i = 0; i < title.length; i++) {
       for (let j = 0; j < 3; j++) result += characters[`${title[i].toLowerCase()}`].middle[j] == "X" ? emoji : emptyChar
       result += "   "
     }
     result += "\n"
 
-    // BOTTOM ROW
+    // bottom row
     for (let i = 0; i < title.length; i++) {
       for (let j = 0; j < 3; j++) result += characters[`${title[i].toLowerCase()}`].bottom[j] == "X" ? emoji : emptyChar
       result += "   "

@@ -18,9 +18,8 @@ module.exports = {
           username: member.user.username,
         })
       )
-      let audio = await client.player.play(message, text).catch(console.error)
 
-   /* if (message.content.includes("youtube.com/playlist")) {
+    if (message.content.includes("youtube.com/playlist")) {
       try {
         await client.player.playlist(message, {
           search: args[0],
@@ -36,7 +35,7 @@ module.exports = {
       }
     } else {
       try {
-        if(await client.player.isPlaying(message)){
+        if (await client.player.isPlaying(message)) {
           await require("./queue.js").callback(message, args, text, client)
         } else {
           let audio = await client.player.play(message, text).catch(console.error)
@@ -55,6 +54,6 @@ module.exports = {
         console.log(e)
       }
     }
-    await userUtils.incUserSchema(message.guild, message.author, "music", 1)*/
+    await userUtils.incUserSchema(message.guild, message.author, "music", 1)
   },
 }
