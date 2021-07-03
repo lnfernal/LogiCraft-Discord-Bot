@@ -18,8 +18,9 @@ module.exports = {
           username: member.user.username,
         })
       )
+      let audio = await client.player.play(message, text).catch(console.error)
 
-    if (message.content.includes("www.youtube.com/playlist")) {
+   /* if (message.content.includes("youtube.com/playlist")) {
       try {
         await client.player.playlist(message, {
           search: args[0],
@@ -54,6 +55,6 @@ module.exports = {
         console.log(e)
       }
     }
-    await userUtils.incUserSchema(message.guild, message.author, "music", 1)
+    await userUtils.incUserSchema(message.guild, message.author, "music", 1)*/
   },
 }
