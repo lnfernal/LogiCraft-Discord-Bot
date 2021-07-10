@@ -15,6 +15,7 @@ module.exports = {
   permissions: ["MANAGE_ROLES"],
   callback: async (message, args, text, client) => {
     const { guild, channel } = message
+    const voice = message.member.voice
     const staff = message.author
     const target = message.mentions.users.first() || (await s.getUserByString(args[0], message.member))
     const emojis = await require("@emojis").logibotEmojis(client)
@@ -97,7 +98,7 @@ module.exports = {
             return
         }
         if (timeout > 2147483647 || timeout < 5000) {
-          channel.send(`**${message.member.displayName}**, el valor introducido no es válido`)
+          channel.send(`**${author.username}**, el valor introducido no es válido`)
           return
         }
         if (args[2]) {
@@ -118,6 +119,9 @@ module.exports = {
       roles,
       id: target.id,
     })
+    if (voice) {
+      await voice.setMute(True, reason) 
+    }
     if (timeout == 0) expires.setFullYear(2077)
     expires = new Date(expires.getTime() + timeout)
     if (expires < new Date().setFullYear(new Date().getFullYear() + 1)) {
