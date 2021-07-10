@@ -17,9 +17,9 @@ const unmute = async (member, author, params) => {
       await member.roles.set(roleBackup.roles)
     }
   })
-  if (voice) {
+  /*if (voice) {
    await voice.setMute(false, `Desmuteado por ${author.username}`) 
-  }
+  }*/
   await params.channel.send(
     new Discord.MessageEmbed()
       .setTitle(`${member.user.username} ha sido desmuteado ${params.unmuted}`)
