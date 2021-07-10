@@ -100,7 +100,7 @@ module.exports = {
           }\n**Último mensaje**: `
             .concat(
               targetMember.lastMessage
-                ? `\"${s.substr(targetMember.lastMessage, 100)}\" _(${moment(
+                ? `\"${s.substr(targetMember.lastMessage.content, 100)}\" _(${moment(
                     targetMember.lastMessage.createdAt
                   ).fromNow()})_`
                 : "_Ninguno_"
