@@ -7,6 +7,7 @@ const Discord = require("discord.js")
 
 const unmute = async (member, author, params) => {
   const rolesBackup = await require("./mute.js").rolesBackup(),
+    voice = member.voice,
     createdAt = await userUtils.getCreatedAt(member.guild, member.user),
     mutedSince = s.formatDate(createdAt),
     mutedFor = s.msToTime(new Date().getTime() - createdAt.getTime())
@@ -16,6 +17,9 @@ const unmute = async (member, author, params) => {
       await member.roles.set(roleBackup.roles)
     }
   })
+  if (voice) {
+   await voice.setMute(False, `Desmuteado por ${author.username}`) 
+  }
   await params.channel.send(
     new Discord.MessageEmbed()
       .setTitle(`${member.user.username} ha sido desmuteado ${params.unmuted}`)
