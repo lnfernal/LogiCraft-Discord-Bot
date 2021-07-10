@@ -18,7 +18,7 @@ const unmute = async (member, author, params) => {
     }
   })
   if (voice) {
-   await voice.setMute(False, `Desmuteado por ${author.username}`) 
+   await voice.setMute(false, `Desmuteado por ${author.username}`) 
   }
   await params.channel.send(
     new Discord.MessageEmbed()
