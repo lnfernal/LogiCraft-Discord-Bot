@@ -120,7 +120,7 @@ module.exports = {
       id: target.id,
     })
     if (voice) {
-      await voice.setMute(True, reason) 
+      await voice.setMute(true, reason) 
     }
     if (timeout == 0) expires.setFullYear(2077)
     expires = new Date(expires.getTime() + timeout)
