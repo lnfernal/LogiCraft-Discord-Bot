@@ -119,9 +119,9 @@ module.exports = {
       roles,
       id: target.id,
     })
-    if (voice) {
+    /*if (voice) {
       await voice.setMute(true, reason) 
-    }
+    }*/
     if (timeout == 0) expires.setFullYear(2077)
     expires = new Date(expires.getTime() + timeout)
     if (expires < new Date().setFullYear(new Date().getFullYear() + 1)) {
