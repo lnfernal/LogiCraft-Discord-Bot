@@ -1,7 +1,6 @@
 require("module-alias/register")
 const general = require("@general")
 const userUtils = require("@user")
-const moment = require("moment")
 const s = require("@string")
 const { MessageEmbed } = require("discord.js")
 
@@ -132,17 +131,11 @@ module.exports = {
   updateActivity: async client => {
     await client.guilds.cache.forEach(async guild => {
       const serverSchema = await general.getSchema(guild)
-      const usersSchema = await guild.members.fetch().then(async members => {
-        const promises = []
-        members.forEach(member => {
-          promises.push(userUtils.getUserProfile(guild, member.user))
-        })
-        return await Promise.all(promises)
-      })
+      const usersSchema = await userUtils.getAllUsersProfile(guild)
       const users = serverSchema.users
       const usersPush = {}
 
-      if (users.length === 7) users.pop()
+      if (users.length === 7) users.shift()
       usersSchema.forEach(user => {
         usersPush[`${user.userId}`] = { ["activity"]: user.points }
         usersPush["date"] = new Date()

@@ -16,9 +16,7 @@ async function checkPresence(guild) {
 
       let userData = await userUtils.getUserProfile(guild, member.user),
         { presence, points } = userData
-      if (presence == 0) promises.push(member.roles.remove(lowRole))
-      else if (presence == 1) promises.push(member.roles.remove(mediumRole))
-      else if (presence == 2) promises.push(member.roles.remove(highRole))
+      const oldPresence = presence
 
       if (presence == -1) {
         if (points > 0) presence++
@@ -31,11 +29,16 @@ async function checkPresence(guild) {
       } else if (presence == 2) {
         if (points < 50) presence--
       }
-      promises.push(userUtils.setUserSchema(guild, member.user, "presence", presence))
+      if (oldPresence != presence) {
+        if (oldPresence == 0) promises.push(member.roles.remove(lowRole))
+        else if (oldPresence == 1) promises.push(member.roles.remove(mediumRole))
+        else if (oldPresence == 2) promises.push(member.roles.remove(highRole))
+        promises.push(userUtils.setUserSchema(guild, member.user, "presence", presence))
+        if (presence == 0) promises.push(member.roles.add(lowRole))
+        else if (presence == 1) promises.push(member.roles.add(mediumRole))
+        else if (presence == 2) promises.push(member.roles.add(highRole))
+      }
       promises.push(userUtils.setUserSchema(guild, member.user, "points", 0))
-      if (presence == 0) promises.push(member.roles.add(lowRole))
-      else if (presence == 1) promises.push(member.roles.add(mediumRole))
-      else if (presence == 2) promises.push(member.roles.add(highRole))
     })
   })
   await Promise.all(promises)

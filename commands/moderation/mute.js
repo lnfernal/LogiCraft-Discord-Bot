@@ -119,7 +119,7 @@ module.exports = {
       roles,
       id: target.id,
     })
-    /*if (voice) {
+    /*if (voice.channel) {
       await voice.setMute(true, reason) 
     }*/
     if (timeout == 0) expires.setFullYear(2077)
@@ -167,7 +167,7 @@ module.exports = {
           new Date()
         )}\n**Terminio**: ${s.formatDate(expires)}`
       )
-    message.channel.send(embed)
+    await message.channel.send(embed)
   },
 }
 
