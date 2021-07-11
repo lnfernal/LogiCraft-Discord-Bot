@@ -25,6 +25,7 @@ module.exports = {
         .setThumbnail(guild.iconURL())
         .setColor("#ff5d8f")
 
+    await message.delete()
     if (dmchannel) author.send(embed).catch(console.error)
     else
       await guild.channels.cache.get("836133440574849044").then(async c => {
