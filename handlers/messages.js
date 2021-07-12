@@ -76,6 +76,10 @@ module.exports = async (key, member = null, params = {}) => {
         spanish: "**${username}**, no se ha encontrado el rol",
         english: "**${username}**, couldn't find role",
       },
+      mentionRequired: {
+        spanish: "**${username}**, tienes que mencionar al usuario para usar este comando",
+        english: "**${username}**, you have to mention the user to use this command",
+      },
       ipDescription: {
         spanish:
           "**Versión**: ${version}\n**Forge ${version}**: [Web de Forge](${forge})\n**Modpack**: [iLogiCraft Modpack v1.0](${requirements})\n**IP**: ${ip}",
