@@ -14,14 +14,11 @@ module.exports = {
   callback: async (message, args, text, client) => {
     const target = message.mentions.users.first()
 
-    if (!target) {
-      message.channel.send(
-        await messageHandler("missingUser", message.member, {
+    if (!target) return message.channel.send(
+        await messageHandler("mentionRequired", message.member, {
           username: message.author.username,
         })
       )
-      return
-    }
 
     if (await userUtils.checkImmunity(message, target, protectedRoles)) return
 
