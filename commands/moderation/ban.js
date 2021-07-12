@@ -15,14 +15,12 @@ module.exports = {
     const target = message.mentions.users.first()
     var reason = "_No especificado_"
 
-    if (!target) {
-      message.channel.send(
-        await messageHandler("missingUser", message.member, {
+    if (!target) return message.channel.send(
+        await messageHandler("mentionRequired", message.member, {
           username: message.author.username,
         })
       )
       return
-    }
 
     if (await userUtils.checkImmunity(message, target, protectedRoles)) return
 
